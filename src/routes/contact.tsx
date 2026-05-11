@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-contact.jpg";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { SITE } from "@/lib/site-config";
@@ -20,7 +21,8 @@ function ContactPage() {
   return (
     <SiteLayout>
       <PageHero eyebrow="Contact" title="Get in touch with World Jumper"
-        subtitle="We're here to help — call, WhatsApp or send an inquiry below." />
+        subtitle="We're here to help — call, WhatsApp or send an inquiry below."
+        image={heroImg} imageAlt="Friendly travel consultant at desk" />
       <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.4fr] lg:items-start">
           <div className="space-y-4">

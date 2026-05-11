@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Plane, FileCheck2, Map, Stethoscope, MoonStar } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, ServiceCard } from "@/components/site/ui";
+import heroImg from "@/assets/hero-services.jpg";
 
 export const Route = createFileRoute("/services")({
   component: ServicesPage,
@@ -20,6 +21,7 @@ function ServicesPage() {
         eyebrow="What we do"
         title="Comprehensive travel & tourism services"
         subtitle="From visas to vacations, we handle every step."
+        image={heroImg} imageAlt="Airplane wing above sunset clouds"
       />
       <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

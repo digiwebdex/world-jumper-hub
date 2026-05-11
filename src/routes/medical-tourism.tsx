@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-medical.jpg";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { supabase, type Package } from "@/lib/supabase";
 import { PackageGrid } from "./tours";
@@ -28,7 +29,8 @@ function MedicalPage() {
   return (
     <SiteLayout>
       <PageHero eyebrow="Medical Tourism" title="Trusted medical travel support"
-        subtitle="End-to-end coordination with top hospitals in India, Thailand and Singapore." />
+        subtitle="End-to-end coordination with top hospitals in India, Thailand and Singapore."
+        image={heroImg} imageAlt="Modern hospital exterior" />
       <section className="mx-auto max-w-7xl px-4 py-12">
         <PackageGrid items={items} loading={loading} emptyText="No medical tourism packages right now." />
       </section>

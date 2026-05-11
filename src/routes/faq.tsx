@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-faq.jpg";
 
 export const Route = createFileRoute("/faq")({
   component: FaqPage,
@@ -27,7 +28,7 @@ function FaqPage() {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <SiteLayout>
-      <PageHero eyebrow="FAQ" title="Frequently asked questions" />
+      <PageHero eyebrow="FAQ" title="Frequently asked questions" subtitle="Everything you need to know before you fly with us." image={heroImg} imageAlt="World map with questions pinned" />
       <section className="mx-auto max-w-3xl px-4 py-12">
         <div className="space-y-3">
           {FAQS.map((f, i) => {
