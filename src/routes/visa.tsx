@@ -84,6 +84,8 @@ function VisaPage() {
     <SiteLayout>
       {/* ============ HERO BANNER ============ */}
       <section className="relative overflow-hidden bg-gradient-hero text-white">
+        <img src={heroImg} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.18_0.05_260)/0.85] via-[oklch(0.22_0.08_255)/0.6] to-transparent" />
         {/* decorative blobs */}
         <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-32 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/30 blur-3xl" />
