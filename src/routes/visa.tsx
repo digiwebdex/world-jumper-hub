@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ChevronDown, Map, Phone, FileCheck2 } from "lucide-react";
+import { ChevronDown, Map as MapIcon, Phone, FileCheck2 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
