@@ -9,13 +9,55 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VisaRouteImport } from './routes/visa'
+import { Route as UmrahRouteImport } from './routes/umrah'
+import { Route as ToursRouteImport } from './routes/tours'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as MedicalTourismRouteImport } from './routes/medical-tourism'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AirTicketingRouteImport } from './routes/air-ticketing'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VisaRoute = VisaRouteImport.update({
+  id: '/visa',
+  path: '/visa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UmrahRoute = UmrahRouteImport.update({
+  id: '/umrah',
+  path: '/umrah',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToursRoute = ToursRouteImport.update({
+  id: '/tours',
+  path: '/tours',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedicalTourismRoute = MedicalTourismRouteImport.update({
+  id: '/medical-tourism',
+  path: '/medical-tourism',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AirTicketingRoute = AirTicketingRouteImport.update({
+  id: '/air-ticketing',
+  path: '/air-ticketing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -32,40 +74,148 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/air-ticketing': typeof AirTicketingRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/medical-tourism': typeof MedicalTourismRoute
   '/services': typeof ServicesRoute
+  '/tours': typeof ToursRoute
+  '/umrah': typeof UmrahRoute
+  '/visa': typeof VisaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/air-ticketing': typeof AirTicketingRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/medical-tourism': typeof MedicalTourismRoute
   '/services': typeof ServicesRoute
+  '/tours': typeof ToursRoute
+  '/umrah': typeof UmrahRoute
+  '/visa': typeof VisaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/air-ticketing': typeof AirTicketingRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/medical-tourism': typeof MedicalTourismRoute
   '/services': typeof ServicesRoute
+  '/tours': typeof ToursRoute
+  '/umrah': typeof UmrahRoute
+  '/visa': typeof VisaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/services'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/air-ticketing'
+    | '/contact'
+    | '/faq'
+    | '/medical-tourism'
+    | '/services'
+    | '/tours'
+    | '/umrah'
+    | '/visa'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/services'
-  id: '__root__' | '/' | '/about' | '/services'
+  to:
+    | '/'
+    | '/about'
+    | '/air-ticketing'
+    | '/contact'
+    | '/faq'
+    | '/medical-tourism'
+    | '/services'
+    | '/tours'
+    | '/umrah'
+    | '/visa'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/air-ticketing'
+    | '/contact'
+    | '/faq'
+    | '/medical-tourism'
+    | '/services'
+    | '/tours'
+    | '/umrah'
+    | '/visa'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AirTicketingRoute: typeof AirTicketingRoute
+  ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
+  MedicalTourismRoute: typeof MedicalTourismRoute
   ServicesRoute: typeof ServicesRoute
+  ToursRoute: typeof ToursRoute
+  UmrahRoute: typeof UmrahRoute
+  VisaRoute: typeof VisaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/visa': {
+      id: '/visa'
+      path: '/visa'
+      fullPath: '/visa'
+      preLoaderRoute: typeof VisaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/umrah': {
+      id: '/umrah'
+      path: '/umrah'
+      fullPath: '/umrah'
+      preLoaderRoute: typeof UmrahRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tours': {
+      id: '/tours'
+      path: '/tours'
+      fullPath: '/tours'
+      preLoaderRoute: typeof ToursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medical-tourism': {
+      id: '/medical-tourism'
+      path: '/medical-tourism'
+      fullPath: '/medical-tourism'
+      preLoaderRoute: typeof MedicalTourismRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/air-ticketing': {
+      id: '/air-ticketing'
+      path: '/air-ticketing'
+      fullPath: '/air-ticketing'
+      preLoaderRoute: typeof AirTicketingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -88,7 +238,14 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AirTicketingRoute: AirTicketingRoute,
+  ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
+  MedicalTourismRoute: MedicalTourismRoute,
   ServicesRoute: ServicesRoute,
+  ToursRoute: ToursRoute,
+  UmrahRoute: UmrahRoute,
+  VisaRoute: VisaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
