@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-umrah.jpg";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { supabase, type Package } from "@/lib/supabase";
 import { PackageGrid } from "./tours";
@@ -28,7 +29,8 @@ function UmrahPage() {
   return (
     <SiteLayout>
       <PageHero eyebrow="Umrah Packages" title="Perform Umrah with peace of mind"
-        subtitle="Trusted Umrah services with full visa, ticket, hotel and ziyarah arrangements." />
+        subtitle="Trusted Umrah services with full visa, ticket, hotel and ziyarah arrangements."
+        image={heroImg} imageAlt="Kaaba in Mecca during blue hour" />
       <section className="mx-auto max-w-7xl px-4 py-12">
         <PackageGrid items={items} loading={loading} emptyText="No Umrah packages available right now." />
       </section>

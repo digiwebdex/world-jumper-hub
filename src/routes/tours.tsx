@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Map } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-tours.jpg";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { supabase, type Package } from "@/lib/supabase";
@@ -29,7 +30,7 @@ function ToursPage() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Tour Packages" title="Curated tour packages" subtitle="Hand-picked international tours with transparent pricing." />
+      <PageHero eyebrow="Tour Packages" title="Curated tour packages" subtitle="Hand-picked international tours with transparent pricing." image={heroImg} imageAlt="Tropical island with turquoise waters" />
       <section className="mx-auto max-w-7xl px-4 py-12">
         <PackageGrid items={items} loading={loading} emptyText="No tour packages available right now." />
       </section>

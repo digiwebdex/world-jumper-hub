@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Plane } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-air.jpg";
 import { InquiryForm } from "@/components/site/InquiryForm";
 
 export const Route = createFileRoute("/air-ticketing")({
@@ -18,7 +19,8 @@ function AirTicketPage() {
   return (
     <SiteLayout>
       <PageHero eyebrow="Air Ticketing" title="Best fares, all major airlines"
-        subtitle="Domestic & international air tickets — share your route and we'll quote the best fare." />
+        subtitle="Domestic & international air tickets — share your route and we'll quote the best fare."
+        image={heroImg} imageAlt="Airliner taking off into sunset" />
       <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:items-start">
           <div className="rounded-2xl border border-border bg-card p-6">

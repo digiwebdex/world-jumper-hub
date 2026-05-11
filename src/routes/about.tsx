@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ShieldCheck, Award, Users, Globe2 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import heroImg from "@/assets/hero-about.jpg";
 import { SITE } from "@/lib/site-config";
 
 export const Route = createFileRoute("/about")({
@@ -21,6 +22,8 @@ function AboutPage() {
         eyebrow="About Us"
         title="Your trusted travel partner in Bangladesh"
         subtitle={`${SITE.tagline} · License No: ${SITE.licenseNo}`}
+        image={heroImg}
+        imageAlt="Passport, map and camera flat lay"
       />
       <section className="mx-auto max-w-5xl px-4 py-16">
         <div className="prose max-w-none text-foreground/90">
