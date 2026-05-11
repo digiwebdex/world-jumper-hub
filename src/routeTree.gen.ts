@@ -19,6 +19,13 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AirTicketingRouteImport } from './routes/air-ticketing'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminVisaRequirementsRouteImport } from './routes/admin.visa-requirements'
+import { Route as AdminVisaCountriesRouteImport } from './routes/admin.visa-countries'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
 
 const VisaRoute = VisaRouteImport.update({
   id: '/visa',
@@ -70,6 +77,41 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminVisaRequirementsRoute = AdminVisaRequirementsRouteImport.update({
+  id: '/admin/visa-requirements',
+  path: '/admin/visa-requirements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminVisaCountriesRoute = AdminVisaCountriesRouteImport.update({
+  id: '/admin/visa-countries',
+  path: '/admin/visa-countries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPackagesRoute = AdminPackagesRouteImport.update({
+  id: '/admin/packages',
+  path: '/admin/packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
+  id: '/admin/inquiries',
+  path: '/admin/inquiries',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +124,13 @@ export interface FileRoutesByFullPath {
   '/tours': typeof ToursRoute
   '/umrah': typeof UmrahRoute
   '/visa': typeof VisaRoute
+  '/admin/inquiries': typeof AdminInquiriesRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/packages': typeof AdminPackagesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/visa-countries': typeof AdminVisaCountriesRoute
+  '/admin/visa-requirements': typeof AdminVisaRequirementsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +143,13 @@ export interface FileRoutesByTo {
   '/tours': typeof ToursRoute
   '/umrah': typeof UmrahRoute
   '/visa': typeof VisaRoute
+  '/admin/inquiries': typeof AdminInquiriesRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/packages': typeof AdminPackagesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/visa-countries': typeof AdminVisaCountriesRoute
+  '/admin/visa-requirements': typeof AdminVisaRequirementsRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +163,13 @@ export interface FileRoutesById {
   '/tours': typeof ToursRoute
   '/umrah': typeof UmrahRoute
   '/visa': typeof VisaRoute
+  '/admin/inquiries': typeof AdminInquiriesRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/packages': typeof AdminPackagesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/visa-countries': typeof AdminVisaCountriesRoute
+  '/admin/visa-requirements': typeof AdminVisaRequirementsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +184,13 @@ export interface FileRouteTypes {
     | '/tours'
     | '/umrah'
     | '/visa'
+    | '/admin/inquiries'
+    | '/admin/login'
+    | '/admin/packages'
+    | '/admin/settings'
+    | '/admin/visa-countries'
+    | '/admin/visa-requirements'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +203,13 @@ export interface FileRouteTypes {
     | '/tours'
     | '/umrah'
     | '/visa'
+    | '/admin/inquiries'
+    | '/admin/login'
+    | '/admin/packages'
+    | '/admin/settings'
+    | '/admin/visa-countries'
+    | '/admin/visa-requirements'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -145,6 +222,13 @@ export interface FileRouteTypes {
     | '/tours'
     | '/umrah'
     | '/visa'
+    | '/admin/inquiries'
+    | '/admin/login'
+    | '/admin/packages'
+    | '/admin/settings'
+    | '/admin/visa-countries'
+    | '/admin/visa-requirements'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +242,13 @@ export interface RootRouteChildren {
   ToursRoute: typeof ToursRoute
   UmrahRoute: typeof UmrahRoute
   VisaRoute: typeof VisaRoute
+  AdminInquiriesRoute: typeof AdminInquiriesRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminPackagesRoute: typeof AdminPackagesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminVisaCountriesRoute: typeof AdminVisaCountriesRoute
+  AdminVisaRequirementsRoute: typeof AdminVisaRequirementsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +323,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/visa-requirements': {
+      id: '/admin/visa-requirements'
+      path: '/admin/visa-requirements'
+      fullPath: '/admin/visa-requirements'
+      preLoaderRoute: typeof AdminVisaRequirementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/visa-countries': {
+      id: '/admin/visa-countries'
+      path: '/admin/visa-countries'
+      fullPath: '/admin/visa-countries'
+      preLoaderRoute: typeof AdminVisaCountriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/packages': {
+      id: '/admin/packages'
+      path: '/admin/packages'
+      fullPath: '/admin/packages'
+      preLoaderRoute: typeof AdminPackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/inquiries': {
+      id: '/admin/inquiries'
+      path: '/admin/inquiries'
+      fullPath: '/admin/inquiries'
+      preLoaderRoute: typeof AdminInquiriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,6 +386,13 @@ const rootRouteChildren: RootRouteChildren = {
   ToursRoute: ToursRoute,
   UmrahRoute: UmrahRoute,
   VisaRoute: VisaRoute,
+  AdminInquiriesRoute: AdminInquiriesRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminPackagesRoute: AdminPackagesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminVisaCountriesRoute: AdminVisaCountriesRoute,
+  AdminVisaRequirementsRoute: AdminVisaRequirementsRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
