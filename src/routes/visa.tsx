@@ -11,6 +11,8 @@ import { InquiryForm } from "@/components/site/InquiryForm";
 import { supabase, type VisaCountry, type VisaRequirement } from "@/lib/supabase";
 import { SITE } from "@/lib/site-config";
 
+import heroImg from "@/assets/hero-visa.jpg";
+
 export const Route = createFileRoute("/visa")({
   component: VisaPage,
   head: () => ({
