@@ -86,7 +86,7 @@ function VisaPage() {
                         <img src={c.flag_url} alt={c.country_name} loading="lazy" className="h-full w-full object-cover"
                           onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }} />
                       ) : (
-                        <div className="flex h-full items-center justify-center text-muted-foreground"><Map className="h-7 w-7" /></div>
+                        <div className="flex h-full items-center justify-center text-muted-foreground"><MapIcon className="h-7 w-7" /></div>
                       )}
                     </div>
                     <div className="flex-1">
