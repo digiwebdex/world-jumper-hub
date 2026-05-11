@@ -57,8 +57,8 @@ function SettingsAdmin() {
       payload[k] = v || null;
     });
     const op = s?.id
-      ? supabase.from("site_settings").update(payload).eq("id", s.id)
-      : supabase.from("site_settings").insert(payload);
+      ? supabase.from("site_settings").update(payload as never).eq("id", s.id)
+      : supabase.from("site_settings").insert(payload as never);
     const { error } = await op;
     setBusy(false);
     if (error) { alert(error.message); return; }
