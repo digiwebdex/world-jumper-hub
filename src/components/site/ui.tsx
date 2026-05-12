@@ -102,3 +102,28 @@ export function SectionHeading({
     </Reveal>
   );
 }
+
+import { ParallaxImage } from "./motion";
+
+export function EditorialItem({
+  index, title, body, image,
+}: { index: number; title: string; body: string; image?: string }) {
+  return (
+    <Reveal className="grid gap-6 border-t border-border py-10 md:grid-cols-12 md:gap-10">
+      <div className="md:col-span-2">
+        <p className="font-mono text-sm font-bold tracking-widest text-[color:var(--brand-orange)]">
+          {String(index).padStart(2, "0")}
+        </p>
+      </div>
+      <div className="md:col-span-5">
+        <h3 className="font-display text-2xl font-bold leading-tight text-foreground md:text-3xl">{title}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+      </div>
+      {image && (
+        <div className="md:col-span-5">
+          <ParallaxImage src={image} alt={title} className="aspect-[4/3] w-full rounded-2xl" strength={0.15} />
+        </div>
+      )}
+    </Reveal>
+  );
+}
