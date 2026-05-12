@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { ImageOff, FileText } from "lucide-react";
+import { resolveImageUrl } from "@/components/site/SafeImage";
 
 export function ImageUrlPreview({ url }: { url: string | null | undefined }) {
   const [err, setErr] = useState(false);
-  if (!url) return null;
+  const resolved = resolveImageUrl(url);
+  if (!resolved) return null;
   if (err) {
     return (
-      <div className="flex h-24 w-32 items-center justify-center rounded-md border border-dashed border-border bg-muted text-muted-foreground">
+      <div className="flex h-24 w-32 flex-col items-center justify-center gap-1 rounded-md border border-dashed border-border bg-muted px-2 text-center text-muted-foreground">
         <ImageOff className="h-5 w-5" />
+        <span className="text-[10px] leading-tight">Image not uploaded yet</span>
       </div>
     );
   }
   return (
     <img
-      src={url}
+      src={resolved}
       alt="preview"
       onError={() => setErr(true)}
       className="h-24 w-32 rounded-md border border-border object-cover"

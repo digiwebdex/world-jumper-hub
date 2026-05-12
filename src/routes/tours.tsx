@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Map } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import { SafeImage } from "@/components/site/SafeImage";
 import heroImg from "@/assets/hero-tours.jpg";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { InquiryForm } from "@/components/site/InquiryForm";
@@ -55,12 +56,13 @@ function PackageCard({ p }: { p: Package }) {
   return (
     <article className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-brand">
       <div className="aspect-video w-full overflow-hidden bg-muted">
-        {p.image_url ? (
-          <img src={p.image_url} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform group-hover:scale-105"
-            onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }} />
-        ) : (
-          <div className="flex h-full items-center justify-center text-muted-foreground"><Map className="h-10 w-10" /></div>
-        )}
+        <SafeImage
+          src={p.image_url}
+          alt={p.title}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+          fallback={<Map className="h-10 w-10 opacity-60" />}
+        />
       </div>
       <div className="p-5">
         <div className="flex items-center gap-2">
