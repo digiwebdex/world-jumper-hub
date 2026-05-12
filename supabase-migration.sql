@@ -230,24 +230,24 @@ values ('World Jumper', 'World Jumper Tours & Travels', '0013423', '01687072001'
   '01757622143', '01337120743, 01337120744, 01337120745', '01687072001',
   'info@worldjumperbd.com', 'Dhaka, Bangladesh',
   'CAAB, IATA, ATAB, TOB, BOTOF, ETAB, e-Cab, Lions International',
-  'https://worldjumperbd.com/uploads/logo/world-jumper-logo.png',
-  'https://worldjumperbd.com/uploads/banners/home-banner.jpg',
+  'https://uploads.worldjumperbd.com/logo/world-jumper-logo.png',
+  'https://uploads.worldjumperbd.com/banners/home-banner.jpg',
   'https://worldjumperbd.com')
 on conflict do nothing;
 
 insert into public.visa_countries (country_name, slug, flag_url, short_description, is_featured) values
-  ('India',     'india',     'https://worldjumperbd.com/uploads/visa-countries/india.jpg',     'Tourist, Medical & Business visa support for India.', true),
-  ('Thailand',  'thailand',  'https://worldjumperbd.com/uploads/visa-countries/thailand.jpg',  'Tourist visa for Thailand with full document guidance.', true),
-  ('Malaysia',  'malaysia',  'https://worldjumperbd.com/uploads/visa-countries/malaysia.jpg',  'eVisa & sticker visa support for Malaysia.', true),
-  ('Singapore', 'singapore', 'https://worldjumperbd.com/uploads/visa-countries/singapore.jpg', 'Tourist & business visa for Singapore.', true),
-  ('Dubai / UAE','dubai-uae','https://worldjumperbd.com/uploads/visa-countries/uae.jpg',       '14/30/90 day UAE tourist visa processing.', true),
-  ('Saudi Arabia','saudi-arabia','https://worldjumperbd.com/uploads/visa-countries/saudi.jpg', 'Umrah, business & visit visa for KSA.', true),
-  ('Turkey',    'turkey',    'https://worldjumperbd.com/uploads/visa-countries/turkey.jpg',    'eVisa and sticker visa for Turkey.', false),
-  ('UK',        'uk',        'https://worldjumperbd.com/uploads/visa-countries/uk.jpg',        'UK Standard Visitor Visa support.', false),
-  ('USA',       'usa',       'https://worldjumperbd.com/uploads/visa-countries/usa.jpg',       'B1/B2 visa documentation guidance.', false),
-  ('Canada',    'canada',    'https://worldjumperbd.com/uploads/visa-countries/canada.jpg',    'Canada visitor visa support.', false),
-  ('Australia', 'australia', 'https://worldjumperbd.com/uploads/visa-countries/australia.jpg', 'Australia tourist & business visa.', false),
-  ('Schengen',  'schengen',  'https://worldjumperbd.com/uploads/visa-countries/schengen.jpg',  'Schengen short-stay visa for 27 countries.', true)
+  ('India',     'india',     'https://uploads.worldjumperbd.com/visa-countries/india.jpg',     'Tourist, Medical & Business visa support for India.', true),
+  ('Thailand',  'thailand',  'https://uploads.worldjumperbd.com/visa-countries/thailand.jpg',  'Tourist visa for Thailand with full document guidance.', true),
+  ('Malaysia',  'malaysia',  'https://uploads.worldjumperbd.com/visa-countries/malaysia.jpg',  'eVisa & sticker visa support for Malaysia.', true),
+  ('Singapore', 'singapore', 'https://uploads.worldjumperbd.com/visa-countries/singapore.jpg', 'Tourist & business visa for Singapore.', true),
+  ('Dubai / UAE','dubai-uae','https://uploads.worldjumperbd.com/visa-countries/uae.jpg',       '14/30/90 day UAE tourist visa processing.', true),
+  ('Saudi Arabia','saudi-arabia','https://uploads.worldjumperbd.com/visa-countries/saudi.jpg', 'Umrah, business & visit visa for KSA.', true),
+  ('Turkey',    'turkey',    'https://uploads.worldjumperbd.com/visa-countries/turkey.jpg',    'eVisa and sticker visa for Turkey.', false),
+  ('UK',        'uk',        'https://uploads.worldjumperbd.com/visa-countries/uk.jpg',        'UK Standard Visitor Visa support.', false),
+  ('USA',       'usa',       'https://uploads.worldjumperbd.com/visa-countries/usa.jpg',       'B1/B2 visa documentation guidance.', false),
+  ('Canada',    'canada',    'https://uploads.worldjumperbd.com/visa-countries/canada.jpg',    'Canada visitor visa support.', false),
+  ('Australia', 'australia', 'https://uploads.worldjumperbd.com/visa-countries/australia.jpg', 'Australia tourist & business visa.', false),
+  ('Schengen',  'schengen',  'https://uploads.worldjumperbd.com/visa-countries/schengen.jpg',  'Schengen short-stay visa for 27 countries.', true)
 on conflict (slug) do nothing;
 
 -- A couple of sample requirements
@@ -282,24 +282,24 @@ insert into public.packages (title, slug, package_type, destination, duration, p
    'Starting from BDT 38,500',
    'Discover Bangkok temples & Pattaya beaches in a curated 5-day itinerary.',
    'Air ticket, Hotel, Breakfast, Tours, Airport transfer',
-   'https://worldjumperbd.com/uploads/packages/bangkok-pattaya.jpg', true),
+   'https://uploads.worldjumperbd.com/packages/bangkok-pattaya.jpg', true),
   ('Kuala Lumpur – Genting 4 Days', 'kl-genting-4d', 'Tour', 'Malaysia', '4 Days / 3 Nights',
    'Starting from BDT 32,000',
    'Twin Towers, Batu Caves & Genting highlands.',
    'Air ticket, Hotel, Breakfast, City tour',
-   'https://worldjumperbd.com/uploads/packages/kl-genting.jpg', true),
+   'https://uploads.worldjumperbd.com/packages/kl-genting.jpg', true),
   ('Economy Umrah Package – 14 Days', 'umrah-economy-14d', 'Umrah', 'Saudi Arabia', '14 Days',
    'Starting from BDT 1,75,000',
    'Affordable Umrah package with 4-star hotel & guided ziyarah.',
    'Visa, Air ticket, Hotel (Makkah & Madinah), Transport, Ziyarah, Guide',
-   'https://worldjumperbd.com/uploads/umrah/economy-umrah.jpg', true),
+   'https://uploads.worldjumperbd.com/umrah/economy-umrah.jpg', true),
   ('India Medical Tourism – Apollo', 'india-medical-apollo', 'Medical Tourism', 'India', 'As required',
    'Quote on request',
    'End-to-end coordination with Apollo Hospitals, Chennai.',
    'Medical visa support, Appointment, Hotel, Local transport, Translator',
-   'https://worldjumperbd.com/uploads/medical-tourism/apollo-india.jpg', true),
+   'https://uploads.worldjumperbd.com/medical-tourism/apollo-india.jpg', true),
   ('Dubai – Special Air Ticket Offer', 'dubai-air-offer', 'Air Ticket Offer', 'Dubai / UAE', 'One-way / Return',
    'From BDT 28,500',
    'Special fare on selected airlines to Dubai.',
-   'Air ticket only', 'https://worldjumperbd.com/uploads/packages/dubai-offer.jpg', false)
+   'Air ticket only', 'https://uploads.worldjumperbd.com/packages/dubai-offer.jpg', false)
 on conflict (slug) do nothing;
