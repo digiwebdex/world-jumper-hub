@@ -45,7 +45,7 @@ export function FancyIcon({
     <span className="relative inline-flex items-center justify-center">
       {/* Outer rotated frame for visual variety */}
       <span className={`relative flex items-center justify-center ${a.shape} ${a.bg} ${a.ring}`} style={{ width: size, height: size }}>
-        <span className={`absolute -inset-2 -z-10 rounded-full bg-gradient-radial ${a.glow} blur-xl opacity-70`} />
+        <span className={`absolute -inset-3 -z-10 rounded-full bg-gradient-to-br ${a.glow} blur-xl opacity-70`} />
         <Icon className={`${a.text} ${accent === "blue" ? "-rotate-[6deg]" : ""}`} style={{ width: size * 0.46, height: size * 0.46 }} strokeWidth={1.75} />
       </span>
     </span>
