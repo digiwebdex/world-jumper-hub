@@ -16,12 +16,12 @@ import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
 
 const SERVICES = [
-  { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa" },
-  { icon: MapPin, title: "Tour Packages", description: "Hand-curated international holidays across Asia, Europe, Middle East and beyond.", to: "/tours" },
-  { icon: Plane, title: "Air Ticketing", description: "IATA-approved fares from 50+ airlines — competitive prices, instant confirmation.", to: "/air-ticketing" },
-  { icon: Stethoscope, title: "Medical Tourism", description: "Trusted hospital partnerships in India, Thailand, Singapore and Malaysia.", to: "/medical-tourism" },
-  { icon: Moon, title: "Umrah Programs", description: "Comfortable Umrah packages all year round with hand-picked hotels in Makkah & Madinah.", to: "/umrah" },
-  { icon: Ticket, title: "Bespoke Itineraries", description: "Custom-designed journeys tailored entirely around your timeline and taste.", to: "/contact" },
+  { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa", accent: "orange" as const },
+  { icon: MapPin, title: "Tour Packages", description: "Hand-curated international holidays across Asia, Europe, Middle East and beyond.", to: "/tours", accent: "blue" as const },
+  { icon: Plane, title: "Air Ticketing", description: "IATA-approved fares from 50+ airlines — competitive prices, instant confirmation.", to: "/air-ticketing", accent: "deep" as const },
+  { icon: Stethoscope, title: "Medical Tourism", description: "Trusted hospital partnerships in India, Thailand, Singapore and Malaysia.", to: "/medical-tourism", accent: "sand" as const },
+  { icon: Moon, title: "Umrah Programs", description: "Comfortable Umrah packages all year round with hand-picked hotels in Makkah & Madinah.", to: "/umrah", accent: "orange" as const },
+  { icon: Ticket, title: "Bespoke Itineraries", description: "Custom-designed journeys tailored entirely around your timeline and taste.", to: "/contact", accent: "blue" as const },
 ];
 
 const TESTIMONIALS = [
