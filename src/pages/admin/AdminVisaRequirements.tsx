@@ -21,7 +21,7 @@ export default function AdminVisaRequirements() {
     const q = country ? `?country_id=${country}` : "";
     api.get<{ items: VisaRequirement[] }>(`/admin/visa-requirements${q}`).then(r => setItems(r.items)).catch(() => setItems([]));
   };
-  useEffect(load, [country]);
+  useEffect(() => { load(); }, [country]);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

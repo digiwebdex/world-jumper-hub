@@ -29,7 +29,7 @@ export default function AdminInquiries() {
     const q = filter ? `?status=${filter}` : "";
     api.get<{ items: Inquiry[] }>(`/admin/inquiries${q}`).then(r => setItems(r.items)).catch(() => setItems([]));
   };
-  useEffect(load, [filter]);
+  useEffect(() => { load(); }, [filter]);
 
   const setStatus = async (id: string, status: InquiryStatus) => {
     await api.patch(`/admin/inquiries/${id}`, { status }); load();

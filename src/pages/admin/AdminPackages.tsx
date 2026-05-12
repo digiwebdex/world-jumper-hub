@@ -15,7 +15,7 @@ export default function AdminPackages() {
   const [editing, setEditing] = useState<Package | null>(null);
 
   const load = () => api.get<{ items: Package[] }>("/admin/packages").then(r => setItems(r.items)).catch(() => setItems([]));
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
