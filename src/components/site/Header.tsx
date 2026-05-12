@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { SITE } from "@/lib/site-config";
 
-const NAV = [
+const NAV: { to: string; label: string; end?: boolean }[] = [
   { to: "/", label: "Home", end: true },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
@@ -13,7 +13,7 @@ const NAV = [
   { to: "/umrah", label: "Umrah" },
   { to: "/air-ticketing", label: "Air Ticket" },
   { to: "/contact", label: "Contact" },
-] as const;
+];
 
 export function Header() {
   const [open, setOpen] = useState(false);
