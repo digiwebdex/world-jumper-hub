@@ -35,8 +35,8 @@ export function ServiceCard({
 export function PageHero({
   eyebrow, title, subtitle, image, imageAlt, kicker,
 }: {
-  eyebrow?: string; title: string; subtitle?: string;
-  image?: string; imageAlt?: string; kicker?: string;
+  eyebrow?: string; title: React.ReactNode; subtitle?: React.ReactNode;
+  image?: string; imageAlt?: string; kicker?: React.ReactNode;
 }) {
   const fallback = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2000&q=70";
   const heroImg = image ?? fallback;
@@ -112,7 +112,7 @@ export function PageHero({
 
 export function SectionHeading({
   eyebrow, title, intro, align = "left",
-}: { eyebrow?: string; title: string; intro?: string; align?: "left" | "center" }) {
+}: { eyebrow?: string; title: React.ReactNode; intro?: React.ReactNode; align?: "left" | "center" }) {
   return (
     <Reveal className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
       {eyebrow && (
