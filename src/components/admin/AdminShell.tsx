@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useAdminAuth, adminSignOut } from "@/lib/use-admin-auth";
-import logo from "@/assets/world-jumper-logo.jpeg";
+import { SITE } from "@/lib/site-config";
 
 const NAV = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
@@ -40,7 +40,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-40 w-64 transform border-r border-border bg-card transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex h-16 items-center gap-2 border-b border-border px-4">
-          <img src={logo} alt="World Jumper" className="h-9 w-auto" />
+          <img src={SITE.logoUrl} alt="World Jumper" className="h-9 w-auto" />
           <span className="text-sm font-bold">Admin</span>
         </div>
         <nav className="flex flex-col gap-1 p-3">

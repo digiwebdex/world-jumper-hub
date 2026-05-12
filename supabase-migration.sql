@@ -230,7 +230,7 @@ values ('World Jumper', 'World Jumper Tours & Travels', '0013423', '01687072001'
   '01757622143', '01337120743, 01337120744, 01337120745', '01687072001',
   'info@worldjumperbd.com', 'Dhaka, Bangladesh',
   'CAAB, IATA, ATAB, TOB, BOTOF, ETAB, e-Cab, Lions International',
-  'https://uploads.worldjumperbd.com/logo/world-jumper-logo.png',
+  'https://uploads.worldjumperbd.com/logo/world-jumper-logo.jpeg',
   'https://uploads.worldjumperbd.com/banners/home-banner.jpg',
   'https://worldjumperbd.com')
 on conflict do nothing;

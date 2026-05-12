@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { SITE } from "@/lib/site-config";
-import logo from "@/assets/world-jumper-logo.jpeg";
+
 
 export function Footer() {
   return (
     <footer className="mt-24 border-t border-border bg-secondary/40">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <img src={logo} alt={SITE.brandName} className="h-12 w-auto" />
+          <img src={SITE.logoUrl} alt={SITE.brandName} className="h-12 w-auto" />
           <p className="mt-3 text-sm text-muted-foreground">
             {SITE.tagline}
           </p>
