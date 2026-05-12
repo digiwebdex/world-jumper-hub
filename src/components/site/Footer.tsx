@@ -98,7 +98,17 @@ export function Footer() {
         <div className="border-t border-cream/10">
           <div className="mx-auto flex max-w-7xl flex-col gap-2 px-6 py-6 text-xs text-cream/55 md:flex-row md:items-center md:justify-between md:px-10">
             <span>© {new Date().getFullYear()} {SITE.brandName}. All rights reserved.</span>
-            <span className="font-mono uppercase tracking-[0.3em]">Crafted in Dhaka</span>
+            <span>
+              Design &amp; Development by{" "}
+              <a
+                href="https://digiwebdex.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-cream/80 transition-colors hover:text-accent"
+              >
+                digiwebdex.com
+              </a>
+            </span>
           </div>
         </div>
       </div>
