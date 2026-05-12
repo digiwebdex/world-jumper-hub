@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { SITE } from "@/lib/site-config";
-import logo from "@/assets/world-jumper-logo.jpeg";
+
 
 export function Footer() {
   return (
