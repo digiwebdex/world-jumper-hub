@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Map } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import { SafeImage } from "@/components/site/SafeImage";
 import heroImg from "@/assets/hero-tours.jpg";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { InquiryForm } from "@/components/site/InquiryForm";
