@@ -2,6 +2,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { FlightPath } from "./FlightPath";
 import { WhatsAppFloat } from "./WhatsAppButton";
+import { BackToTop } from "./BackToTop";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -15,6 +16,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       <FlightPath />
       <Footer />
       <WhatsAppFloat />
+      <BackToTop />
     </div>
   );
 }
