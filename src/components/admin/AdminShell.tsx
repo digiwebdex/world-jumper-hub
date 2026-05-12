@@ -1,9 +1,8 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard, Globe2, FileCheck2, Package, Inbox, Settings, LogOut, Menu,
 } from "lucide-react";
-import { useState } from "react";
 import { useAdminAuth, adminSignOut } from "@/lib/use-admin-auth";
 import { SITE } from "@/lib/site-config";
 
@@ -19,19 +18,19 @@ const NAV = [
 export function AdminShell({ children, title }: { children: React.ReactNode; title: string }) {
   const auth = useAdminAuth();
   const navigate = useNavigate();
-  const path = useRouterState({ select: (s) => s.location.pathname });
+  const path = useLocation().pathname;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!auth.loading && (!auth.session || !auth.isAdmin)) {
-      void navigate({ to: "/admin/login" });
+    if (!auth.loading && !auth.isAdmin) {
+      navigate("/admin/login");
     }
-  }, [auth.loading, auth.session, auth.isAdmin, navigate]);
+  }, [auth.loading, auth.isAdmin, navigate]);
 
   if (auth.loading) {
     return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading...</div>;
   }
-  if (!auth.session || !auth.isAdmin) {
+  if (!auth.isAdmin) {
     return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Redirecting...</div>;
   }
 
@@ -63,7 +62,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
         <div className="absolute bottom-0 left-0 right-0 border-t border-border p-3">
           <p className="mb-2 truncate px-2 text-xs text-muted-foreground">{auth.email}</p>
           <button
-            onClick={async () => { await adminSignOut(); void navigate({ to: "/admin/login" }); }}
+            onClick={async () => { await adminSignOut(); navigate("/admin/login"); }}
             className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-muted"
           >
             <LogOut className="h-4 w-4" /> Sign out

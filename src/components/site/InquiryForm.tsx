@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
-import { supabase } from "@/lib/supabase";
+import { api } from "@/lib/api";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 const SERVICE_TYPES = [
@@ -82,12 +82,14 @@ export function InquiryForm({
       status: "New",
     };
 
-    const { error } = await supabase.from("inquiries").insert(payload);
-    setSubmitting(false);
-    if (error) {
+    try {
+      await api.post("/inquiries", payload);
+    } catch {
+      setSubmitting(false);
       setStatus({ ok: false, msg: "Could not submit. Please try again or call us directly." });
       return;
     }
+    setSubmitting(false);
     setStatus({ ok: true, msg: "Inquiry submitted! Our team will contact you soon." });
     (e.target as HTMLFormElement).reset();
   };
