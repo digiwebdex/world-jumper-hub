@@ -35,14 +35,13 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/30">
-      {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-40 w-64 transform border-r border-border bg-card transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="flex h-16 items-center gap-2 border-b border-border px-4">
-          <img src={SITE.logoUrl} alt="World Jumper" className="h-9 w-auto" />
-          <span className="text-sm font-bold">Admin</span>
+    <div className="flex min-h-screen bg-cream-deep">
+      <aside className={`fixed inset-y-0 left-0 z-40 w-64 transform border-r border-border bg-ink text-cream transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="flex h-16 items-center gap-3 border-b border-cream/10 px-5">
+          <img src={SITE.logoUrl} alt="World Jumper" className="h-8 w-auto brightness-0 invert" />
+          <span className="font-display text-lg">Admin</span>
         </div>
-        <nav className="flex flex-col gap-1 p-3">
+        <nav className="flex flex-col gap-0.5 p-3">
           {NAV.map((n) => {
             const active = n.to === "/admin" ? path === n.to : path.startsWith(n.to);
             return (
@@ -50,37 +49,37 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  active ? "bg-gradient-brand text-white shadow-brand" : "text-foreground/80 hover:bg-muted"
+                className={`flex items-center gap-3 rounded-sm px-3 py-2.5 text-xs font-medium uppercase tracking-[0.18em] transition-colors ${
+                  active ? "bg-accent text-accent-foreground" : "text-cream/70 hover:bg-cream/5 hover:text-cream"
                 }`}
               >
-                <n.icon className="h-4 w-4" /> {n.label}
+                <n.icon className="h-4 w-4" strokeWidth={1.5} /> {n.label}
               </Link>
             );
           })}
         </nav>
-        <div className="absolute bottom-0 left-0 right-0 border-t border-border p-3">
-          <p className="mb-2 truncate px-2 text-xs text-muted-foreground">{auth.email}</p>
+        <div className="absolute bottom-0 left-0 right-0 border-t border-cream/10 p-3">
+          <p className="mb-2 truncate px-2 font-mono text-[10px] uppercase tracking-[0.25em] text-cream/55">{auth.email}</p>
           <button
             onClick={async () => { await adminSignOut(); navigate("/admin/login"); }}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-muted"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-sm border border-cream/20 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-cream/5"
           >
-            <LogOut className="h-4 w-4" /> Sign out
+            <LogOut className="h-3.5 w-3.5" /> Sign out
           </button>
         </div>
       </aside>
 
-      {open && <div className="fixed inset-0 z-30 bg-black/40 lg:hidden" onClick={() => setOpen(false)} />}
+      {open && <div className="fixed inset-0 z-30 bg-ink/60 lg:hidden" onClick={() => setOpen(false)} />}
 
       <div className="flex flex-1 flex-col">
-        <header className="flex h-16 items-center justify-between gap-4 border-b border-border bg-background px-4">
+        <header className="flex h-16 items-center justify-between gap-4 border-b border-border bg-background px-6">
           <div className="flex items-center gap-3">
-            <button onClick={() => setOpen(true)} className="rounded-md p-2 lg:hidden"><Menu className="h-5 w-5" /></button>
-            <h1 className="text-lg font-bold">{title}</h1>
+            <button onClick={() => setOpen(true)} className="rounded-sm p-2 lg:hidden"><Menu className="h-5 w-5" /></button>
+            <h1 className="font-display text-2xl">{title}</h1>
           </div>
-          <Link to="/" className="text-sm font-medium text-primary hover:underline">View site →</Link>
+          <Link to="/" className="font-mono text-[11px] uppercase tracking-[0.25em] text-foreground hover:text-accent">View site →</Link>
         </header>
-        <main className="flex-1 p-4 md:p-6">{children}</main>
+        <main className="flex-1 p-5 md:p-8">{children}</main>
       </div>
     </div>
   );
