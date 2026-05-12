@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Loader2, AlertCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAdminAuth } from "@/lib/use-admin-auth";
-import logo from "@/assets/world-jumper-logo.jpeg";
+import { SITE } from "@/lib/site-config";
 
 export const Route = createFileRoute("/admin/login")({
   component: LoginPage,
