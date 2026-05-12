@@ -1,10 +1,10 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { SITE } from "@/lib/site-config";
 
 const NAV = [
-  { to: "/", label: "Home" },
+  { to: "/", label: "Home", end: true },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
   { to: "/visa", label: "Visa" },
@@ -25,15 +25,18 @@ export function Header() {
         </Link>
         <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((n) => (
-            <Link
+            <NavLink
               key={n.to}
               to={n.to}
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted hover:text-foreground"
-              activeProps={{ className: "text-primary" }}
-              activeOptions={{ exact: n.to === "/" }}
+              end={n.end}
+              className={({ isActive }) =>
+                `rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${
+                  isActive ? "text-primary" : "text-foreground/80 hover:text-foreground"
+                }`
+              }
             >
               {n.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
         <div className="hidden items-center gap-2 md:flex">
@@ -56,16 +59,19 @@ export function Header() {
         <div className="border-t border-border bg-background lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
             {NAV.map((n) => (
-              <Link
+              <NavLink
                 key={n.to}
                 to={n.to}
+                end={n.end}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-muted"
-                activeProps={{ className: "text-primary bg-muted" }}
-                activeOptions={{ exact: n.to === "/" }}
+                className={({ isActive }) =>
+                  `rounded-md px-3 py-2 text-sm font-medium hover:bg-muted ${
+                    isActive ? "text-primary bg-muted" : "text-foreground/80"
+                  }`
+                }
               >
                 {n.label}
-              </Link>
+              </NavLink>
             ))}
             <a
               href={`tel:${SITE.primaryPhone}`}
