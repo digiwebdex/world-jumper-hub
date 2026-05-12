@@ -1,5 +1,6 @@
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
+import { Reveal } from "@/components/site/motion";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
@@ -9,33 +10,55 @@ export default function Contact() {
   usePageTitle("Contact Us");
   return (
     <SiteLayout>
-      <PageHero eyebrow="Get in touch" title="Contact Us" subtitle="We respond within 24 hours, every day of the week." />
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-2">
-        <div>
-          <h2 className="text-2xl font-bold">{SITE.brandName}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{SITE.tagline}</p>
-          <div className="mt-6 space-y-4 text-sm">
-            <div className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-5 w-5 text-primary" />
-              <span>{SITE.address}</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <Phone className="mt-0.5 h-5 w-5 text-primary" />
-              <div className="flex flex-col">
-                {SITE.phones.map(p => <a key={p} href={`tel:${p}`} className="hover:text-primary">{p}</a>)}
+      <PageHero
+        kicker="Conversation"
+        eyebrow="Contact"
+        title={<>Let's plan something <em className="not-italic text-accent">memorable</em>.</>}
+        subtitle="Call, write or knock — a consultant responds within 24 hours, every day."
+        image="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2400&q=70"
+      />
+      <section className="mx-auto grid max-w-7xl gap-14 px-6 py-24 md:grid-cols-12 md:px-10 md:py-32">
+        <Reveal className="md:col-span-5">
+          <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-accent">
+            <span className="mr-3 inline-block h-px w-10 bg-accent align-middle" />Reach us
+          </p>
+          <h2 className="mt-4 font-display text-4xl leading-[1.05] md:text-5xl">{SITE.brandName}</h2>
+          <p className="mt-3 text-sm text-muted-foreground">{SITE.tagline}</p>
+
+          <ul className="mt-10 space-y-6 text-sm">
+            <li className="flex items-start gap-4 border-t border-border pt-5">
+              <MapPin className="mt-0.5 h-5 w-5 text-accent" strokeWidth={1.5} />
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Studio</p>
+                <p className="mt-1 text-foreground">{SITE.address}</p>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Mail className="h-5 w-5 text-primary" />
-              <a href={`mailto:${SITE.email}`} className="hover:text-primary">{SITE.email}</a>
-            </div>
-            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"
-               className="inline-flex items-center gap-2 rounded-md bg-[#25D366] px-4 py-2 font-semibold text-white">
-              <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
-            </a>
-          </div>
-        </div>
-        <InquiryForm sourcePage="contact" />
+            </li>
+            <li className="flex items-start gap-4 border-t border-border pt-5">
+              <Phone className="mt-0.5 h-5 w-5 text-accent" strokeWidth={1.5} />
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Telephone</p>
+                <div className="mt-1 flex flex-col gap-0.5">
+                  {SITE.phones.map(p => <a key={p} href={`tel:${p}`} className="text-foreground hover:text-accent">{p}</a>)}
+                </div>
+              </div>
+            </li>
+            <li className="flex items-start gap-4 border-t border-border pt-5">
+              <Mail className="mt-0.5 h-5 w-5 text-accent" strokeWidth={1.5} />
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Correspondence</p>
+                <a href={`mailto:${SITE.email}`} className="mt-1 block text-foreground hover:text-accent">{SITE.email}</a>
+              </div>
+            </li>
+          </ul>
+
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"
+             className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-xs font-medium uppercase tracking-[0.25em] text-white transition-transform hover:-translate-y-0.5">
+            <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
+          </a>
+        </Reveal>
+        <Reveal delay={0.15} className="md:col-span-7">
+          <InquiryForm sourcePage="contact" />
+        </Reveal>
       </section>
     </SiteLayout>
   );

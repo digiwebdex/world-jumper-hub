@@ -46,7 +46,7 @@ export function InquiryForm({
   defaultDestination,
   variant = "general",
   title = "Send us an inquiry",
-  subtitle = "Our travel experts will get back to you within 24 hours.",
+  subtitle = "A consultant will respond within 24 hours.",
 }: InquiryFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<null | { ok: boolean; msg: string }>(null);
@@ -95,11 +95,14 @@ export function InquiryForm({
   };
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
-      <h3 className="text-2xl font-bold text-foreground">{title}</h3>
-      <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+    <div className="rounded-sm border border-border bg-card p-7 shadow-soft md:p-10">
+      <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
+        <span className="mr-3 inline-block h-px w-8 bg-accent align-middle" />Form
+      </p>
+      <h3 className="mt-3 font-display text-3xl leading-tight text-foreground md:text-4xl">{title}</h3>
+      <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
 
-      <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
+      <form onSubmit={handleSubmit} className="mt-8 grid gap-5 md:grid-cols-2">
         {baseFields.map((f) => (
           <FormInput key={f.name} {...f} />
         ))}
@@ -114,50 +117,35 @@ export function InquiryForm({
           </>
         ) : (
           <>
-            <SelectInput
-              name="service_type"
-              label="Service Type"
-              defaultValue={defaultServiceType ?? ""}
-              options={SERVICE_TYPES}
-            />
-            <FormInput
-              name="destination_country"
-              label="Destination Country"
-              placeholder="e.g. Thailand"
-              defaultValue={defaultDestination}
-            />
+            <SelectInput name="service_type" label="Service Type" defaultValue={defaultServiceType ?? ""} options={SERVICE_TYPES} />
+            <FormInput name="destination_country" label="Destination Country" placeholder="e.g. Thailand" defaultValue={defaultDestination} />
             <FormInput name="travel_date" label="Travel Date" type="date" />
           </>
         )}
 
         <div className="md:col-span-2">
-          <label className="mb-1.5 block text-sm font-medium text-foreground">Message</label>
+          <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Message</label>
           <textarea
             name="message"
             rows={4}
-            placeholder="Tell us about your travel plan..."
-            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
+            placeholder="Tell us about your travel plan…"
+            className="w-full rounded-sm border border-input bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
           />
         </div>
 
-        <div className="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="md:col-span-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-gradient-brand px-6 py-3 text-sm font-semibold text-white shadow-brand transition-transform hover:scale-[1.02] disabled:opacity-60"
+            className="group inline-flex items-center justify-center gap-3 rounded-full bg-foreground px-7 py-4 text-xs font-medium uppercase tracking-[0.25em] text-background transition-all hover:bg-accent hover:text-accent-foreground disabled:opacity-60"
           >
             {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-            {submitting ? "Submitting..." : "Submit Inquiry"}
+            {submitting ? "Sending…" : "Submit Inquiry"}
+            {!submitting && <span className="transition-transform group-hover:translate-x-1">→</span>}
           </button>
 
           {status && (
-            <div
-              className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium ${
-                status.ok
-                  ? "bg-green-50 text-green-700"
-                  : "bg-red-50 text-red-700"
-              }`}
-            >
+            <div className={`inline-flex items-center gap-2 rounded-sm px-3 py-2 text-xs font-medium uppercase tracking-[0.2em] ${status.ok ? "bg-accent/15 text-accent" : "bg-destructive/15 text-destructive"}`}>
               {status.ok ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
               {status.msg}
             </div>
@@ -173,8 +161,8 @@ function FormInput({
 }: Field & { defaultValue?: string }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-foreground">
-        {label}{required && <span className="text-destructive"> *</span>}
+      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+        {label}{required && <span className="text-accent"> *</span>}
       </label>
       <input
         name={name}
@@ -182,7 +170,7 @@ function FormInput({
         placeholder={placeholder}
         required={required}
         defaultValue={defaultValue}
-        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
+        className="w-full rounded-sm border border-input bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
       />
     </div>
   );
@@ -193,13 +181,13 @@ function SelectInput({
 }: { name: string; label: string; options: readonly string[]; defaultValue?: string }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-foreground">{label}</label>
+      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{label}</label>
       <select
         name={name}
         defaultValue={defaultValue}
-        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
+        className="w-full rounded-sm border border-input bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-accent"
       >
-        <option value="">Select...</option>
+        <option value="">Select…</option>
         {options.map((o) => (
           <option key={o} value={o}>{o}</option>
         ))}
