@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useAdminAuth, adminSignOut } from "@/lib/use-admin-auth";
-import logo from "@/assets/world-jumper-logo.jpeg";
+import { SITE } from "@/lib/site-config";
 
 const NAV = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
