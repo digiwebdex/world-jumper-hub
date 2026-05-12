@@ -83,7 +83,7 @@ export function Header() {
 
         <button
           aria-label="Toggle menu"
-          className={`rounded-full p-2 transition-colors lg:hidden ${transparent ? "text-cream" : "text-foreground"}`}
+          className={`rounded-full p-2 transition-colors lg:hidden ${transparent ? "text-white" : "text-foreground"}`}
           onClick={() => setOpen((s) => !s)}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
