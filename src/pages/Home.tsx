@@ -400,18 +400,16 @@ export default function Home() {
           />
           <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: ShieldCheck, title: "Govt. Approved", body: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
-              { icon: HeartHandshake, title: "Human Consultants", body: "A real person handles your file end-to-end — no chatbots, no scripts." },
-              { icon: Clock, title: "On-Time Processing", body: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
-              { icon: Globe2, title: "30+ Destinations", body: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
-              { icon: Sparkles, title: "Curated, Not Generic", body: "Itineraries hand-built for your taste, budget and travel style." },
-              { icon: ShieldCheck, title: "After-Trip Care", body: "24/7 emergency support while you're abroad. We answer when others don't." },
-            ].map(({ icon: I, title, body }) => (
+              { icon: ShieldCheck,    accent: "orange" as const, title: "Govt. Approved",       body: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
+              { icon: HeartHandshake, accent: "blue"   as const, title: "Human Consultants",     body: "A real person handles your file end-to-end — no chatbots, no scripts." },
+              { icon: Clock,          accent: "deep"   as const, title: "On-Time Processing",    body: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
+              { icon: Globe2,         accent: "sand"   as const, title: "30+ Destinations",      body: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
+              { icon: Sparkles,       accent: "orange" as const, title: "Curated, Not Generic",  body: "Itineraries hand-built for your taste, budget and travel style." },
+              { icon: ShieldCheck,    accent: "blue"   as const, title: "After-Trip Care",       body: "24/7 emergency support while you're abroad. We answer when others don't." },
+            ].map(({ icon: I, accent, title, body }) => (
               <StaggerItem key={title}>
                 <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card/80 p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift">
-                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-brand">
-                    <I className="h-6 w-6" strokeWidth={2} />
-                  </div>
+                  <FancyIcon icon={I} accent={accent} />
                   <h3 className="mt-6 font-display text-xl font-bold text-foreground">{title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
                 </div>
