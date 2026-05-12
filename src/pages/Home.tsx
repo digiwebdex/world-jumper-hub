@@ -47,7 +47,10 @@ const QUICK_TABS = [
 ] as const;
 
 export default function Home() {
-  usePageTitle("Home");
+  usePageTitle(
+    "World Jumper Tours & Travels — Jump into the World",
+    "Govt. approved travel agency in Bangladesh (License 0013423). Visa processing for 30+ countries, curated tour packages, air tickets, Umrah programs and medical tourism — plan your trip in 30 seconds."
+  );
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
   const [destIndex, setDestIndex] = useState(0);

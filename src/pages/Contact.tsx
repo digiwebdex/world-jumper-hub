@@ -7,7 +7,10 @@ import { SITE, whatsappLink } from "@/lib/site-config";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
 export default function Contact() {
-  usePageTitle("Contact Us");
+  usePageTitle(
+    "Contact Us",
+    "Talk to a senior travel consultant at World Jumper. Call, WhatsApp or send an inquiry — we reply within 24 hours with a tailored visa, tour or ticket plan."
+  );
   return (
     <SiteLayout>
       <PageHero
