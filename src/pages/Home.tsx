@@ -40,7 +40,7 @@ export default function Home() {
       <PageHero
         kicker={`Est. — License No. ${SITE.licenseNo}`}
         eyebrow="Govt. Approved Travel Atelier"
-        title={<>The world,<br /><em className="not-italic text-accent">curated</em> for Bangladesh.</> as unknown as string}
+        title={<>The world,<br /><em className="not-italic text-accent">curated</em> for Bangladesh.</>}
         subtitle="Visas, tours, air tickets and pilgrimage — designed by travelers, for travelers. From a single passport stamp to a fortnight across continents."
         image="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2400&q=70"
         imageAlt="Traveler overlooking mountains"
@@ -92,7 +92,7 @@ export default function Home() {
           <div className="flex items-end justify-between gap-10">
             <SectionHeading
               eyebrow="What We Offer"
-              title={<>Six disciplines.<br />One travel house.</> as unknown as string}
+              title={<>Six disciplines.<br />One travel house.</>}
             />
             <Reveal delay={0.2} className="hidden md:block">
               <Link to="/about" className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-foreground link-underline">
@@ -116,7 +116,7 @@ export default function Home() {
           <div className="md:col-span-7">
             <SectionHeading
               eyebrow="Visa Atlas"
-              title={<>Stamps that<br />open <em className="not-italic text-accent">continents</em>.</> as unknown as string}
+              title={<>Stamps that<br />open <em className="not-italic text-accent">continents</em>.</>}
               intro="From the bazaars of Istanbul to the alpine spas of Switzerland — full document checklists, processing times and embassy fees, all in one place."
             />
           </div>
