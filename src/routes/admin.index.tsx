@@ -67,7 +67,7 @@ function Dashboard() {
         <Card>
           <h3 className="font-bold">Image hosting reminder</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Upload images and PDFs to your Hostinger File Manager under <code className="rounded bg-muted px-1.5 py-0.5">public_html/uploads/</code> and paste the public URL into the relevant form. The admin shows a live preview of any URL you enter.
+            Upload images and PDFs to your Hostinger File Manager under the <code className="rounded bg-muted px-1.5 py-0.5">uploads.worldjumperbd.com</code> subdomain (e.g. <code className="rounded bg-muted px-1.5 py-0.5">public_html/uploads/packages/tour.jpg</code>) and paste the full public URL like <code className="rounded bg-muted px-1.5 py-0.5">https://uploads.worldjumperbd.com/packages/tour.jpg</code> into the relevant form. The admin shows a live preview of any URL you enter.
           </p>
         </Card>
       </div>
