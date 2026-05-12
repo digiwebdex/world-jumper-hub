@@ -1,0 +1,54 @@
+# /etc/nginx/sites-available/worldjumperbd.com
+# Replace /var/www/worldjumper with your deploy path.
+# After certbot --nginx -d worldjumperbd.com -d www.worldjumperbd.com runs,
+# it will inject 443 server blocks and SSL config automatically.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name worldjumperbd.com www.worldjumperbd.com;
+
+    # ACME challenge (certbot)
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+    }
+
+    # Allow large uploads (10MB cap enforced by app, leave headroom)
+    client_max_body_size 15M;
+
+    # Static SPA build
+    root /var/www/worldjumper/dist;
+    index index.html;
+
+    # User-uploaded files served straight from disk
+    location /uploads/ {
+        alias /var/www/worldjumper/public/uploads/;
+        access_log off;
+        expires 30d;
+        add_header Cache-Control "public, max-age=2592000, immutable";
+        try_files $uri =404;
+    }
+
+    # API → Express on localhost:3001
+    location /api/ {
+        proxy_pass         http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_read_timeout 60s;
+    }
+
+    # SPA fallback — every other path returns index.html
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Cache built JS/CSS aggressively (Vite outputs hashed filenames)
+    location ~* \.(?:js|css|woff2?|ttf|eot|svg|png|jpg|jpeg|webp|gif|ico)$ {
+        expires 30d;
+        add_header Cache-Control "public, max-age=2592000, immutable";
+        try_files $uri =404;
+    }
+}
