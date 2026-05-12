@@ -1,24 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { SiteLayout } from "@/components/site/SiteLayout";
-
-import HomePage from "@/routes/index";
-import AboutPage from "@/routes/about";
-import ServicesPage from "@/routes/services";
-import VisaPage from "@/routes/visa";
-import ToursPage from "@/routes/tours";
-import UmrahPage from "@/routes/umrah";
-import MedicalPage from "@/routes/medical-tourism";
-import AirTicketPage from "@/routes/air-ticketing";
-import ContactPage from "@/routes/contact";
-import FaqPage from "@/routes/faq";
-
-import LoginPage from "@/routes/admin.login";
-import Dashboard from "@/routes/admin.index";
-import VisaCountriesAdmin from "@/routes/admin.visa-countries";
-import VisaReqAdmin from "@/routes/admin.visa-requirements";
-import PackagesAdmin from "@/routes/admin.packages";
-import InquiriesAdmin from "@/routes/admin.inquiries";
-import SettingsAdmin from "@/routes/admin.settings";
+import Placeholder from "@/components/site/Placeholder";
 
 function NotFound() {
   return (
@@ -37,25 +19,17 @@ function NotFound() {
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/services" element={<ServicesPage />} />
-      <Route path="/visa" element={<VisaPage />} />
-      <Route path="/tours" element={<ToursPage />} />
-      <Route path="/umrah" element={<UmrahPage />} />
-      <Route path="/medical-tourism" element={<MedicalPage />} />
-      <Route path="/air-ticketing" element={<AirTicketPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/faq" element={<FaqPage />} />
-
-      <Route path="/admin/login" element={<LoginPage />} />
-      <Route path="/admin" element={<Dashboard />} />
-      <Route path="/admin/visa-countries" element={<VisaCountriesAdmin />} />
-      <Route path="/admin/visa-requirements" element={<VisaReqAdmin />} />
-      <Route path="/admin/packages" element={<PackagesAdmin />} />
-      <Route path="/admin/inquiries" element={<InquiriesAdmin />} />
-      <Route path="/admin/settings" element={<SettingsAdmin />} />
-
+      <Route path="/" element={<Placeholder title="World Jumper Tours & Travels" blurb="Site is being reconnected to the VPS backend. Public pages return shortly." />} />
+      <Route path="/about" element={<Placeholder title="About" />} />
+      <Route path="/services" element={<Placeholder title="Services" />} />
+      <Route path="/visa" element={<Placeholder title="Visa Services" />} />
+      <Route path="/tours" element={<Placeholder title="Tour Packages" />} />
+      <Route path="/umrah" element={<Placeholder title="Umrah Packages" />} />
+      <Route path="/medical-tourism" element={<Placeholder title="Medical Tourism" />} />
+      <Route path="/air-ticketing" element={<Placeholder title="Air Ticketing" />} />
+      <Route path="/contact" element={<Placeholder title="Contact" />} />
+      <Route path="/faq" element={<Placeholder title="FAQ" />} />
+      <Route path="/admin/*" element={<Placeholder title="Admin Panel" blurb="Admin pages are being rewired to the VPS API. Available after the next conversion pass." />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
