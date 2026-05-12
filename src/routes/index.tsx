@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ServiceCard } from "@/components/site/ui";
+import { SafeImage } from "@/components/site/SafeImage";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { SITE } from "@/lib/site-config";
