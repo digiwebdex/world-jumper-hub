@@ -87,25 +87,39 @@ export default function Home() {
 
   return (
     <SiteLayout>
-      {/* HERO — orange→blue gradient with floating glass card */}
-      <section className="relative isolate overflow-hidden bg-[color:var(--ink-deep)] text-white">
-        {/* Background image + brand wash */}
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2400&q=70"
-            alt=""
-            aria-hidden
-            className="h-full w-full object-cover animate-ken-burns"
-          />
-          <div
-            className="absolute inset-0 animate-gradient"
-            style={{ backgroundImage: "linear-gradient(115deg, rgba(245,130,32,0.85) 0%, rgba(217,82,65,0.75) 35%, rgba(50,90,180,0.8) 70%, rgba(20,40,90,0.92) 100%)" }}
-          />
-          <div className="absolute -left-20 top-10 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/45 blur-3xl animate-float" />
-          <div className="absolute right-0 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[color:var(--brand-blue)]/45 blur-3xl animate-float" style={{ animationDelay: "1.4s" }} />
-        </div>
+      {/* HERO — interactive: rotating destinations + mouse parallax + tabbed search */}
+      <section
+        ref={heroRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={() => { mx.set(0); my.set(0); }}
+        className="relative isolate overflow-hidden bg-[color:var(--ink-deep)] text-white"
+      >
+        {/* Crossfading destination backgrounds with mouse parallax */}
+        <motion.div className="absolute inset-0" style={{ x: bgX, y: bgY, scale: 1.06 }}>
+          <AnimatePresence mode="sync">
+            <motion.img
+              key={activeDest.img}
+              src={activeDest.img}
+              alt={activeDest.name}
+              initial={{ opacity: 0, scale: 1.12 }}
+              animate={{ opacity: 1, scale: 1.04 }}
+              exit={{ opacity: 0, scale: 1.0 }}
+              transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </AnimatePresence>
+        </motion.div>
 
-        <div className="relative mx-auto grid max-w-7xl gap-14 px-6 pb-24 pt-32 md:grid-cols-12 md:px-10 md:pb-32 md:pt-40">
+        {/* Brand wash + animated blobs */}
+        <div
+          className="absolute inset-0 animate-gradient mix-blend-multiply"
+          style={{ backgroundImage: "linear-gradient(115deg, rgba(245,130,32,0.78) 0%, rgba(217,82,65,0.65) 35%, rgba(50,90,180,0.78) 70%, rgba(20,40,90,0.92) 100%)" }}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(0,0,0,0)_50%,_rgba(0,0,0,0.55)_100%)]" />
+        <motion.div style={{ x: blobX, y: blobY }} className="absolute -left-24 top-10 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/45 blur-3xl animate-float" />
+        <motion.div style={{ x: blobX, y: blobY }} className="absolute right-0 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[color:var(--brand-blue)]/45 blur-3xl animate-float" />
+
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pb-28 pt-32 md:grid-cols-12 md:px-10 md:pb-36 md:pt-40">
           {/* LEFT — copy */}
           <div className="md:col-span-7">
             <motion.span
@@ -113,7 +127,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--brand-orange)]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--brand-orange)] animate-pulse" />
               Govt. Approved · License No. {SITE.licenseNo}
             </motion.span>
 
@@ -122,10 +136,23 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="mt-6 font-display text-5xl font-extrabold leading-[1.02] md:text-6xl lg:text-7xl"
             >
-              Jump into the world with{" "}
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(95deg, #FFD8A8, #BFE3FF)" }}>
-                World Jumper
+              Jump into{" "}
+              <span className="relative inline-block min-w-[6ch] align-baseline overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={activeDest.name}
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={{ y: "0%", opacity: 1 }}
+                    exit={{ y: "-100%", opacity: 0 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="inline-block bg-clip-text text-transparent"
+                    style={{ backgroundImage: "linear-gradient(95deg, #FFD8A8, #BFE3FF)" }}
+                  >
+                    {activeDest.name}
+                  </motion.span>
+                </AnimatePresence>
               </span>
+              <br />with World Jumper.
             </motion.h1>
 
             <motion.p
@@ -135,12 +162,35 @@ export default function Home() {
             >
               Your trusted travel partner in Bangladesh for visas, curated tours,
               air tickets, Umrah and medical journeys. Real consultants, transparent
-              pricing, and care from booking to homecoming.
+              pricing, care from booking to homecoming.
             </motion.p>
+
+            {/* Destination chips — click to switch hero */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.45 }}
+              className="mt-7 flex flex-wrap items-center gap-2"
+            >
+              <span className="text-xs font-semibold uppercase tracking-widest text-white/60">Trending →</span>
+              {DESTINATIONS.map((d, i) => (
+                <button
+                  key={d.name}
+                  onClick={() => setDestIndex(i)}
+                  className={`group inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider backdrop-blur-md transition-all ${
+                    i === destIndex
+                      ? "border-[color:var(--brand-orange)] bg-[color:var(--brand-orange)] text-white shadow-brand"
+                      : "border-white/30 bg-white/10 text-white hover:border-white hover:bg-white/20"
+                  }`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${i === destIndex ? "bg-white" : "bg-white/60"}`} />
+                  {d.name}
+                </button>
+              ))}
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
               className="mt-9 flex flex-wrap items-center gap-4"
             >
               <Link
@@ -159,68 +209,135 @@ export default function Home() {
               </a>
             </motion.div>
 
-            {/* Trust strip */}
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.7 }}
-              className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-semibold uppercase tracking-widest text-white/70"
-            >
-              <span>Member of</span>
-              {SITE.memberships.slice(0, 6).map(m => (
-                <span key={m} className="rounded-md bg-white/10 px-2.5 py-1 backdrop-blur-md">{m}</span>
-              ))}
-            </motion.div>
+            {/* Hero progress dots */}
+            <div className="mt-10 flex items-center gap-3">
+              <button
+                aria-label="Previous"
+                onClick={() => setDestIndex(i => (i - 1 + DESTINATIONS.length) % DESTINATIONS.length)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md transition hover:bg-white/20"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <div className="flex flex-1 items-center gap-1.5 max-w-xs">
+                {DESTINATIONS.map((_, i) => (
+                  <div key={i} className="relative h-1 flex-1 overflow-hidden rounded-full bg-white/20">
+                    {i === destIndex && (
+                      <motion.div
+                        key={`bar-${destIndex}`}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 5, ease: "linear" }}
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-[color:var(--brand-orange)] to-white"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button
+                aria-label="Next"
+                onClick={() => setDestIndex(i => (i + 1) % DESTINATIONS.length)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md transition hover:bg-white/20"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+              <span className="ml-2 font-mono text-xs text-white/70">
+                {String(destIndex + 1).padStart(2, "0")}<span className="text-white/40"> / {String(DESTINATIONS.length).padStart(2, "0")}</span>
+              </span>
+            </div>
           </div>
 
-          {/* RIGHT — floating glass quick-quote card */}
+          {/* RIGHT — interactive tabbed quick-search card */}
           <motion.div
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.4 }}
             className="md:col-span-5"
           >
-            <div className="glass relative rounded-3xl p-7 text-foreground md:p-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-[color:var(--brand-orange)]">Quick Quote</p>
-              <h3 className="mt-2 font-display text-2xl font-extrabold text-foreground md:text-3xl">
-                Where do you want to go?
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground">Pick a service — we'll get back in 24 hours.</p>
+            <div className="glass relative overflow-hidden rounded-3xl p-6 text-foreground md:p-7">
+              <div aria-hidden className="pointer-events-none absolute -inset-px -z-10 rounded-3xl bg-gradient-brand opacity-60 blur-md" />
 
-              <div className="mt-5 grid grid-cols-2 gap-3">
-                {[
-                  { icon: Stamp, label: "Visa", to: "/visa" },
-                  { icon: MapPin, label: "Tours", to: "/tours" },
-                  { icon: Plane, label: "Air Ticket", to: "/air-ticketing" },
-                  { icon: Moon, label: "Umrah", to: "/umrah" },
-                  { icon: Stethoscope, label: "Medical", to: "/medical-tourism" },
-                  { icon: Search, label: "Other", to: "/contact" },
-                ].map(({ icon: I, label, to }) => (
-                  <Link
-                    key={label}
-                    to={to}
-                    className="group flex items-center gap-3 rounded-xl border border-border bg-white/70 px-4 py-3 text-sm font-semibold text-foreground transition-all hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)] hover:bg-white hover:shadow-soft"
-                  >
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-brand text-white">
-                      <I className="h-4 w-4" strokeWidth={2} />
-                    </span>
-                    {label}
-                  </Link>
-                ))}
+              <p className="text-xs font-bold uppercase tracking-widest text-[color:var(--brand-orange)]">Quick Search</p>
+              <h3 className="mt-1 font-display text-2xl font-extrabold text-foreground md:text-[1.7rem]">
+                Start your journey in 30 seconds
+              </h3>
+
+              {/* Tabs */}
+              <div className="mt-5 flex flex-wrap gap-1 rounded-2xl bg-muted/60 p-1.5">
+                {QUICK_TABS.map(t => {
+                  const Icon = t.icon;
+                  const active = tab === t.key;
+                  return (
+                    <button
+                      key={t.key}
+                      onClick={() => setTab(t.key)}
+                      className={`relative flex flex-1 items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-xs font-bold transition ${
+                        active ? "text-white" : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {active && (
+                        <motion.span
+                          layoutId="hero-tab-pill"
+                          className="absolute inset-0 rounded-xl bg-gradient-brand shadow-brand"
+                          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative inline-flex items-center gap-1.5">
+                        <Icon className="h-3.5 w-3.5" /> {t.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Search input */}
+              <div className="mt-5 flex items-center gap-2 rounded-2xl border border-border bg-white px-4 py-3 shadow-soft focus-within:border-[color:var(--brand-orange)] focus-within:ring-2 focus-within:ring-[color:var(--brand-orange)]/20">
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <input
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder={activeTab.placeholder}
+                  className="flex-1 bg-transparent text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none"
+                />
               </div>
 
               <Link
-                to="/contact"
-                className="btn-brand mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-bold"
+                to={`${activeTab.to}${query ? `?q=${encodeURIComponent(query)}` : ""}`}
+                className="btn-brand mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-sm font-bold"
               >
-                Get free consultation <ArrowUpRight className="h-4 w-4" />
+                Explore {activeTab.label} <ArrowUpRight className="h-4 w-4" />
               </Link>
 
-              <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-xs">
-                <a href={`tel:${SITE.primaryPhone}`} className="inline-flex items-center gap-1.5 font-semibold text-[color:var(--brand-blue-deep)]">
-                  <PhoneCall className="h-3.5 w-3.5" /> {SITE.primaryPhone}
+              {/* Live activity strip */}
+              <div className="mt-5 flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2.5 text-[11px]">
+                <span className="inline-flex items-center gap-1.5 font-semibold text-[color:var(--brand-blue-deep)]">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  12 inquiries today
+                </span>
+                <a href={`tel:${SITE.primaryPhone}`} className="inline-flex items-center gap-1 font-semibold text-foreground hover:text-[color:var(--brand-orange)]">
+                  <PhoneCall className="h-3 w-3" /> {SITE.primaryPhone}
                 </a>
-                <span className="text-muted-foreground">10,000+ happy travelers</span>
+              </div>
+
+              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+                <Sparkles className="h-3.5 w-3.5 text-[color:var(--brand-orange)]" />
+                Now showing{" "}
+                <span className="font-bold text-foreground">{activeDest.name}</span>
+                <span>· {activeDest.tag}</span>
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Member strip */}
+        <div className="relative border-t border-white/10 bg-black/20 backdrop-blur-md">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-2 px-6 py-4 text-[11px] font-semibold uppercase tracking-widest text-white/70 md:px-10">
+            <span className="text-white">Member of</span>
+            {SITE.memberships.slice(0, 6).map(m => (
+              <span key={m} className="rounded-md bg-white/10 px-2.5 py-1 backdrop-blur-md transition hover:bg-white/20">{m}</span>
+            ))}
+          </div>
         </div>
       </section>
 
