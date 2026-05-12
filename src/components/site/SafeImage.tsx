@@ -8,6 +8,10 @@ export function resolveImageUrl(url: string | null | undefined): string | null {
   if (!url) return null;
   const trimmed = url.trim();
   if (!trimmed) return null;
+  // Rewrite legacy apex /uploads/ URLs to the new uploads subdomain
+  if (/^https?:\/\/(www\.)?worldjumperbd\.com\/uploads\//i.test(trimmed)) {
+    return trimmed.replace(/^https?:\/\/(www\.)?worldjumperbd\.com\/uploads\//i, `${UPLOADS_BASE}/`);
+  }
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
   if (trimmed.startsWith("/uploads/")) return `${UPLOADS_BASE}${trimmed.slice("/uploads".length)}`;
   if (trimmed.startsWith("uploads/")) return `${UPLOADS_BASE}/${trimmed.slice("uploads/".length)}`;
