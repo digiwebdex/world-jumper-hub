@@ -59,7 +59,7 @@
 
   --gradient-brand: linear-gradient(120deg, var(--brand-orange) 0%, var(--brand-orange-deep) 35%, var(--brand-blue) 75%, var(--brand-blue-deep) 100%);
   --gradient-warm-brand: linear-gradient(135deg, oklch(0.72 0.18 50 / 0.92), oklch(0.55 0.20 250 / 0.92));
-  --gradient-hero: linear-gradient(135deg, oklch(0.62 0.20 38 / 0.78) 0%, oklch(0.32 0.10 248 / 0.55) 50%, oklch(0.18 0.06 250 / 0.92) 100%);
+  --gradient-hero: linear-gradient(135deg, oklch(0.62 0.20 38 / 0.55) 0%, oklch(0.30 0.08 248 / 0.40) 50%, oklch(0.16 0.06 250 / 0.85) 100%);
   --gradient-warm: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
   --gradient-text-brand: linear-gradient(95deg, var(--brand-orange), var(--brand-blue));
   --shadow-brand: 0 30px 80px -25px oklch(0.62 0.20 38 / 0.45);
