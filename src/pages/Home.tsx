@@ -30,15 +30,60 @@ const TESTIMONIALS = [
   { name: "Tanvir Ahmed", trip: "Bangkok · Medical", quote: "World Jumper coordinated the hospital, hotel and translator. Truly stress-free." },
 ];
 
+const DESTINATIONS = [
+  { name: "Maldives",  tag: "Island Escape",   img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=2400&q=70" },
+  { name: "Dubai",     tag: "City of Gold",    img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2400&q=70" },
+  { name: "Makkah",    tag: "Umrah & Hajj",    img: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=2400&q=70" },
+  { name: "Bangkok",   tag: "Medical & Tour",  img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=2400&q=70" },
+  { name: "Switzerland", tag: "Alps & Lakes",  img: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=2400&q=70" },
+];
+
+const QUICK_TABS = [
+  { key: "visa",     label: "Visa",     icon: Stamp,       to: "/visa",            placeholder: "Search country (e.g. Schengen)" },
+  { key: "tour",     label: "Tours",    icon: MapPin,      to: "/tours",           placeholder: "Search destination (e.g. Bali)" },
+  { key: "air",      label: "Air",      icon: Plane,       to: "/air-ticketing",   placeholder: "From DAC to ..." },
+  { key: "umrah",    label: "Umrah",    icon: Moon,        to: "/umrah",           placeholder: "Choose Umrah package" },
+  { key: "medical",  label: "Medical",  icon: Stethoscope, to: "/medical-tourism", placeholder: "Hospital or city" },
+] as const;
+
 export default function Home() {
   usePageTitle("Home");
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
+  const [destIndex, setDestIndex] = useState(0);
+  const [tab, setTab] = useState<typeof QUICK_TABS[number]["key"]>("visa");
+  const [query, setQuery] = useState("");
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Mouse parallax
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 18 });
+  const sy = useSpring(my, { stiffness: 60, damping: 18 });
+  const bgX = useTransform(sx, [-1, 1], ["-2.5%", "2.5%"]);
+  const bgY = useTransform(sy, [-1, 1], ["-2.5%", "2.5%"]);
+  const blobX = useTransform(sx, [-1, 1], ["-30px", "30px"]);
+  const blobY = useTransform(sy, [-1, 1], ["-30px", "30px"]);
+
+  function onMouseMove(e: React.MouseEvent) {
+    const r = heroRef.current?.getBoundingClientRect(); if (!r) return;
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top)  / r.height) * 2 - 1);
+  }
+
+  // Auto-rotate destinations
+  useEffect(() => {
+    const id = setInterval(() => setDestIndex(i => (i + 1) % DESTINATIONS.length), 5000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     api.get<{ items: Package[] }>("/packages?featured=1").then(r => setPkgs(r.items)).catch(() => setPkgs([]));
     api.get<{ items: VisaCountry[] }>("/visa-countries?featured=1").then(r => setCountries(r.items)).catch(() => setCountries([]));
   }, []);
+
+  const activeDest = DESTINATIONS[destIndex];
+  const activeTab = QUICK_TABS.find(t => t.key === tab)!;
 
   return (
     <SiteLayout>
