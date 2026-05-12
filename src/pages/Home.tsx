@@ -110,14 +110,14 @@ export default function Home() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Brand wash + animated blobs */}
-        <div
-          className="absolute inset-0 animate-gradient mix-blend-multiply"
-          style={{ backgroundImage: "linear-gradient(115deg, rgba(245,130,32,0.78) 0%, rgba(217,82,65,0.65) 35%, rgba(50,90,180,0.78) 70%, rgba(20,40,90,0.92) 100%)" }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(0,0,0,0)_50%,_rgba(0,0,0,0.55)_100%)]" />
-        <motion.div style={{ x: blobX, y: blobY }} className="absolute -left-24 top-10 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/45 blur-3xl animate-float" />
-        <motion.div style={{ x: blobX, y: blobY }} className="absolute right-0 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[color:var(--brand-blue)]/45 blur-3xl animate-float" />
+        {/* Cinematic dark wash — keeps imagery vivid, adds legibility */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,12,32,0.55)_0%,rgba(8,12,32,0.25)_35%,rgba(8,12,32,0.85)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(8,12,32,0.75)_0%,rgba(8,12,32,0.35)_45%,rgba(8,12,32,0)_75%)]" />
+        {/* Subtle brand accent (very low opacity, no multiply) */}
+        <motion.div style={{ x: blobX, y: blobY }} className="absolute -left-32 top-20 h-[26rem] w-[26rem] rounded-full bg-[color:var(--brand-orange)]/25 blur-[120px] animate-float" />
+        <motion.div style={{ x: blobX, y: blobY }} className="absolute -right-20 bottom-0 h-[30rem] w-[30rem] rounded-full bg-[color:var(--brand-blue)]/30 blur-[140px] animate-float" />
+        {/* Film grain / vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(0,0,0,0.45)_100%)]" />
 
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pb-28 pt-32 md:grid-cols-12 md:px-10 md:pb-36 md:pt-40">
           {/* LEFT — copy */}
