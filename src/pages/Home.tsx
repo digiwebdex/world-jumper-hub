@@ -7,7 +7,7 @@ import {
   ChevronLeft, ChevronRight, Play,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { ServiceCard, SectionHeading } from "@/components/site/ui";
+import { ServiceCard, SectionHeading, FancyIcon } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem, CountUp } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
