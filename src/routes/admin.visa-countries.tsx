@@ -106,7 +106,7 @@ function VisaCountriesAdmin() {
           <Field label="Country name" name="country_name" required defaultValue={current?.country_name} />
           <Field label="Slug" name="slug" required defaultValue={current?.slug} placeholder="india" />
           <Field label="Flag image URL" name="flag_url" full defaultValue={current?.flag_url}
-            placeholder="https://worldjumperbd.com/uploads/visa-countries/india.jpg" />
+            placeholder="https://uploads.worldjumperbd.com/visa-countries/india.jpg" />
           <Field label="Short description" name="short_description" full textarea defaultValue={current?.short_description} />
           <Field label="Featured" name="is_featured" type="checkbox" defaultValue={current?.is_featured ?? false} />
           <Field label="Active" name="is_active" type="checkbox" defaultValue={current?.is_active ?? true} />

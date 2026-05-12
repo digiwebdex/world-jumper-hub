@@ -135,13 +135,13 @@ function PackagesAdmin() {
           <Field full label="Excluded services" name="excluded_services" textarea defaultValue={current?.excluded_services} />
           <div className="md:col-span-2">
             <Field full label="Main image URL" name="image_url" defaultValue={current?.image_url}
-              placeholder="https://worldjumperbd.com/uploads/packages/sample.jpg" />
+              placeholder="https://uploads.worldjumperbd.com/packages/sample.jpg" />
             <div className="mt-2"><ImageUrlPreview url={current?.image_url ?? null} /></div>
           </div>
           <Field full label="Gallery URLs (comma separated)" name="gallery_urls" textarea defaultValue={current?.gallery_urls} />
           <div className="md:col-span-2">
             <Field full label="Brochure / PDF URL" name="brochure_url" defaultValue={current?.brochure_url}
-              placeholder="https://worldjumperbd.com/uploads/documents/sample.pdf" />
+              placeholder="https://uploads.worldjumperbd.com/documents/sample.pdf" />
             <div className="mt-2"><FileUrlPreview url={current?.brochure_url ?? null} /></div>
           </div>
           <Field label="Featured" name="is_featured" type="checkbox" defaultValue={current?.is_featured ?? false} />
