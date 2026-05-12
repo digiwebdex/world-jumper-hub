@@ -11,7 +11,10 @@ const PILLARS = [
 ];
 
 export default function About() {
-  usePageTitle("About Us");
+  usePageTitle(
+    "About Us",
+    "Meet World Jumper — a 12-year-old, Govt. approved travel house in Bangladesh staffed by real consultants who handle your visa, tickets and itinerary end-to-end."
+  );
   return (
     <SiteLayout>
       <PageHero

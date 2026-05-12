@@ -14,7 +14,10 @@ const ITEMS = [
 ];
 
 export default function Services() {
-  usePageTitle("Services");
+  usePageTitle(
+    "Our Services",
+    "Visa, tour packages, air ticketing, Umrah programs, medical tourism and bespoke itineraries — six trusted travel services under one Bangladeshi roof."
+  );
   return (
     <SiteLayout>
       <PageHero

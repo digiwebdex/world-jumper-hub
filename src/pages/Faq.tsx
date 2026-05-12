@@ -16,7 +16,10 @@ const FAQS = [
 ];
 
 export default function Faq() {
-  usePageTitle("FAQ");
+  usePageTitle(
+    "FAQ",
+    "Answers to common questions about visa processing, payment, refunds, embassy appointments and travel support from World Jumper Tours & Travels."
+  );
   const [open, setOpen] = useState<number | null>(0);
   return (
     <SiteLayout>

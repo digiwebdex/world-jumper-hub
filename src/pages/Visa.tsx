@@ -8,7 +8,10 @@ import { usePageTitle } from "@/lib/use-page-title";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
 
 export default function Visa() {
-  usePageTitle("Visa Services");
+  usePageTitle(
+    "Visa Services",
+    "Tourist, business, medical and student visa processing for 30+ countries — full document checklists, embassy fees and processing times from World Jumper, Dhaka."
+  );
   const [countries, setCountries] = useState<VisaCountry[]>([]);
   const [active, setActive] = useState<VisaCountry | null>(null);
   const [reqs, setReqs] = useState<VisaRequirement[]>([]);
