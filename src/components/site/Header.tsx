@@ -35,19 +35,20 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
         transparent
-          ? "bg-transparent text-cream"
-          : "border-b border-border/70 bg-background/85 text-foreground backdrop-blur-md"
+          ? "bg-transparent text-white"
+          : "border-b border-border/70 bg-background/90 text-foreground shadow-sm backdrop-blur-md"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 md:px-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 md:px-10">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img
-            src={SITE.logoUrl}
-            alt="World Jumper"
-            className={`h-9 w-auto transition-all md:h-11 ${transparent ? "brightness-0 invert" : ""}`}
-          />
-          <span className={`hidden font-display text-lg leading-none tracking-tight md:block`}>
-            World&nbsp;Jumper
+          <span className={`inline-flex items-center justify-center rounded-xl px-2 py-1 transition-all ${
+            transparent ? "bg-white/95 shadow-lift" : ""
+          }`}>
+            <img
+              src={SITE.logoUrl}
+              alt="World Jumper Tours & Travels"
+              className="h-9 w-auto md:h-12"
+            />
           </span>
         </Link>
 
@@ -58,10 +59,10 @@ export function Header() {
               to={n.to}
               end={n.end}
               className={({ isActive }) =>
-                `relative px-3 py-2 text-xs font-medium uppercase tracking-[0.2em] transition-colors ${
+                `relative px-3 py-2 text-[13px] font-semibold tracking-wide transition-colors ${
                   isActive
-                    ? transparent ? "text-cream" : "text-foreground"
-                    : transparent ? "text-cream/75 hover:text-cream" : "text-foreground/65 hover:text-foreground"
+                    ? transparent ? "text-white" : "text-[color:var(--brand-blue-deep)]"
+                    : transparent ? "text-white/85 hover:text-white" : "text-foreground/75 hover:text-[color:var(--brand-orange)]"
                 } link-underline`
               }
             >
@@ -73,20 +74,16 @@ export function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href={`tel:${SITE.primaryPhone}`}
-            className={`group inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-xs font-medium uppercase tracking-[0.2em] transition-all ${
-              transparent
-                ? "border-cream/40 text-cream hover:bg-cream hover:text-ink"
-                : "border-foreground/20 text-foreground hover:border-accent hover:bg-accent hover:text-accent-foreground"
-            }`}
+            className="btn-brand group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold tracking-wide"
           >
-            <Phone className="h-3.5 w-3.5" strokeWidth={1.5} />
+            <Phone className="h-3.5 w-3.5" strokeWidth={2} />
             {SITE.primaryPhone}
           </a>
         </div>
 
         <button
           aria-label="Toggle menu"
-          className={`rounded-full p-2 transition-colors lg:hidden ${transparent ? "text-cream" : "text-foreground"}`}
+          className={`rounded-full p-2 transition-colors lg:hidden ${transparent ? "text-white" : "text-foreground"}`}
           onClick={() => setOpen((s) => !s)}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

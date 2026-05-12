@@ -36,30 +36,36 @@
   --color-cream: var(--cream);
   --color-terracotta: var(--terracotta);
   --color-gold: var(--gold);
-  --color-brand-orange: var(--terracotta);
-  --color-brand-blue: var(--ink);
-  --color-brand-blue-deep: var(--ink-deep);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-deep: var(--brand-blue-deep);
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  /* Editorial Travel Palette */
-  --cream: oklch(0.975 0.012 80);              /* warm paper */
-  --cream-deep: oklch(0.945 0.018 75);
-  --ink: oklch(0.22 0.035 245);                /* deep navy ink */
-  --ink-deep: oklch(0.16 0.03 250);
-  --terracotta: oklch(0.62 0.16 38);           /* warm rust accent */
-  --terracotta-soft: oklch(0.78 0.10 45);
-  --gold: oklch(0.78 0.13 80);                 /* warm gold */
-  --sand: oklch(0.88 0.04 75);
+  /* World Jumper Brand Palette — orange → blue gradient logo */
+  --cream: oklch(0.985 0.006 90);              /* near-white paper */
+  --cream-deep: oklch(0.96 0.012 80);
+  --ink: oklch(0.22 0.04 245);                 /* deep navy text */
+  --ink-deep: oklch(0.16 0.04 250);
+  --brand-orange: oklch(0.72 0.18 50);         /* logo orange #F58220 */
+  --brand-orange-deep: oklch(0.62 0.20 38);
+  --brand-blue: oklch(0.62 0.18 245);          /* logo blue #2A9DF4 */
+  --brand-blue-deep: oklch(0.45 0.20 255);
+  --terracotta: var(--brand-orange);
+  --gold: oklch(0.82 0.14 75);
+  --sand: oklch(0.92 0.03 75);
 
-  --gradient-brand: linear-gradient(135deg, var(--terracotta), var(--gold));
-  --gradient-hero: linear-gradient(180deg, oklch(0.16 0.03 250 / 0.55) 0%, oklch(0.16 0.03 250 / 0.25) 50%, oklch(0.16 0.03 250 / 0.85) 100%);
+  --gradient-brand: linear-gradient(120deg, var(--brand-orange) 0%, var(--brand-orange-deep) 35%, var(--brand-blue) 75%, var(--brand-blue-deep) 100%);
+  --gradient-warm-brand: linear-gradient(135deg, oklch(0.72 0.18 50 / 0.92), oklch(0.55 0.20 250 / 0.92));
+  --gradient-hero: linear-gradient(135deg, oklch(0.62 0.20 38 / 0.55) 0%, oklch(0.30 0.08 248 / 0.40) 50%, oklch(0.16 0.06 250 / 0.85) 100%);
   --gradient-warm: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
-  --shadow-brand: 0 30px 80px -30px oklch(0.22 0.035 245 / 0.45);
-  --shadow-soft: 0 10px 40px -15px oklch(0.22 0.035 245 / 0.18);
-  --shadow-lift: 0 20px 50px -25px oklch(0.22 0.035 245 / 0.35);
+  --gradient-text-brand: linear-gradient(95deg, var(--brand-orange), var(--brand-blue));
+  --shadow-brand: 0 30px 80px -25px oklch(0.62 0.20 38 / 0.45);
+  --shadow-blue: 0 30px 80px -25px oklch(0.55 0.20 250 / 0.45);
+  --shadow-soft: 0 10px 40px -15px oklch(0.22 0.04 245 / 0.18);
+  --shadow-lift: 0 25px 60px -25px oklch(0.22 0.04 245 / 0.35);
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -67,19 +73,19 @@
   --card-foreground: var(--ink);
   --popover: oklch(1 0 0);
   --popover-foreground: var(--ink);
-  --primary: var(--ink);
+  --primary: var(--brand-blue-deep);
   --primary-foreground: var(--cream);
   --secondary: var(--cream-deep);
   --secondary-foreground: var(--ink);
   --muted: var(--cream-deep);
-  --muted-foreground: oklch(0.45 0.02 250);
-  --accent: var(--terracotta);
-  --accent-foreground: var(--cream);
+  --muted-foreground: oklch(0.45 0.03 250);
+  --accent: var(--brand-orange);
+  --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.88 0.015 70);
-  --input: oklch(0.92 0.012 70);
-  --ring: var(--terracotta);
+  --border: oklch(0.90 0.015 240);
+  --input: oklch(0.94 0.012 240);
+  --ring: var(--brand-orange);
 }
 
 .dark {
@@ -117,7 +123,7 @@
     letter-spacing: -0.015em;
     font-weight: 500;
   }
-  ::selection { background: var(--terracotta); color: var(--cream); }
+  ::selection { background: var(--brand-orange); color: oklch(1 0 0); }
 }
 
 @layer utilities {
@@ -126,14 +132,47 @@
   .bg-gradient-hero  { background-image: var(--gradient-hero); }
   .bg-gradient-warm  { background-image: var(--gradient-warm); }
   .text-gradient-brand {
-    background-image: linear-gradient(135deg, var(--terracotta), var(--gold));
+    background-image: var(--gradient-text-brand);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .shadow-brand { box-shadow: var(--shadow-brand); }
+  .shadow-blue  { box-shadow: var(--shadow-blue); }
   .shadow-soft  { box-shadow: var(--shadow-soft); }
   .shadow-lift  { box-shadow: var(--shadow-lift); }
+
+  /* Animated gradient sweep */
+  @keyframes gradient-sweep {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-sweep 8s ease infinite;
+  }
+
+  /* Glow pulse */
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 oklch(0.72 0.18 50 / 0.45); }
+    50%      { box-shadow: 0 0 0 16px oklch(0.72 0.18 50 / 0); }
+  }
+  .animate-glow { animation: glow-pulse 2.4s ease-out infinite; }
+
+  /* Tilt on hover via group */
+  .tilt-card { transform-style: preserve-3d; transition: transform 500ms cubic-bezier(.2,.8,.2,1); }
+  .group:hover .tilt-card { transform: perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(-4px); }
+
+  /* Brand button */
+  .btn-brand {
+    background-image: var(--gradient-brand);
+    background-size: 200% 200%;
+    color: white;
+    transition: background-position .6s ease, transform .3s ease, box-shadow .3s ease;
+    box-shadow: var(--shadow-brand);
+  }
+  .btn-brand:hover { background-position: 100% 0; transform: translateY(-2px); }
 
   /* Editorial divider */
   .rule-gold::before {
