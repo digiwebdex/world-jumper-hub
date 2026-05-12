@@ -4,21 +4,67 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Reveal } from "./motion";
 
+type Accent = "orange" | "blue" | "deep" | "sand";
+
+const ACCENTS: Record<Accent, { bg: string; ring: string; text: string; glow: string; shape: string }> = {
+  orange: {
+    bg: "bg-[color:var(--brand-orange)]/12",
+    ring: "ring-1 ring-[color:var(--brand-orange)]/35",
+    text: "text-[color:var(--brand-orange)]",
+    glow: "from-[color:var(--brand-orange)]/40 to-transparent",
+    shape: "rounded-2xl",
+  },
+  blue: {
+    bg: "bg-[color:var(--brand-blue)]/12",
+    ring: "ring-1 ring-[color:var(--brand-blue)]/35",
+    text: "text-[color:var(--brand-blue)]",
+    glow: "from-[color:var(--brand-blue)]/40 to-transparent",
+    shape: "rounded-[28px] rotate-[6deg]",
+  },
+  deep: {
+    bg: "bg-[color:var(--brand-blue-deep)]/12",
+    ring: "ring-1 ring-[color:var(--brand-blue-deep)]/35",
+    text: "text-[color:var(--brand-blue-deep)]",
+    glow: "from-[color:var(--brand-blue-deep)]/40 to-transparent",
+    shape: "rounded-full",
+  },
+  sand: {
+    bg: "bg-gradient-to-br from-[color:var(--brand-orange)]/15 to-[color:var(--brand-blue)]/15",
+    ring: "ring-1 ring-foreground/10",
+    text: "text-foreground",
+    glow: "from-[color:var(--brand-orange)]/30 to-[color:var(--brand-blue)]/30",
+    shape: "rounded-3xl",
+  },
+};
+
+export function FancyIcon({
+  icon: Icon, accent = "orange", size = 56,
+}: { icon: LucideIcon; accent?: Accent; size?: number }) {
+  const a = ACCENTS[accent];
+  return (
+    <span className="relative inline-flex items-center justify-center">
+      {/* Outer rotated frame for visual variety */}
+      <span className={`relative flex items-center justify-center ${a.shape} ${a.bg} ${a.ring}`} style={{ width: size, height: size }}>
+        <span className={`absolute -inset-3 -z-10 rounded-full bg-gradient-to-br ${a.glow} blur-xl opacity-70`} />
+        <Icon className={`${a.text} ${accent === "blue" ? "-rotate-[6deg]" : ""}`} style={{ width: size * 0.46, height: size * 0.46 }} strokeWidth={1.75} />
+      </span>
+    </span>
+  );
+}
+
 export function ServiceCard({
-  icon: Icon, title, description, to,
-}: { icon: LucideIcon; title: string; description: string; to: string; index?: number }) {
+  icon: Icon, title, description, to, accent = "orange",
+}: { icon: LucideIcon; title: string; description: string; to: string; index?: number; accent?: Accent }) {
   return (
     <Link
       to={to}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lift"
     >
-      <div className="absolute -right-20 -top-20 h-44 w-44 rounded-full bg-gradient-brand opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-30" />
-      <div className="relative inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-brand">
-        <Icon className="h-6 w-6" strokeWidth={2} />
-      </div>
+      <div className={`absolute -right-16 -top-16 h-44 w-44 rounded-full bg-gradient-to-br ${ACCENTS[accent].glow} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100`} />
+      <FancyIcon icon={Icon} accent={accent} />
       <h3 className="mt-6 font-display text-xl font-bold text-foreground">{title}</h3>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>
-      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--brand-blue-deep)] transition-colors group-hover:text-[color:var(--brand-orange)]">
+      <span className={`mt-6 inline-flex items-center gap-1.5 text-sm font-semibold ${ACCENTS[accent].text} transition-transform group-hover:gap-2.5`}>
         Learn more
         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} />
       </span>

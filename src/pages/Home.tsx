@@ -7,7 +7,7 @@ import {
   ChevronLeft, ChevronRight, Play,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { ServiceCard, SectionHeading } from "@/components/site/ui";
+import { ServiceCard, SectionHeading, FancyIcon } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem, CountUp } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
@@ -16,12 +16,12 @@ import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
 
 const SERVICES = [
-  { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa" },
-  { icon: MapPin, title: "Tour Packages", description: "Hand-curated international holidays across Asia, Europe, Middle East and beyond.", to: "/tours" },
-  { icon: Plane, title: "Air Ticketing", description: "IATA-approved fares from 50+ airlines — competitive prices, instant confirmation.", to: "/air-ticketing" },
-  { icon: Stethoscope, title: "Medical Tourism", description: "Trusted hospital partnerships in India, Thailand, Singapore and Malaysia.", to: "/medical-tourism" },
-  { icon: Moon, title: "Umrah Programs", description: "Comfortable Umrah packages all year round with hand-picked hotels in Makkah & Madinah.", to: "/umrah" },
-  { icon: Ticket, title: "Bespoke Itineraries", description: "Custom-designed journeys tailored entirely around your timeline and taste.", to: "/contact" },
+  { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa", accent: "orange" as const },
+  { icon: MapPin, title: "Tour Packages", description: "Hand-curated international holidays across Asia, Europe, Middle East and beyond.", to: "/tours", accent: "blue" as const },
+  { icon: Plane, title: "Air Ticketing", description: "IATA-approved fares from 50+ airlines — competitive prices, instant confirmation.", to: "/air-ticketing", accent: "deep" as const },
+  { icon: Stethoscope, title: "Medical Tourism", description: "Trusted hospital partnerships in India, Thailand, Singapore and Malaysia.", to: "/medical-tourism", accent: "sand" as const },
+  { icon: Moon, title: "Umrah Programs", description: "Comfortable Umrah packages all year round with hand-picked hotels in Makkah & Madinah.", to: "/umrah", accent: "orange" as const },
+  { icon: Ticket, title: "Bespoke Itineraries", description: "Custom-designed journeys tailored entirely around your timeline and taste.", to: "/contact", accent: "blue" as const },
 ];
 
 const TESTIMONIALS = [
@@ -400,18 +400,16 @@ export default function Home() {
           />
           <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: ShieldCheck, title: "Govt. Approved", body: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
-              { icon: HeartHandshake, title: "Human Consultants", body: "A real person handles your file end-to-end — no chatbots, no scripts." },
-              { icon: Clock, title: "On-Time Processing", body: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
-              { icon: Globe2, title: "30+ Destinations", body: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
-              { icon: Sparkles, title: "Curated, Not Generic", body: "Itineraries hand-built for your taste, budget and travel style." },
-              { icon: ShieldCheck, title: "After-Trip Care", body: "24/7 emergency support while you're abroad. We answer when others don't." },
-            ].map(({ icon: I, title, body }) => (
+              { icon: ShieldCheck,    accent: "orange" as const, title: "Govt. Approved",       body: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
+              { icon: HeartHandshake, accent: "blue"   as const, title: "Human Consultants",     body: "A real person handles your file end-to-end — no chatbots, no scripts." },
+              { icon: Clock,          accent: "deep"   as const, title: "On-Time Processing",    body: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
+              { icon: Globe2,         accent: "sand"   as const, title: "30+ Destinations",      body: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
+              { icon: Sparkles,       accent: "orange" as const, title: "Curated, Not Generic",  body: "Itineraries hand-built for your taste, budget and travel style." },
+              { icon: ShieldCheck,    accent: "blue"   as const, title: "After-Trip Care",       body: "24/7 emergency support while you're abroad. We answer when others don't." },
+            ].map(({ icon: I, accent, title, body }) => (
               <StaggerItem key={title}>
                 <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card/80 p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift">
-                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-brand">
-                    <I className="h-6 w-6" strokeWidth={2} />
-                  </div>
+                  <FancyIcon icon={I} accent={accent} />
                   <h3 className="mt-6 font-display text-xl font-bold text-foreground">{title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
                 </div>
@@ -558,7 +556,132 @@ export default function Home() {
         </StaggerGroup>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* TRAVEL INSPIRATION — Bento mosaic */}
+      <section className="relative bg-card py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <SectionHeading
+            eyebrow="Travel Inspiration"
+            title={<>A world that <span className="text-gradient-brand">never sleeps</span>.</>}
+            intro="Snapshots from the journeys we've built — from quiet mountain mornings to neon city nights."
+          />
+          <Reveal className="mt-12">
+            <div className="grid grid-cols-4 grid-rows-2 gap-3 md:gap-4 h-[420px] md:h-[560px]">
+              {[
+                { src: "https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?auto=format&fit=crop&w=1400&q=70", label: "Maldives", tag: "Beach", span: "col-span-2 row-span-2" },
+                { src: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=900&q=70", label: "Dubai",    tag: "City",  span: "col-span-2 row-span-1" },
+                { src: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=900&q=70", label: "Makkah",   tag: "Umrah", span: "col-span-1 row-span-1" },
+                { src: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=900&q=70", label: "Alps",     tag: "Nature", span: "col-span-1 row-span-1" },
+              ].map(p => (
+                <Link
+                  key={p.label}
+                  to="/tours"
+                  className={`group relative overflow-hidden rounded-2xl ${p.span}`}
+                >
+                  <SafeImage src={p.src} alt={p.label} className="h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--ink-deep)]/80 via-[color:var(--ink-deep)]/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4 text-white md:p-5">
+                    <div>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur-md">
+                        {p.tag}
+                      </span>
+                      <h3 className="mt-2 font-display text-xl font-extrabold md:text-2xl">{p.label}</h3>
+                    </div>
+                    <span className="flex h-9 w-9 -translate-y-1 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* TRUSTED PARTNERS — Marquee */}
+      <section className="relative overflow-hidden border-y border-border bg-gradient-warm py-14">
+        <div className="mx-auto mb-6 max-w-7xl px-6 md:px-10">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
+              Trusted by travelers · Recognized by industry
+            </p>
+            <p className="text-xs font-semibold text-muted-foreground">
+              50+ airline partners · 30+ embassies · 200+ hotel chains
+            </p>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[color:var(--cream)] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[color:var(--cream)] to-transparent" />
+          <div className="flex gap-3 overflow-hidden">
+            {[0, 1].map(loop => (
+              <div key={loop} className="flex shrink-0 items-center gap-3 animate-marquee" aria-hidden={loop === 1}>
+                {[
+                  "Emirates", "Qatar Airways", "Singapore Airlines", "Turkish Airlines", "Etihad",
+                  "Biman Bangladesh", "Saudia", "Cathay Pacific", "Thai Airways", "Malaysia Airlines",
+                  "IATA", "ATAB", "TOAB", "CAAB", "Bangladesh Tourism Board",
+                ].map((n, i) => (
+                  <div
+                    key={`${loop}-${n}-${i}`}
+                    className="flex h-16 min-w-[200px] items-center justify-center rounded-2xl border border-border bg-card/80 px-6 font-display text-base font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:text-[color:var(--brand-orange)]"
+                  >
+                    {n}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA BANNER — animated split */}
+      <section className="relative px-6 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <Reveal>
+            <div className="relative overflow-hidden rounded-[36px] border border-border bg-[color:var(--ink-deep)] p-10 text-white shadow-lift md:p-16">
+              <div
+                className="absolute inset-0 animate-gradient opacity-90"
+                style={{ backgroundImage: "linear-gradient(120deg, rgba(245,130,32,0.85), rgba(217,82,65,0.6) 40%, rgba(50,90,180,0.85) 80%)" }}
+              />
+              <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+              <div className="absolute -bottom-32 -left-10 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/40 blur-3xl" />
+
+              <div className="relative grid items-center gap-10 md:grid-cols-12">
+                <div className="md:col-span-8">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest backdrop-blur-md">
+                    <Sparkles className="h-3.5 w-3.5" /> Limited time
+                  </span>
+                  <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight md:text-5xl">
+                    Free 30-min consultation —<br className="hidden md:block" /> we map your trip on a real map.
+                  </h2>
+                  <p className="mt-4 max-w-xl text-base text-white/85">
+                    Sit with a senior consultant (in person or on Zoom) and walk through visa eligibility, ideal dates, hidden costs and the perfect itinerary — all on the house.
+                  </p>
+                </div>
+                <div className="md:col-span-4">
+                  <div className="flex flex-col gap-3">
+                    <Link
+                      to="/contact"
+                      className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-4 text-sm font-bold text-[color:var(--brand-blue-deep)] shadow-lift transition hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange)] hover:text-white"
+                    >
+                      Book my free session
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    <a
+                      href={whatsappLink()}
+                      target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-white/50 px-6 py-4 text-sm font-bold backdrop-blur-md transition hover:border-white hover:bg-white/10"
+                    >
+                      <Send className="h-4 w-4" /> WhatsApp us
+                    </a>
+                    <p className="text-center text-[11px] uppercase tracking-widest text-white/70">No obligation · Replies in 5 min</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="relative overflow-hidden bg-[color:var(--ink-deep)] py-24 text-white md:py-32">
         <div className="absolute -left-20 top-20 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/30 blur-3xl" />
         <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[color:var(--brand-blue)]/30 blur-3xl" />
