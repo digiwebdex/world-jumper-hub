@@ -40,16 +40,12 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 md:px-10">
-        <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className={`inline-flex items-center justify-center rounded-xl px-2 py-1 transition-all ${
-            transparent ? "bg-white/95 shadow-lift" : ""
-          }`}>
-            <img
-              src={SITE.logoUrl}
-              alt="World Jumper Tours & Travels"
-              className="h-9 w-auto md:h-12"
-            />
-          </span>
+        <Link to="/" className="flex items-center" onClick={() => setOpen(false)} aria-label="World Jumper Tours & Travels">
+          <img
+            src={SITE.logoUrl}
+            alt="World Jumper Tours & Travels"
+            className="h-10 w-auto object-contain md:h-14"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
