@@ -1,4 +1,6 @@
 // Static fallback config. Admin panel (Phase 2) will overlay site_settings from Supabase.
+import logoUrl from "@/assets/world-jumper-logo.png";
+
 export const SITE = {
   companyName: "World Jumper",
   brandName: "World Jumper Tours & Travels",
@@ -14,7 +16,7 @@ export const SITE = {
   address: "Dhaka, Bangladesh",
   memberships: ["CAAB", "IATA", "ATAB", "TOB", "BOTOF", "ETAB", "e-Cab", "Lions International"],
   domain: "https://worldjumperbd.com",
-  logoUrl: new URL("../assets/world-jumper-logo.png", import.meta.url).href,
+  logoUrl,
 };
 
 export const whatsappLink = (msg: string = SITE.whatsappMessage) =>
