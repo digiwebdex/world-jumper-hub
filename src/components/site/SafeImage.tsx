@@ -1,16 +1,21 @@
 import { useState, type ImgHTMLAttributes, type ReactNode } from "react";
 
-const HOSTINGER_BASE = "https://worldjumperbd.com";
+const UPLOADS_BASE = "https://uploads.worldjumperbd.com";
 
-/** Normalize an image URL: turn a stray `/uploads/...` relative path into the
- *  full Hostinger URL. Returns null for empty/invalid input. */
+/** Normalize an image URL: turn a stray `/uploads/...` or `uploads/...` relative
+ *  path into the full uploads subdomain URL. Returns null for empty/invalid input. */
 export function resolveImageUrl(url: string | null | undefined): string | null {
   if (!url) return null;
   const trimmed = url.trim();
   if (!trimmed) return null;
+  // Rewrite legacy apex /uploads/ URLs to the new uploads subdomain
+  if (/^https?:\/\/(www\.)?worldjumperbd\.com\/uploads\//i.test(trimmed)) {
+    return trimmed.replace(/^https?:\/\/(www\.)?worldjumperbd\.com\/uploads\//i, `${UPLOADS_BASE}/`);
+  }
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  if (trimmed.startsWith("/uploads/")) return `${HOSTINGER_BASE}${trimmed}`;
-  if (trimmed.startsWith("uploads/")) return `${HOSTINGER_BASE}/${trimmed}`;
+  if (trimmed.startsWith("/uploads/")) return `${UPLOADS_BASE}${trimmed.slice("/uploads".length)}`;
+  if (trimmed.startsWith("uploads/")) return `${UPLOADS_BASE}/${trimmed.slice("uploads/".length)}`;
+  if (trimmed.startsWith("/")) return `${UPLOADS_BASE}${trimmed}`;
   return trimmed; // local asset or data URL — render as-is
 }
 

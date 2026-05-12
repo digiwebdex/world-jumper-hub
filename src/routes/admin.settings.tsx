@@ -84,7 +84,7 @@ function SettingsAdmin() {
 
           <div className="md:col-span-2">
             <Field full label="Logo URL" name="logo_url" defaultValue={s?.logo_url}
-              placeholder="https://worldjumperbd.com/uploads/logo/world-jumper-logo.png" />
+              placeholder="https://uploads.worldjumperbd.com/logo/world-jumper-logo.png" />
             <div className="mt-2"><ImageUrlPreview url={s?.logo_url} /></div>
           </div>
           <div className="md:col-span-2">
