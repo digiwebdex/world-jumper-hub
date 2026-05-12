@@ -42,10 +42,13 @@ export function Footer() {
         {/* Columns */}
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-12 md:px-10">
           <div className="md:col-span-4">
-            <div className="flex items-center gap-3">
-              <img src={SITE.logoUrl} alt={SITE.brandName} className="h-12 w-auto brightness-0 invert" />
-              <span className="font-display text-2xl">World Jumper</span>
-            </div>
+            <Link to="/" className="inline-flex items-center" aria-label={SITE.brandName}>
+              <img
+                src={SITE.logoUrl}
+                alt={SITE.brandName}
+                className="h-14 w-auto object-contain md:h-16"
+              />
+            </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/70">{SITE.tagline}</p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">
               License No. {SITE.licenseNo}
