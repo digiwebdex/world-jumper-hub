@@ -245,6 +245,88 @@ export default function Home() {
         </StaggerGroup>
       </section>
 
+      {/* WHY CHOOSE US */}
+      <section className="relative overflow-hidden bg-gradient-warm py-24 md:py-32">
+        <div className="absolute -top-20 right-0 h-72 w-72 rounded-full bg-[color:var(--brand-orange)]/15 blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[color:var(--brand-blue)]/15 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-6 md:px-10">
+          <SectionHeading
+            eyebrow="Why World Jumper"
+            title={<>Six promises behind <span className="text-gradient-brand">every journey</span>.</>}
+            intro="We are not a booking portal. We are a 12-year-old travel house staffed by real consultants who answer the phone, walk you through your visa file, and stand by you long after departure."
+          />
+          <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { icon: ShieldCheck, title: "Govt. Approved", body: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
+              { icon: HeartHandshake, title: "Human Consultants", body: "A real person handles your file end-to-end — no chatbots, no call-center scripts." },
+              { icon: Clock, title: "On-Time Processing", body: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
+              { icon: Globe2, title: "30+ Destinations", body: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
+              { icon: Sparkles, title: "Curated, Not Generic", body: "Itineraries hand-built for your taste, budget and travel style — not copy-pasted templates." },
+              { icon: ShieldCheck, title: "After-Trip Care", body: "24/7 emergency support while you're abroad. We answer when others don't." },
+            ].map(({ icon: I, title, body }, i) => (
+              <StaggerItem key={title}>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 transition-all duration-500 hover:-translate-y-2 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift">
+                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-brand opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30" />
+                  <div className="relative inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-brand text-white shadow-brand">
+                    <I className="h-6 w-6" strokeWidth={2} />
+                  </div>
+                  <p className="mt-6 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-[color:var(--brand-orange)]">
+                    {String(i + 1).padStart(2, "0")} / 06
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl leading-tight text-foreground">{title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="relative bg-card py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <SectionHeading
+            align="center"
+            eyebrow="How It Works"
+            title={<>Four simple steps from <span className="text-gradient-brand">dream to departure</span>.</>}
+          />
+          <div className="relative mt-16">
+            <div className="absolute left-0 right-0 top-[42px] hidden h-px bg-gradient-to-r from-transparent via-[color:var(--brand-orange)]/40 to-transparent md:block" />
+            <StaggerGroup className="grid gap-10 md:grid-cols-4">
+              {[
+                { icon: PhoneCall, title: "Tell us your dream", body: "Call, WhatsApp or fill the form. Share where, when and how you want to travel." },
+                { icon: FileCheck2, title: "Get a tailored quote", body: "Within 24h we send a custom itinerary with visa, hotels, flights and total cost." },
+                { icon: Stamp, title: "We handle the paperwork", body: "Visa, embassy appointments, insurance, tickets — every document, end-to-end." },
+                { icon: Plane, title: "Pack and fly", body: "You receive a full travel pack and a 24/7 helpline for the entire journey." },
+              ].map(({ icon: I, title, body }, i) => (
+                <StaggerItem key={title}>
+                  <div className="relative text-center">
+                    <div className="relative mx-auto inline-flex h-[84px] w-[84px] items-center justify-center rounded-full bg-background ring-4 ring-card">
+                      <div className="absolute inset-0 rounded-full bg-gradient-brand p-[3px]">
+                        <div className="flex h-full w-full items-center justify-center rounded-full bg-card">
+                          <I className="h-7 w-7 text-[color:var(--brand-blue-deep)]" strokeWidth={1.8} />
+                        </div>
+                      </div>
+                      <span className="absolute -right-2 -top-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-brand text-xs font-bold text-white shadow-brand">
+                        {i + 1}
+                      </span>
+                    </div>
+                    <h3 className="mt-6 font-display text-xl text-foreground">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+
+          <div className="mt-16 text-center">
+            <Link to="/contact" className="btn-brand inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-semibold">
+              Start your trip now <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* PARALLAX QUOTE */}
       <section className="relative h-[70vh] overflow-hidden">
         <ParallaxImage
