@@ -6,6 +6,7 @@ import {
   Globe2, Clock, ShieldCheck, ArrowRight,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { SafeImage } from "@/components/site/SafeImage";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { supabase, type VisaCountry, type VisaRequirement } from "@/lib/supabase";
