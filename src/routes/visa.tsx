@@ -239,13 +239,13 @@ function VisaPage() {
                   className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-brand">
                   <div className="flex gap-4 p-4">
                     <div className="relative h-24 w-32 shrink-0 overflow-hidden rounded-xl bg-muted ring-1 ring-border">
-                      {c.flag_url ? (
-                        <img src={c.flag_url} alt={c.country_name} loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }} />
-                      ) : (
-                        <div className="flex h-full items-center justify-center text-muted-foreground"><MapIcon className="h-7 w-7" /></div>
-                      )}
+                      <SafeImage
+                        src={c.flag_url}
+                        alt={c.country_name}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fallback={<MapIcon className="h-7 w-7 opacity-60" />}
+                      />
                       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
                         {c.country_name}
                       </div>
