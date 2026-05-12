@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plane, Stamp, MapPin, Stethoscope, Moon, Ticket, ArrowUpRight, Star } from "lucide-react";
+import { Plane, Stamp, MapPin, Stethoscope, Moon, Ticket, ArrowUpRight, Star, ShieldCheck, Clock, HeartHandshake, Globe2, Sparkles, FileCheck2, Send, PhoneCall } from "lucide-react";
+import { motion } from "framer-motion";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { PageHero, ServiceCard, SectionHeading } from "@/components/site/ui";
+import { ServiceCard, SectionHeading } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem, ParallaxImage, CountUp } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { api, type Package, type VisaCountry } from "@/lib/api";
 import { usePageTitle } from "@/lib/use-page-title";
-import { SITE } from "@/lib/site-config";
+import { SITE, whatsappLink } from "@/lib/site-config";
 
 const SERVICES = [
   { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa" },
@@ -37,15 +38,103 @@ export default function Home() {
 
   return (
     <SiteLayout>
-      <PageHero
-        kicker={`Est. — License No. ${SITE.licenseNo}`}
-        eyebrow="Govt. Approved Travel Atelier"
-        title={<>The world,<br /><em className="not-italic text-accent">curated</em> for Bangladesh.</>}
-        subtitle="Visas, tours, air tickets and pilgrimage — designed by travelers, for travelers. From a single passport stamp to a fortnight across continents."
-        image="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2400&q=70"
-        imageAlt="Traveler overlooking mountains"
-      />
+      {/* HERO — brand-gradient cinematic */}
+      <section className="relative isolate overflow-hidden bg-[color:var(--ink-deep)] text-white">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=2400&q=70"
+            alt="Traveler overlooking mountains"
+            className="h-full w-full object-cover animate-ken-burns"
+          />
+          <div className="absolute inset-0 bg-gradient-hero animate-gradient" />
+          {/* Floating orange/blue blobs */}
+          <div className="absolute -left-20 top-20 h-72 w-72 rounded-full bg-[color:var(--brand-orange)]/40 blur-3xl animate-float" />
+          <div className="absolute right-0 bottom-10 h-96 w-96 rounded-full bg-[color:var(--brand-blue)]/40 blur-3xl animate-float" style={{ animationDelay: "1.2s" }} />
+        </div>
 
+        <div className="relative mx-auto flex min-h-[88vh] max-w-7xl flex-col justify-end px-6 pb-20 pt-32 md:px-10 md:pb-28 md:pt-40">
+          <motion.p
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-mono text-[11px] font-semibold uppercase tracking-[0.4em] text-white/80"
+          >
+            Govt. Approved · License No. {SITE.licenseNo}
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-5 max-w-5xl font-display text-5xl leading-[1.02] md:text-7xl lg:text-[5.75rem]"
+          >
+            Jump into the world with{" "}
+            <span className="bg-clip-text text-transparent bg-[linear-gradient(95deg,#FFB36B,#7CC9FF)]">
+              World Jumper
+            </span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-6 max-w-2xl text-base text-white/85 md:text-lg"
+          >
+            Visas for 30+ countries · curated tour packages · IATA air ticketing ·
+            Umrah programs · medical tourism. One trusted travel house — for every
+            kind of journey from Bangladesh.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <Link to="/contact" className="btn-brand inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold">
+              Plan my trip <ArrowUpRight className="h-4 w-4" />
+            </Link>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"
+               className="inline-flex items-center gap-2 rounded-full border-2 border-white/40 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white hover:text-[color:var(--brand-blue-deep)]">
+              <Send className="h-4 w-4" /> WhatsApp us
+            </a>
+            <a href={`tel:${SITE.primaryPhone}`} className="inline-flex items-center gap-2 text-sm font-medium text-white/90 link-underline">
+              <PhoneCall className="h-4 w-4" /> {SITE.primaryPhone}
+            </a>
+          </motion.div>
+
+          {/* Quick service chips */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.8 }}
+            className="mt-12 flex flex-wrap gap-2"
+          >
+            {[
+              { icon: Stamp, label: "Visa", to: "/visa" },
+              { icon: MapPin, label: "Tours", to: "/tours" },
+              { icon: Plane, label: "Air Ticket", to: "/air-ticketing" },
+              { icon: Moon, label: "Umrah", to: "/umrah" },
+              { icon: Stethoscope, label: "Medical", to: "/medical-tourism" },
+            ].map(({ icon: I, label, to }) => (
+              <Link key={label} to={to}
+                className="group inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all hover:border-[color:var(--brand-orange)] hover:bg-[color:var(--brand-orange)]">
+                <I className="h-3.5 w-3.5" /> {label}
+              </Link>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Marquee */}
+        <div className="relative border-t border-white/15 bg-black/30 backdrop-blur-sm">
+          <div className="flex overflow-hidden py-3">
+            <div className="flex shrink-0 animate-marquee gap-12 whitespace-nowrap font-mono text-[11px] font-semibold uppercase tracking-[0.35em] text-white/70">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="flex shrink-0 items-center gap-12">
+                  <span>✦ Visa Processing</span>
+                  <span>✦ Tour Packages</span>
+                  <span>✦ Air Ticketing</span>
+                  <span>✦ Umrah Programs</span>
+                  <span>✦ Medical Tourism</span>
+                  <span>✦ IATA · ATAB · TOAB · CAAB</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
       {/* INTRO with stats */}
       <section className="relative mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
         <div className="grid gap-14 md:grid-cols-12">
