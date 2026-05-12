@@ -21,7 +21,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src={logo} alt="World Jumper Tours & Travels" className="h-10 w-auto md:h-12" />
+          <img src={SITE.logoUrl} alt="World Jumper Tours & Travels" className="h-10 w-auto md:h-12" />
         </Link>
         <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((n) => (
