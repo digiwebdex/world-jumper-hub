@@ -10,8 +10,14 @@ const VISA_CATEGORIES = [
   "Student Visa",
   "Medical Visa",
   "Family Visit Visa",
-  "Work Visa",
+  "Work / Employment Visa",
   "Transit Visa",
+  "Visa On Arrival",
+  "E-Visa",
+  "Conference Visa",
+  "Hajj / Umrah Visa",
+  "Cross Border Visa",
+  "Document Legalization",
 ] as const;
 
 type FieldProps = {
