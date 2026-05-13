@@ -84,7 +84,7 @@ function Dropdown({
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.15 }}
-        className="absolute left-0 right-0 top-[calc(100%+6px)] z-40 max-h-72 overflow-y-auto rounded-xl border border-border bg-white p-1.5 shadow-[0_20px_50px_-12px_rgba(8,12,32,0.25)]"
+        className="absolute left-0 right-0 bottom-[calc(100%+6px)] z-40 max-h-72 overflow-y-auto rounded-xl border border-border bg-white p-1.5 shadow-[0_-20px_50px_-12px_rgba(8,12,32,0.25)]"
       >
         {children}
       </motion.div>
