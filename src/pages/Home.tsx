@@ -125,7 +125,7 @@ export default function Home() {
 
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pb-28 pt-32 md:grid-cols-12 md:px-10 md:pb-36 md:pt-40">
           {/* LEFT — copy */}
-          <div className="md:col-span-7">
+          <div className="md:col-span-12">
             <motion.span
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
