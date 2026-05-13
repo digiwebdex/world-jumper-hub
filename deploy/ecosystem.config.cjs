@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "worldjumper-api",
-      cwd: "/var/www/worldjumper/server",
+      cwd: "/var/www/world-jumper-bd/server",
       script: "node_modules/tsx/dist/cli.mjs",
       args: "src/index.ts",
       env: {
