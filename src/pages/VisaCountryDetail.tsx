@@ -139,6 +139,33 @@ export default function VisaCountryDetail() {
 
   return (
     <SiteLayout>
+      {/* TABS — top of page */}
+      <section className="sticky top-0 z-30 border-b border-border bg-white/95 shadow-sm backdrop-blur">
+        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 md:px-10">
+          {TABS.map((t) => {
+            const Icon = t.icon;
+            const active = activeTab === t.key;
+            return (
+              <button
+                key={t.key}
+                onClick={() => switchTab(t.key)}
+                className={`relative flex shrink-0 items-center gap-2 px-4 py-4 text-sm font-bold transition ${
+                  active
+                    ? "text-[color:var(--brand-orange)]"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {t.label}
+                {active && (
+                  <span className="absolute inset-x-2 bottom-0 h-[3px] rounded-t bg-[color:var(--brand-orange)]" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
       {/* HERO */}
       <section className="relative overflow-hidden bg-[color:var(--ink-deep)] text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,120,40,0.18),transparent_55%),radial-gradient(circle_at_80%_60%,rgba(40,90,200,0.25),transparent_55%)]" />
@@ -191,33 +218,6 @@ export default function VisaCountryDetail() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* TABS */}
-      <section className="sticky top-0 z-20 border-b border-border bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 md:px-10">
-          {TABS.map((t) => {
-            const Icon = t.icon;
-            const active = activeTab === t.key;
-            return (
-              <button
-                key={t.key}
-                onClick={() => switchTab(t.key)}
-                className={`relative flex shrink-0 items-center gap-2 px-4 py-4 text-sm font-bold transition ${
-                  active
-                    ? "text-[color:var(--brand-orange)]"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                {t.label}
-                {active && (
-                  <span className="absolute inset-x-2 bottom-0 h-[3px] rounded-t bg-[color:var(--brand-orange)]" />
-                )}
-              </button>
-            );
-          })}
         </div>
       </section>
 
