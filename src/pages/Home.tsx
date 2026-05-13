@@ -250,35 +250,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT — interactive tabbed quick-search card */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4 }}
-            className="md:col-span-5"
-          >
-            <VisaSearchCard />
-
-            {/* Live activity strip */}
-            <div className="mt-4 flex items-center justify-between rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 text-[11px] backdrop-blur-md">
-              <span className="inline-flex items-center gap-1.5 font-semibold text-white">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                </span>
-                12 inquiries today
-              </span>
-              <a href={`tel:${SITE.primaryPhone}`} className="inline-flex items-center gap-1 font-semibold text-white hover:text-[color:var(--brand-orange)]">
-                <PhoneCall className="h-3 w-3" /> {SITE.primaryPhone}
-              </a>
-            </div>
-
-            <div className="mt-3 flex items-center gap-2 text-xs text-white/70">
-              <Sparkles className="h-3.5 w-3.5 text-[color:var(--brand-orange)]" />
-              Now showing{" "}
-              <span className="font-bold text-white">{activeDest.name}</span>
-              <span>· {activeDest.tag}</span>
-            </div>
-          </motion.div>
+          {/* Search card moved below stats section */}
         </div>
 
         {/* Member strip */}
