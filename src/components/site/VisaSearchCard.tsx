@@ -157,7 +157,7 @@ export function VisaSearchCard() {
         Find your visa requirements in 30 seconds
       </h3>
 
-      <div className="mt-5 grid gap-3 md:grid-cols-2">
+      <div className="mt-5 grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end">
         {/* Citizen — fixed Bangladesh */}
         <Field label="I'm a Citizen of" required>
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-3.5 py-2.5">
@@ -225,9 +225,7 @@ export function VisaSearchCard() {
             </Dropdown>
           </div>
         </Field>
-      </div>
 
-      <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto]">
         {/* Category */}
         <Field label="Visa Category">
           <div className="relative">
@@ -268,16 +266,14 @@ export function VisaSearchCard() {
         </Field>
 
         {/* Submit */}
-        <div className="flex items-end">
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--brand-blue-deep)] px-6 py-2.5 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(20,40,90,0.55)] transition hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange)] md:w-auto"
-          >
-            <Search className="h-4 w-4" />
-            Check Details
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="group inline-flex h-[42px] w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--brand-blue-deep)] px-6 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(20,40,90,0.55)] transition hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange)] md:w-auto"
+        >
+          <Search className="h-4 w-4" />
+          Check Details
+        </button>
       </div>
     </div>
   );
