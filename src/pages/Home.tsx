@@ -255,83 +255,27 @@ export default function Home() {
             transition={{ duration: 0.9, delay: 0.4 }}
             className="md:col-span-5"
           >
-            <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white p-6 text-foreground shadow-[0_30px_80px_-20px_rgba(8,12,32,0.55)] md:p-7">
-              {/* Soft top accent */}
-              <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-brand" />
-              <div aria-hidden className="pointer-events-none absolute -inset-px -z-10 rounded-3xl bg-gradient-brand opacity-40 blur-lg" />
+            <VisaSearchCard />
 
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[color:var(--brand-orange)]">Quick Search</p>
-              <h3 className="mt-1 font-display text-2xl font-extrabold leading-tight text-foreground md:text-[1.6rem]">
-                Start your journey in 30 seconds
-              </h3>
-
-              {/* Tabs — solid background, full contrast */}
-              <div className="mt-5 grid grid-cols-5 gap-1 rounded-2xl bg-[color:var(--cream)] p-1.5 ring-1 ring-border">
-                {QUICK_TABS.map(t => {
-                  const Icon = t.icon;
-                  const active = tab === t.key;
-                  return (
-                    <button
-                      key={t.key}
-                      onClick={() => setTab(t.key)}
-                      className={`relative flex items-center justify-center gap-1 rounded-xl px-1 py-2 text-[11px] font-bold transition ${
-                        active ? "text-white" : "text-[color:var(--brand-blue-deep)]/80 hover:text-[color:var(--brand-blue-deep)]"
-                      }`}
-                    >
-                      {active && (
-                        <motion.span
-                          layoutId="hero-tab-pill"
-                          className="absolute inset-0 rounded-xl bg-[color:var(--brand-blue-deep)] shadow-[0_8px_20px_-6px_rgba(20,40,90,0.55)]"
-                          transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                        />
-                      )}
-                      <span className="relative inline-flex flex-col items-center gap-0.5 sm:flex-row sm:gap-1.5">
-                        <Icon className="h-3.5 w-3.5" /> {t.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Search input */}
-              <div className="mt-5 flex items-center gap-2 rounded-2xl border-2 border-border bg-[color:var(--cream)] px-4 py-3 transition focus-within:border-[color:var(--brand-orange)] focus-within:bg-white focus-within:ring-4 focus-within:ring-[color:var(--brand-orange)]/15">
-                <Search className="h-4 w-4 text-[color:var(--brand-blue-deep)]" />
-                <input
-                  value={query}
-                  onChange={e => setQuery(e.target.value)}
-                  placeholder={activeTab.placeholder}
-                  className="flex-1 bg-transparent text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none"
-                />
-              </div>
-
-              <Link
-                to={`${activeTab.to}${query ? `?q=${encodeURIComponent(query)}` : ""}`}
-                className="group mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[color:var(--brand-orange)] px-5 py-3.5 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(245,130,32,0.6)] transition hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange-deep,#d96a1a)]"
-              >
-                Explore {activeTab.label}
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-
-              {/* Live activity strip */}
-              <div className="mt-5 flex items-center justify-between rounded-xl border border-border bg-[color:var(--cream)] px-3 py-2.5 text-[11px]">
-                <span className="inline-flex items-center gap-1.5 font-semibold text-[color:var(--brand-blue-deep)]">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                  </span>
-                  12 inquiries today
+            {/* Live activity strip */}
+            <div className="mt-4 flex items-center justify-between rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 text-[11px] backdrop-blur-md">
+              <span className="inline-flex items-center gap-1.5 font-semibold text-white">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                 </span>
-                <a href={`tel:${SITE.primaryPhone}`} className="inline-flex items-center gap-1 font-semibold text-foreground hover:text-[color:var(--brand-orange)]">
-                  <PhoneCall className="h-3 w-3" /> {SITE.primaryPhone}
-                </a>
-              </div>
+                12 inquiries today
+              </span>
+              <a href={`tel:${SITE.primaryPhone}`} className="inline-flex items-center gap-1 font-semibold text-white hover:text-[color:var(--brand-orange)]">
+                <PhoneCall className="h-3 w-3" /> {SITE.primaryPhone}
+              </a>
+            </div>
 
-              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-                <Sparkles className="h-3.5 w-3.5 text-[color:var(--brand-orange)]" />
-                Now showing{" "}
-                <span className="font-bold text-foreground">{activeDest.name}</span>
-                <span>· {activeDest.tag}</span>
-              </div>
+            <div className="mt-3 flex items-center gap-2 text-xs text-white/70">
+              <Sparkles className="h-3.5 w-3.5 text-[color:var(--brand-orange)]" />
+              Now showing{" "}
+              <span className="font-bold text-white">{activeDest.name}</span>
+              <span>· {activeDest.tag}</span>
             </div>
           </motion.div>
         </div>
