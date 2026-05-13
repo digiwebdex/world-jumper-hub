@@ -287,6 +287,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* VISA QUICK SEARCH */}
+      <section className="relative px-6 pt-16 md:px-10 md:pt-20">
+        <div className="mx-auto max-w-3xl">
+          <Reveal>
+            <VisaSearchCard />
+          </Reveal>
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section className="relative py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
