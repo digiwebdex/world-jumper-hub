@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { SITE } from "@/lib/site-config";
+import { normalizeBdPhone } from "@/lib/phone";
 
 export interface WhatsAppSettings {
   whatsapp_number: string;
