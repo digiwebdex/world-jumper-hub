@@ -56,6 +56,7 @@ export default function Home() {
   );
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
+  const { data: partnersData } = usePartners();
   const [destIndex, setDestIndex] = useState(0);
   const [tab, setTab] = useState<typeof QUICK_TABS[number]["key"]>("visa");
   const [query, setQuery] = useState("");
