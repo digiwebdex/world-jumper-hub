@@ -22,6 +22,7 @@ import AdminVisaRequirements from "@/pages/admin/AdminVisaRequirements";
 import AdminVisaServices from "@/pages/admin/AdminVisaServices";
 import AdminVisaServiceEditor from "@/pages/admin/AdminVisaServiceEditor";
 import AdminPartners from "@/pages/admin/AdminPartners";
+import AdminMemberships from "@/pages/admin/AdminMemberships";
 import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
