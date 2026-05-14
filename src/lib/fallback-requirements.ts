@@ -291,4 +291,45 @@ export const FALLBACK_REQUIREMENTS: Record<string, VisaRequirement[]> = {
       eligibility_notes: "EPS-cleared workers and skilled professionals with Korean job offer.",
     }),
   ],
-};
+
+  "united-kingdom": [
+    r("Standard Visitor Visa", {
+      required_documents: "Online application, biometrics at VFS Gulshan, passport, financials, employer NOC, accommodation & itinerary.",
+      bank_statement: "Last 6 months statement, min BDT 5,00,000 balance. USD 2,000+ endorsement.",
+      hotel_booking: "Hotel booking or invitation from UK host with proof of accommodation.",
+      air_ticket_booking: "Flight reservation (do not buy until visa granted).",
+      travel_itinerary: "Day-wise itinerary + cover letter explaining purpose.",
+      processing_time: "3 weeks standard / 5 working days priority",
+      embassy_fee: "GBP 115 (6 months) / GBP 432 (2 yrs)", service_charge: "BDT 12,000",
+      important_notes: "• Apply: https://www.gov.uk/standard-visitor-visa\n• Biometrics at VFS, Delta Life Tower, Gulshan-2.\n• Strong ties to Bangladesh + financial stability are key.",
+      eligibility_notes: "Tourism, family visits, business meetings and short courses (under 6 months).",
+    }),
+    r("Student Visa (Student Route)", {
+      required_documents: "CAS from UK university, financial proof, ATAS if applicable, TB test, English test, academic certificates.",
+      bank_statement: "Min GBP 1,334/month (London) or GBP 1,023/month (outside) for 9 months held for 28 days.",
+      student_id: "All academic transcripts and certificates.",
+      invitation_letter: "Confirmation of Acceptance for Studies (CAS) from licensed UK sponsor.",
+      medical_documents: "TB test from IOM-approved clinic in Dhaka.",
+      processing_time: "3 weeks standard",
+      embassy_fee: "GBP 490 + IHS GBP 776/year", service_charge: "BDT 18,000",
+      important_notes: "• English: IELTS UKVI / PTE Academic / TOEFL.\n• ATAS for STEM PhD/Master's.\n• Dependants only for PhD or government-sponsored Master's.",
+      eligibility_notes: "Foundation, Bachelor's, Master's, PhD at UKVI-licensed sponsor universities.",
+    }),
+    r("Skilled Worker Visa", {
+      required_documents: "Certificate of Sponsorship from UK employer, English test, eligible job, salary proof.",
+      invitation_letter: "Certificate of Sponsorship (CoS) from Home Office licensed sponsor.",
+      job_certificate: "BD employer reference + complete CV.",
+      processing_time: "3 weeks (overseas application)",
+      embassy_fee: "GBP 719–1,500 + IHS GBP 1,035/year", service_charge: "BDT 22,000",
+      important_notes: "Min salary GBP 38,700 (general). Job must be on Skilled Worker eligible list (RQF 6+).",
+      eligibility_notes: "Skilled professionals with UK job offer from licensed sponsor.",
+    }),
+  ],
+
+  canada: [
+    r("Visitor Visa (TRV)", {
+      required_documents: "Online IRCC application, biometrics at VFS, passport, financials, ties to Bangladesh, ticket & accommodation.",
+      bank_statement: "Last 12 months statement, min BDT 8,00,000 balance. USD 3,000+ endorsement.",
+      hotel_booking: "Hotel booking or invitation from Canadian host (PR/citizen) with NOA, employment & accommodation proof.",
+      air_ticket_booking: "Flight reservation (book after approval).",
+      travel_
