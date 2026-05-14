@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronDown, Search } from "lucide-react";
 import { api, type VisaCountry } from "@/lib/api";
+import { FALLBACK_COUNTRIES } from "@/lib/fallback-countries";
 
 const VISA_CATEGORIES = [
   "Tourist Visa",
@@ -20,53 +21,6 @@ const VISA_CATEGORIES = [
   "Document Legalization",
 ] as const;
 
-const FALLBACK_COUNTRIES: VisaCountry[] = [
-  ["India", "india", "in"],
-  ["Thailand", "thailand", "th"],
-  ["Malaysia", "malaysia", "my"],
-  ["Singapore", "singapore", "sg"],
-  ["Indonesia", "indonesia", "id"],
-  ["Vietnam", "vietnam", "vn"],
-  ["Sri Lanka", "sri-lanka", "lk"],
-  ["Nepal", "nepal", "np"],
-  ["Bhutan", "bhutan", "bt"],
-  ["Maldives", "maldives", "mv"],
-  ["China", "china", "cn"],
-  ["Japan", "japan", "jp"],
-  ["South Korea", "south-korea", "kr"],
-  ["United Arab Emirates", "united-arab-emirates", "ae"],
-  ["Saudi Arabia", "saudi-arabia", "sa"],
-  ["Qatar", "qatar", "qa"],
-  ["Oman", "oman", "om"],
-  ["Turkey", "turkey", "tr"],
-  ["Egypt", "egypt", "eg"],
-  ["United Kingdom", "united-kingdom", "gb"],
-  ["United States", "united-states", "us"],
-  ["Canada", "canada", "ca"],
-  ["Australia", "australia", "au"],
-  ["New Zealand", "new-zealand", "nz"],
-  ["Germany", "germany", "de"],
-  ["France", "france", "fr"],
-  ["Italy", "italy", "it"],
-  ["Spain", "spain", "es"],
-  ["Netherlands", "netherlands", "nl"],
-  ["Switzerland", "switzerland", "ch"],
-  ["Sweden", "sweden", "se"],
-  ["Norway", "norway", "no"],
-  ["Denmark", "denmark", "dk"],
-  ["Finland", "finland", "fi"],
-  ["Russia", "russia", "ru"],
-  ["South Africa", "south-africa", "za"],
-  ["Brazil", "brazil", "br"],
-].map(([country_name, slug, cc]) => ({
-  id: slug,
-  country_name,
-  slug,
-  flag_url: `https://flagcdn.com/w160/${cc}.png`,
-  short_description: null,
-  is_featured: false,
-  is_active: true,
-}));
 
 type FieldProps = {
   label: string;
@@ -220,7 +174,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   }
 
   const inner = (
-    <div className="grid gap-3 md:grid-cols-[0.6fr_2.2fr_1.4fr_auto] md:items-end">
+    <div className="grid gap-2 md:grid-cols-[0.6fr_2.2fr_1.4fr_auto] md:gap-0 md:items-end">
         {/* Citizen — fixed Bangladesh */}
         <Field label="I'm a Citizen of" required>
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-3.5 py-2.5">
