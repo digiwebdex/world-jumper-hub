@@ -10,12 +10,17 @@ import VisaServices from "@/pages/VisaServices";
 import VisaServiceDetail from "@/pages/VisaServiceDetail";
 import Contact from "@/pages/Contact";
 import Faq from "@/pages/Faq";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
 import { Tours, Umrah, Medical, AirTicketing } from "@/pages/Packages";
 
 import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminSignup from "@/pages/admin/AdminSignup";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminVisaCountries from "@/pages/admin/AdminVisaCountries";
 import AdminVisaRequirements from "@/pages/admin/AdminVisaRequirements";
+import AdminVisaServices from "@/pages/admin/AdminVisaServices";
+import AdminVisaServiceEditor from "@/pages/admin/AdminVisaServiceEditor";
 import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
@@ -50,11 +55,17 @@ export default function App() {
       <Route path="/air-ticketing" element={<AirTicketing />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/faq" element={<Faq />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/signup" element={<AdminSignup />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/visa-countries" element={<AdminVisaCountries />} />
       <Route path="/admin/visa-requirements" element={<AdminVisaRequirements />} />
+      <Route path="/admin/visa-services" element={<AdminVisaServices />} />
+      <Route path="/admin/visa-services/new" element={<AdminVisaServiceEditor />} />
+      <Route path="/admin/visa-services/:id" element={<AdminVisaServiceEditor />} />
       <Route path="/admin/packages" element={<AdminPackages />} />
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
