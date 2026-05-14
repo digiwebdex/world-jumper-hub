@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import {
   Plane, Stamp, MapPin, Stethoscope, Moon, Ticket, ArrowRight, ArrowUpRight, Star,
   ShieldCheck, Clock, HeartHandshake, Globe2, Sparkles, FileCheck2, Send, PhoneCall, Search,
-  ChevronLeft, ChevronRight, Play,
+  ChevronLeft, ChevronRight, Play, Hotel,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ServiceCard, SectionHeading, FancyIcon } from "@/components/site/ui";
@@ -545,22 +545,62 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[color:var(--cream)] to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[color:var(--cream)] to-transparent" />
           <div className="flex gap-3 overflow-hidden">
-            {[0, 1].map(loop => (
-              <div key={loop} className="flex shrink-0 items-center gap-3 animate-marquee" aria-hidden={loop === 1}>
-                {[
-                  "Emirates", "Qatar Airways", "Singapore Airlines", "Turkish Airlines", "Etihad",
-                  "Biman Bangladesh", "Saudia", "Cathay Pacific", "Thai Airways", "Malaysia Airlines",
-                  "IATA", "ATAB", "TOAB", "CAAB", "Bangladesh Tourism Board",
-                ].map((n, i) => (
-                  <div
-                    key={`${loop}-${n}-${i}`}
-                    className="flex h-16 min-w-[200px] items-center justify-center rounded-2xl border border-border bg-card/80 px-6 font-display text-base font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:text-[color:var(--brand-orange)]"
-                  >
-                    {n}
-                  </div>
-                ))}
-              </div>
-            ))}
+            {[0, 1].map(loop => {
+              const partners: { name: string; kind: "airline" | "hotel" | "authority" }[] = [
+                { name: "Emirates", kind: "airline" },
+                { name: "Qatar Airways", kind: "airline" },
+                { name: "Singapore Airlines", kind: "airline" },
+                { name: "Turkish Airlines", kind: "airline" },
+                { name: "Etihad", kind: "airline" },
+                { name: "Biman Bangladesh", kind: "airline" },
+                { name: "Saudia", kind: "airline" },
+                { name: "Cathay Pacific", kind: "airline" },
+                { name: "Thai Airways", kind: "airline" },
+                { name: "Malaysia Airlines", kind: "airline" },
+                { name: "Marriott Hotels", kind: "hotel" },
+                { name: "Hilton Worldwide", kind: "hotel" },
+                { name: "Accor Group", kind: "hotel" },
+                { name: "IATA", kind: "authority" },
+                { name: "ATAB", kind: "authority" },
+                { name: "TOAB", kind: "authority" },
+                { name: "CAAB", kind: "authority" },
+                { name: "Bangladesh Tourism Board", kind: "authority" },
+              ];
+              const initials = (s: string) =>
+                s.split(" ").filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+              const palette: Record<string, string> = {
+                airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
+                hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
+                authority: "from-[color:var(--brand-blue-deep)] to-[color:var(--ink-deep)]",
+              };
+              const Icon = ({ kind }: { kind: string }) =>
+                kind === "airline" ? <Plane className="h-4 w-4" /> :
+                kind === "hotel" ? <Hotel className="h-4 w-4" /> :
+                <ShieldCheck className="h-4 w-4" />;
+              return (
+                <div key={loop} className="flex shrink-0 items-center gap-3 animate-marquee" aria-hidden={loop === 1}>
+                  {partners.map((p, i) => (
+                    <div
+                      key={`${loop}-${p.name}-${i}`}
+                      className="group flex h-16 min-w-[220px] items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 font-display text-sm font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
+                    >
+                      <span className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${palette[p.kind]} text-white shadow-sm`}>
+                        <span className="text-[11px] font-extrabold tracking-tight">{initials(p.name)}</span>
+                        <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border">
+                          <Icon kind={p.kind} />
+                        </span>
+                      </span>
+                      <span className="flex flex-col leading-tight">
+                        <span className="truncate">{p.name}</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                          {p.kind === "airline" ? "Airline Partner" : p.kind === "hotel" ? "Hotel Partner" : "Industry Body"}
+                        </span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
