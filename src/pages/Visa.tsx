@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, SectionHeading } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/motion";
@@ -6,6 +8,7 @@ import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { usePageTitle } from "@/lib/use-page-title";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
+import { VISA_SERVICES } from "@/lib/visa-services";
 
 export default function Visa() {
   usePageTitle(
