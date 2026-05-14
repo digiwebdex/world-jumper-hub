@@ -77,4 +77,66 @@ export const FALLBACK_REQUIREMENTS: Record<string, VisaRequirement[]> = {
       eligibility_notes: "Business owners, exporters, consultants attending meetings.",
     }),
   ],
-};
+
+  india: [
+    r("Tourist Visa", {
+      required_documents: "Online application (IVAC), passport, photo, NID, bank statement, ticket, hotel booking, utility bill.",
+      photo_requirement: "2×2 inch (51×51 mm) white background matte color photo. JPEG upload also required.",
+      bank_statement: "Last 6 months statement, min BDT 50,000 avg balance. Or 3 months + USD 150 endorsement.",
+      hotel_booking: "Confirmed hotel booking.", air_ticket_booking: "Confirmed return ticket.",
+      travel_itinerary: "Day-wise plan inside India.",
+      processing_time: "5–10 working days from IVAC submission",
+      embassy_fee: "BDT 824 (regular)", service_charge: "BDT 2,500",
+      important_notes: "• Apply at https://indianvisaonline.gov.in then book IVAC e-token.\n• IVAC: JFP, Mirpur, Uttara, CTG, Sylhet, Khulna, Rajshahi, Mymensingh, Rangpur, Barishal.\n• Tourist visa quota currently limited.",
+      eligibility_notes: "Sightseeing, family visits and short yoga programs.",
+    }),
+    r("Medical Visa", {
+      required_documents: "Hospital appointment letter, medical reports, doctor's referral, financial documents.",
+      bank_statement: BANK + " Min USD 1,000 endorsement.",
+      invitation_letter: "Original appointment from Indian hospital (Apollo, Fortis, Medanta, CMC Vellore, Narayana etc.).",
+      medical_documents: "All reports, prescriptions, doctor's referral letter from Bangladesh, biopsy/scan reports.",
+      air_ticket_booking: "Open ticket acceptable.",
+      processing_time: "5–7 working days", embassy_fee: "BDT 824", service_charge: "BDT 3,500",
+      important_notes: "• Up to 3 Medical Attendant Visas allowed (blood relatives).\n• Validity 6 months, multiple entry, 60 days per visit.\n• Appointment letter must be within 3 months.",
+      eligibility_notes: "Specialised treatment not available/affordable in Bangladesh.",
+    }),
+    r("Student Visa", {
+      required_documents: "Admission from UGC/AICTE university, certificates, financial papers, police clearance.",
+      bank_statement: BANK + " Sponsor's bank statement min USD 5,000 equivalent.",
+      student_id: "All academic certificates (SSC, HSC, Bachelor's) with transcripts.",
+      invitation_letter: "Original admission/bonafide letter from Indian institution.",
+      medical_documents: "Medical fitness & HIV test report.",
+      hotel_booking: "Hostel allotment or accommodation arrangement.",
+      air_ticket_booking: "Travel booking copy.",
+      processing_time: "10–15 working days", embassy_fee: "BDT 824", service_charge: "BDT 5,000",
+      important_notes: "Valid for course duration up to 5 years. FRRO registration required after arrival.",
+      eligibility_notes: "MBBS, BDS, Engineering, MBA and other recognised programs.",
+    }),
+    r("Business Visa", {
+      required_documents: "Invitation from Indian company, NOC from BD employer, trade license, financial papers.",
+      invitation_letter: "Invitation on Indian company letterhead with GST/PAN.",
+      job_certificate: "NOC + cover letter from BD company.",
+      processing_time: "7–10 working days", embassy_fee: "BDT 824", service_charge: "BDT 4,000",
+      important_notes: "Multiple entry, valid 1 year (5 yrs select). Each visit max 180 days.",
+      eligibility_notes: "Trade meetings, exhibitions, conferences, contract negotiations.",
+    }),
+  ],
+
+  thailand: [
+    r("Tourist Visa (Single Entry)", {
+      required_documents: "Online TR e-Visa, passport, photo, ticket, hotel booking, financial proof.",
+      bank_statement: "Last 6 months statement, min BDT 1,50,000 (≈ THB 20,000). USD 700+ endorsement.",
+      hotel_booking: "Confirmed hotel for full stay.", air_ticket_booking: "Confirmed round-trip ticket.",
+      travel_itinerary: "Day-wise plan.",
+      processing_time: "5–7 working days (Royal Thai Embassy Dhaka)",
+      embassy_fee: "BDT 4,000 (single entry)", service_charge: "BDT 3,500",
+      important_notes: "• Apply via https://thaievisa.go.th\n• Stay up to 60 days, extendable by 30 days.\n• BD passport NOT eligible for Thai visa-on-arrival.",
+      eligibility_notes: "Tourism, family visits, short business meetings under 14 days.",
+    }),
+    r("Education Visa (ED)", {
+      required_documents: "Acceptance from MOE-approved Thai school, financial papers.",
+      student_id: "All academic certificates with English translation.",
+      invitation_letter: "Acceptance + MOE approval letter from Thai institution.",
+      medical_documents: "Medical certificate (no contagious disease).",
+      processing_time: "10–15 working days", embassy_fee: "BDT 8,000", service_charge: "BDT 6,000",
+      important_notes: "Valid 90 days initially, extendable up to 1
