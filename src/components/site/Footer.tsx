@@ -124,12 +124,12 @@ export function Footer() {
                 { name: "Lions Int'l", src: lionsLogo },
               ].map(m => (
                 <li key={m.name} title={m.name} className="group">
-                  <div className="flex h-32 items-center justify-center rounded-xl bg-white p-4 ring-[0.5px] ring-cream/15 transition duration-200 group-hover:-translate-y-0.5 group-hover:ring-accent/50">
+                  <div className="flex h-24 items-center justify-center rounded-lg bg-white px-2 py-2 ring-1 ring-cream/15 transition duration-200 group-hover:-translate-y-0.5 group-hover:ring-accent/60">
                     <img
                       src={m.src}
                       alt={`${m.name} logo`}
                       loading="lazy"
-                      className="max-h-full max-w-full object-contain"
+                      className="h-full w-full object-contain"
                     />
                   </div>
                   <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-cream/60 group-hover:text-accent">
