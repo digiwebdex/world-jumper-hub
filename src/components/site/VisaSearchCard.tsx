@@ -174,11 +174,11 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   }
 
   const inner = (
-    <div className="grid gap-2 md:grid-cols-[0.6fr_2.2fr_1.4fr_auto] md:gap-0 md:items-end">
+    <div className="grid w-full gap-2 md:grid-cols-[minmax(170px,1fr)_minmax(260px,1.7fr)_minmax(240px,1.45fr)_minmax(160px,0.75fr)] md:gap-0 md:items-end">
         {/* Citizen — fixed Bangladesh */}
         <Field label="I'm a Citizen of" required>
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-3.5 py-2.5">
-            <span className="flex items-center gap-2.5 text-sm font-semibold text-foreground">
+          <div className="flex h-12 w-full min-w-0 items-center justify-between gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-4">
+            <span className="flex min-w-0 items-center gap-2.5 text-sm font-semibold text-foreground">
               <img
                 src="https://flagcdn.com/w40/bd.png"
                 alt="Bangladesh"
@@ -315,7 +315,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
         <button
           type="button"
           onClick={handleSubmit}
-          className="group inline-flex h-[42px] w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--brand-blue-deep)] px-6 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(20,40,90,0.55)] transition hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange)] md:w-auto"
+          className="group inline-flex h-12 w-full min-w-0 items-center justify-center gap-2 rounded-xl bg-[color:var(--brand-blue-deep)] px-5 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(20,40,90,0.55)] transition hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange)]"
         >
           <Search className="h-4 w-4" />
           Check Details
