@@ -112,7 +112,7 @@ export function Footer() {
 
           <div className="md:col-span-2">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Member of</h4>
-            <ul className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+            <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { name: "CAAB", src: caabLogo },
                 { name: "IATA", src: iataLogo },
@@ -121,19 +121,20 @@ export function Footer() {
                 { name: "BOTOF", src: botofLogo },
                 { name: "ETAB", src: etabLogo },
                 { name: "e-CAB", src: ecabLogo },
-                { name: "Lions International", src: lionsLogo },
+                { name: "Lions Int'l", src: lionsLogo },
               ].map(m => (
-                <li
-                  key={m.name}
-                  title={m.name}
-                  className="flex h-16 items-center justify-center rounded-lg border border-cream/15 bg-cream/95 p-2 transition hover:border-accent/50 hover:bg-cream"
-                >
-                  <img
-                    src={m.src}
-                    alt={`${m.name} logo`}
-                    loading="lazy"
-                    className="max-h-full max-w-full object-contain"
-                  />
+                <li key={m.name} title={m.name} className="group">
+                  <div className="flex h-24 items-center justify-center rounded-xl bg-white p-3 shadow-[0_4px_14px_rgba(0,0,0,0.25)] ring-1 ring-cream/10 transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_8px_22px_rgba(0,0,0,0.35)] group-hover:ring-accent/40">
+                    <img
+                      src={m.src}
+                      alt={`${m.name} logo`}
+                      loading="lazy"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                  <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-cream/60 group-hover:text-accent">
+                    {m.name}
+                  </p>
                 </li>
               ))}
             </ul>
