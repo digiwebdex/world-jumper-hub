@@ -4,8 +4,27 @@ import { SITE, whatsappLink } from "@/lib/site-config";
 
 export function Footer() {
   return (
-    <footer className="relative mt-32 overflow-hidden bg-ink text-cream">
+    <footer className="relative overflow-hidden bg-ink text-cream">
+      {/* Seamless top transition — replaces the old cream gap */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-40"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--brand-orange) 22%, transparent) 0%, transparent 60%), linear-gradient(180deg, color-mix(in oklab, var(--ink) 85%, black) 0%, var(--ink) 100%)",
+        }}
+      />
       <div className="absolute inset-0 texture-paper opacity-[0.06]" aria-hidden />
+
+      {/* Decorative top rule */}
+      <div className="relative mx-auto max-w-7xl px-6 pt-10 md:px-10">
+        <div className="flex items-center gap-4 text-cream/40">
+          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-cream/25 to-transparent" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.5em]">World Jumper</span>
+          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-cream/25 to-transparent" />
+        </div>
+      </div>
+
       <div className="relative">
         {/* Top — invitation */}
         <div className="border-b border-cream/10">
