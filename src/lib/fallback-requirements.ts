@@ -152,4 +152,60 @@ export const FALLBACK_REQUIREMENTS: Record<string, VisaRequirement[]> = {
       eligibility_notes: "Business meetings, conferences, exhibitions, pre-employment travel.",
     }),
   ],
-};
+
+  malaysia: [
+    r("eVisa Tourist", {
+      required_documents: "Online eVisa, passport, photo, ticket, hotel booking, financial proof.",
+      photo_requirement: "35×50 mm color photo, white background, JPEG upload.",
+      bank_statement: "Last 3 months statement, min BDT 1,00,000 balance. USD 500 endorsement.",
+      hotel_booking: "Confirmed hotel booking.", air_ticket_booking: "Confirmed return ticket.",
+      travel_itinerary: "Day-wise plan.",
+      processing_time: "3–5 working days online",
+      embassy_fee: "USD 25 (eVisa)", service_charge: "BDT 3,500",
+      important_notes: "• Apply online: https://malaysiavisa.imi.gov.my\n• Single entry, 30 days stay.\n• eNTRI/MyXpats not available for BD passport.",
+      eligibility_notes: "Tourism, family visits, short business trips.",
+    }),
+    r("Student Visa", {
+      required_documents: "Offer letter from MOHE-approved Malaysian university, EMGS approval, financial papers, medical, police clearance.",
+      bank_statement: BANK + " Min USD 8,000 equivalent.",
+      student_id: "All academic certificates with EMGS verification.",
+      invitation_letter: "Offer letter + EMGS Visa Approval Letter (VAL).",
+      medical_documents: "EMGS pre-medical screening report.",
+      hotel_booking: "Hostel/accommodation arrangement.",
+      air_ticket_booking: "Confirmed travel booking.",
+      processing_time: "30–45 working days (EMGS + VAL + endorsement)",
+      embassy_fee: "RM 60 + EMGS RM 1,060", service_charge: "BDT 12,000",
+      important_notes: "• Single Entry Visa with VAL → arrival → iKad → student pass.\n• Renewable yearly inside Malaysia.",
+      eligibility_notes: "Foundation, Diploma, Bachelor's, Master's, PhD at recognised universities.",
+    }),
+    r("Employment Pass / Work Visa", {
+      required_documents: "Job offer, MyXpats/Expatriate Committee approval, employer support letter, qualifications.",
+      invitation_letter: "Employment contract + MyXpats / DP10 approval letter from Malaysian employer.",
+      job_certificate: "Bangladeshi employer NOC and full work history.",
+      processing_time: "30–60 working days",
+      embassy_fee: "RM 200 + processing", service_charge: "BDT 15,000",
+      important_notes: "Min monthly salary RM 5,000 for EP. Sector-specific quotas apply.",
+      eligibility_notes: "Skilled professionals with degree + 3 years experience hired by Malaysian employer.",
+    }),
+  ],
+
+  singapore: [
+    r("Tourist Visa (Entry Visa)", {
+      required_documents: "SAVE-approved Local Sponsor (LS) submission, Form 14A, passport, photo, financials.",
+      photo_requirement: "35×45 mm white background color photo, max 6 months old.",
+      bank_statement: "Last 6 months statement, min BDT 3,00,000 balance. SGD 800+ endorsement.",
+      hotel_booking: "Confirmed hotel booking.", air_ticket_booking: "Confirmed return ticket.",
+      travel_itinerary: "Day-wise plan.",
+      processing_time: "3–5 working days (via authorised agent)",
+      embassy_fee: "SGD 30", service_charge: "BDT 5,000 (with sponsor support)",
+      important_notes: "• BD passport requires Form 14A and a Singapore-based local sponsor (citizen/PR).\n• ICA may request additional documents.\n• 30 days single entry typical.",
+      eligibility_notes: "Tourism, transit, family visits, short business meetings.",
+    }),
+    r("Student Pass", {
+      required_documents: "IPA letter from Singapore institution, SOLAR registration, financial proof, medical, FIN.",
+      bank_statement: BANK + " Min SGD 30,000 / USD 22,000 equivalent.",
+      student_id: "All academic certificates + transcripts.",
+      invitation_letter: "In-Principle Approval (IPA) letter from ICA via the Singapore institution.",
+      medical_documents: "ICA medical report (chest X-ray + HIV).",
+      processing_time: "4–6 weeks (SOLAR + IPA + e-Form 16)",
+      embassy_fee: "SGD 30 (issuance) + SGD 60 (Student Pass)", service_charge: "
