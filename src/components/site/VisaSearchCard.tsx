@@ -316,6 +316,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
         <Field label="Visa Category">
           <div className="relative">
             <Pill
+              pillRef={catBtnRef}
               open={openCat}
               placeholder={!category}
               onClick={() => {
@@ -325,7 +326,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
             >
               {category || "Visa Category (optional)"}
             </Pill>
-            <Dropdown open={openCat} onClose={() => setOpenCat(false)}>
+            <Dropdown open={openCat} onClose={() => setOpenCat(false)} anchorRef={catBtnRef}>
               <div className="sticky top-0 z-10 -mx-1 mb-1 bg-white px-1 pb-2">
                 <input
                   autoFocus
