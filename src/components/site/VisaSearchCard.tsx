@@ -187,6 +187,8 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   const [openCat, setOpenCat] = useState(false);
   const [destQuery, setDestQuery] = useState("");
   const [catQuery, setCatQuery] = useState("");
+  const destBtnRef = useRef<HTMLButtonElement>(null);
+  const catBtnRef = useRef<HTMLButtonElement>(null);
 
   const filteredCountries = useMemo(() => {
     const q = destQuery.trim().toLowerCase();
