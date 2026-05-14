@@ -21,6 +21,7 @@ import AdminVisaCountries from "@/pages/admin/AdminVisaCountries";
 import AdminVisaRequirements from "@/pages/admin/AdminVisaRequirements";
 import AdminVisaServices from "@/pages/admin/AdminVisaServices";
 import AdminVisaServiceEditor from "@/pages/admin/AdminVisaServiceEditor";
+import AdminPartners from "@/pages/admin/AdminPartners";
 import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
