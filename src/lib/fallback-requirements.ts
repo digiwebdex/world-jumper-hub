@@ -430,4 +430,37 @@ export const FALLBACK_REQUIREMENTS: Record<string, VisaRequirement[]> = {
   france: [
     r("Schengen Short-Stay Visa (Type C)", {
       required_documents: "TLScontact appointment, online form, passport, photo, travel insurance, financials, employment, accommodation, ticket.",
-      phot
+      photo_requirement: "35×45 mm white background color photo, ICAO compliant, max 6 months old.",
+      bank_statement: "Last 3 months statement, min BDT 2,50,000 balance. EUR 100/day equivalent endorsement.",
+      hotel_booking: "Confirmed hotel for entire stay or invitation (Attestation d'accueil) from French host.",
+      air_ticket_booking: "Confirmed round-trip air ticket reservation.",
+      travel_itinerary: "Day-by-day itinerary covering Schengen states.",
+      processing_time: "15 working days standard (longer in peak season)",
+      embassy_fee: "EUR 90 (adult) + TLS service fee EUR 30",
+      service_charge: "BDT 12,000",
+      important_notes: "• Submit at TLScontact, Delta Life Tower, Gulshan-2.\n• Travel insurance min EUR 30,000 mandatory.\n• Apply max 6 months before travel, min 15 days ahead.\n• France Schengen also valid for all 27 Schengen countries.",
+      eligibility_notes: "Tourism, family visits and short business under 90 days in 180-day period.",
+    }),
+    r("Student Visa (Long-Stay VLS-TS)", {
+      required_documents: "Campus France 'Études en France' clearance, university acceptance, financial proof, accommodation, French/English test, civil documents.",
+      bank_statement: BANK + " Min EUR 7,380/year (EUR 615/month) for 1 year, sponsor's bank statement.",
+      student_id: "All academic certificates + transcripts with notarised translation (English or French).",
+      invitation_letter: "Acceptance letter from French institution + Campus France clearance.",
+      medical_documents: "Medical fitness certificate.",
+      hotel_booking: "Accommodation arrangement (CROUS, private rental, or host family).",
+      processing_time: "3–4 weeks after Campus France interview",
+      embassy_fee: "EUR 99 + TLS service", service_charge: "BDT 18,000",
+      important_notes: "• Mandatory Campus France procedure first: https://www.bangladesh.campusfrance.org\n• OFII validation required after arrival in France.\n• French B2 / English B2 test (TCF / IELTS / TOEFL) usually required.",
+      eligibility_notes: "Bachelor's, Master's, PhD at recognised French universities and Grandes Écoles.",
+    }),
+    r("Long-Stay Work Visa (Passeport Talent)", {
+      required_documents: "Work contract approved by DREETS, qualification, employer support, civil documents.",
+      invitation_letter: "Approved Work Contract / Passeport Talent attestation from French employer.",
+      job_certificate: "BD employer reference + complete CV with verifiable experience.",
+      processing_time: "4–8 weeks", embassy_fee: "EUR 99 + EUR 200 OFII tax",
+      service_charge: "BDT 25,000",
+      important_notes: "Passeport Talent for skilled employees, researchers, ICT, investors, artists. Min salary varies by category (typically ≥ EUR 43,243/year).",
+      eligibility_notes: "Skilled professionals, researchers and specialised workers with French employer sponsorship.",
+    }),
+  ],
+};
