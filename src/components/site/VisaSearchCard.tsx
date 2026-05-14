@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronDown, Search } from "lucide-react";
 import { api, type VisaCountry } from "@/lib/api";
+import { FALLBACK_COUNTRIES } from "@/lib/fallback-countries";
 
 const VISA_CATEGORIES = [
   "Tourist Visa",
