@@ -600,55 +600,101 @@ export default function Home() {
               50+ airline partners · 30+ embassies · 200+ hotel chains
             </p>
           </div>
-        </div>
-        <div className="relative marquee-pause">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
-          <div className="flex w-max gap-2 overflow-hidden sm:gap-3">
-            {(() => {
-              const partners = partnersData;
-              const palette: Record<string, string> = {
-                airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
-                hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
-                authority: "from-[color:var(--brand-blue-deep)] to-[color:var(--ink-deep)]",
-              };
-              const Icon = ({ kind }: { kind: string }) =>
-                kind === "airline" ? <Plane className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> :
-                kind === "hotel" ? <Hotel className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> :
-                <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5" />;
-              return [0, 1].map(loop => (
-                <div key={loop} className="flex shrink-0 items-center gap-2 animate-marquee sm:gap-3" aria-hidden={loop === 1}>
-                  {partners.map((p, i) => (
-                    <div
-                      key={`${loop}-${p.name}-${i}`}
-                      className="group flex h-14 min-w-[180px] items-center gap-2.5 rounded-xl border border-border bg-card/80 px-3 font-display text-xs font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift sm:h-16 sm:min-w-[240px] sm:gap-3 sm:rounded-2xl sm:px-4 sm:text-sm"
-                    >
-                      <span className={`relative flex h-9 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm sm:h-11 sm:w-14 sm:rounded-lg`}>
-                        <img
-                          src={flagUrl(p.cc)}
-                          data-cc={p.cc}
-                          onError={onFlagError}
-                          alt={`${p.country} flag`}
-                          loading="lazy"
-                          className="h-full w-full rounded-sm object-cover sm:rounded-md"
-                        />
-                        <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border sm:h-5 sm:w-5">
-                          <Icon kind={p.kind} />
-                        </span>
-                      </span>
-                      <span className="flex min-w-0 flex-col leading-tight">
-                        <span className="truncate">{p.name}</span>
-                        <span className="truncate text-[9px] font-semibold uppercase tracking-wider text-muted-foreground sm:text-[10px] sm:tracking-widest">
-                          {p.country} · {p.kind === "airline" ? "Airline" : p.kind === "hotel" ? "Hotel" : "Authority"}
-                        </span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ));
-            })()}
+          <div className="mt-4 flex flex-wrap gap-2" role="tablist" aria-label="Filter partners">
+            {([
+              { key: "all", label: "All", icon: Globe2 },
+              { key: "airline", label: "Airlines", icon: Plane },
+              { key: "hotel", label: "Hotels", icon: Hotel },
+              { key: "authority", label: "Authorities", icon: ShieldCheck },
+            ] as const).map(({ key, label, icon: TabIcon }) => {
+              const active = partnerFilter === key;
+              const count = key === "all" ? partnersData.length : partnersData.filter(p => p.kind === key).length;
+              return (
+                <button
+                  key={key}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setPartnerFilter(key)}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-display text-xs font-bold uppercase tracking-wider transition sm:px-4 sm:py-2 sm:text-[11px] ${
+                    active
+                      ? "border-transparent bg-[color:var(--brand-blue-deep)] text-white shadow-sm"
+                      : "border-border bg-card/70 text-[color:var(--brand-blue-deep)] hover:border-[color:var(--brand-orange)]/50"
+                  }`}
+                >
+                  <TabIcon className="h-3.5 w-3.5" />
+                  {label}
+                  <span className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-bold ${active ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"}`}>{count}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
+        {(() => {
+          const palette: Record<string, string> = {
+            airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
+            hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
+            authority: "from-[color:var(--brand-blue-deep)] to-[color:var(--ink-deep)]",
+          };
+          const Icon = ({ kind }: { kind: string }) =>
+            kind === "airline" ? <Plane className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> :
+            kind === "hotel" ? <Hotel className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> :
+            <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5" />;
+          const filtered = partnerFilter === "all" ? partnersData : partnersData.filter(p => p.kind === partnerFilter);
+          const Card = ({ p, keyId }: { p: typeof partnersData[number]; keyId: string }) => (
+            <div
+              key={keyId}
+              className="group flex h-14 min-w-[180px] items-center gap-2.5 rounded-xl border border-border bg-card/80 px-3 font-display text-xs font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift sm:h-16 sm:min-w-[240px] sm:gap-3 sm:rounded-2xl sm:px-4 sm:text-sm"
+            >
+              <span className={`relative flex h-9 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm sm:h-11 sm:w-14 sm:rounded-lg`}>
+                <img
+                  src={flagUrl(p.cc)}
+                  data-cc={p.cc}
+                  onError={onFlagError}
+                  alt={`${p.country} flag`}
+                  loading="lazy"
+                  className="h-full w-full rounded-sm object-cover sm:rounded-md"
+                />
+                <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border sm:h-5 sm:w-5">
+                  <Icon kind={p.kind} />
+                </span>
+              </span>
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span className="truncate">{p.name}</span>
+                <span className="truncate text-[9px] font-semibold uppercase tracking-wider text-muted-foreground sm:text-[10px] sm:tracking-widest">
+                  {p.country} · {p.kind === "airline" ? "Airline" : p.kind === "hotel" ? "Hotel" : "Authority"}
+                </span>
+              </span>
+            </div>
+          );
+
+          if (partnerFilter !== "all") {
+            return (
+              <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-10">
+                {filtered.length === 0 ? (
+                  <p className="py-6 text-center text-sm text-muted-foreground">No partners in this category yet.</p>
+                ) : (
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-4">
+                    {filtered.map((p, i) => <Card key={`f-${p.name}-${i}`} p={p} keyId={`f-${p.name}-${i}`} />)}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          return (
+            <div className="relative marquee-pause">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
+              <div className="flex w-max gap-2 overflow-hidden sm:gap-3">
+                {[0, 1].map(loop => (
+                  <div key={loop} className="flex shrink-0 items-center gap-2 animate-marquee sm:gap-3" aria-hidden={loop === 1}>
+                    {filtered.map((p, i) => <Card key={`${loop}-${p.name}-${i}`} p={p} keyId={`${loop}-${p.name}-${i}`} />)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       {/* CTA BANNER — animated split */}
