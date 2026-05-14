@@ -178,6 +178,22 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
 
   const [openDest, setOpenDest] = useState(false);
   const [openCat, setOpenCat] = useState(false);
+  const [destQuery, setDestQuery] = useState("");
+  const [catQuery, setCatQuery] = useState("");
+
+  const filteredCountries = useMemo(() => {
+    const q = destQuery.trim().toLowerCase();
+    if (!q) return countries;
+    return countries.filter((c) => c.country_name.toLowerCase().includes(q));
+  }, [countries, destQuery]);
+
+  const filteredCategories = useMemo(() => {
+    const q = catQuery.trim().toLowerCase();
+    if (!q) return VISA_CATEGORIES as readonly string[];
+    return (VISA_CATEGORIES as readonly string[]).filter((c) =>
+      c.toLowerCase().includes(q),
+    );
+  }, [catQuery]);
 
   useEffect(() => {
     api
@@ -204,7 +220,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   }
 
   const inner = (
-    <div className="grid gap-3 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end">
+    <div className="grid gap-3 md:grid-cols-[0.85fr_1.3fr_1.1fr_auto] md:items-end">
         {/* Citizen — fixed Bangladesh */}
         <Field label="I'm a Citizen of" required>
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-3.5 py-2.5">
@@ -246,16 +262,29 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
               )}
             </Pill>
             <Dropdown open={openDest} onClose={() => setOpenDest(false)}>
+              <div className="sticky top-0 z-10 -mx-1 mb-1 bg-white px-1 pb-2">
+                <input
+                  autoFocus
+                  type="text"
+                  value={destQuery}
+                  onChange={(e) => setDestQuery(e.target.value)}
+                  placeholder="Search country…"
+                  className="w-full rounded-lg border border-border bg-[color:var(--cream)] px-3 py-2 text-sm outline-none focus:border-[color:var(--brand-blue-deep)]"
+                />
+              </div>
               {countries.length === 0 ? (
                 <p className="px-3 py-2 text-sm text-muted-foreground">Loading countries…</p>
+              ) : filteredCountries.length === 0 ? (
+                <p className="px-3 py-2 text-sm text-muted-foreground">No countries match “{destQuery}”.</p>
               ) : (
-                countries.map((c) => (
+                filteredCountries.map((c) => (
                   <Option
                     key={c.id}
                     active={c.slug === destSlug}
                     onClick={() => {
                       setDestSlug(c.slug);
                       setOpenDest(false);
+                      setDestQuery("");
                     }}
                   >
                     {c.flag_url && (
@@ -287,27 +316,43 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
               {category || "Visa Category (optional)"}
             </Pill>
             <Dropdown open={openCat} onClose={() => setOpenCat(false)}>
+              <div className="sticky top-0 z-10 -mx-1 mb-1 bg-white px-1 pb-2">
+                <input
+                  autoFocus
+                  type="text"
+                  value={catQuery}
+                  onChange={(e) => setCatQuery(e.target.value)}
+                  placeholder="Search visa category…"
+                  className="w-full rounded-lg border border-border bg-[color:var(--cream)] px-3 py-2 text-sm outline-none focus:border-[color:var(--brand-blue-deep)]"
+                />
+              </div>
               <Option
                 active={category === ""}
                 onClick={() => {
                   setCategory("");
                   setOpenCat(false);
+                  setCatQuery("");
                 }}
               >
                 <span className="text-muted-foreground">Any category</span>
               </Option>
-              {VISA_CATEGORIES.map((c) => (
-                <Option
-                  key={c}
-                  active={category === c}
-                  onClick={() => {
-                    setCategory(c);
-                    setOpenCat(false);
-                  }}
-                >
-                  {c}
-                </Option>
-              ))}
+              {filteredCategories.length === 0 ? (
+                <p className="px-3 py-2 text-sm text-muted-foreground">No categories match “{catQuery}”.</p>
+              ) : (
+                filteredCategories.map((c) => (
+                  <Option
+                    key={c}
+                    active={category === c}
+                    onClick={() => {
+                      setCategory(c);
+                      setOpenCat(false);
+                      setCatQuery("");
+                    }}
+                  >
+                    {c}
+                  </Option>
+                ))
+              )}
             </Dropdown>
           </div>
         </Field>
