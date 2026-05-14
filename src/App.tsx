@@ -26,6 +26,9 @@ import AdminMemberships from "@/pages/admin/AdminMemberships";
 import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
+import AdminWhatsApp from "@/pages/admin/AdminWhatsApp";
+import { useEffect } from "react";
+import { bootWhatsAppSettings } from "@/lib/whatsapp-settings";
 
 function NotFound() {
   return (
