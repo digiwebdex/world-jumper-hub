@@ -41,6 +41,8 @@ export default function App() {
       <Route path="/about" element={<About />} />
       <Route path="/services" element={<Services />} />
       <Route path="/visa" element={<Visa />} />
+      <Route path="/visa/services" element={<VisaServices />} />
+      <Route path="/visa/services/:slug" element={<VisaServiceDetail />} />
       <Route path="/visa/:slug" element={<VisaCountryDetail />} />
       <Route path="/tours" element={<Tours />} />
       <Route path="/umrah" element={<Umrah />} />
