@@ -59,7 +59,7 @@ export default function AdminWhatsApp() {
         <form onSubmit={submit} className="grid gap-4 md:grid-cols-2">
           <Field
             full
-            label="WhatsApp Number (international format, digits only)"
+            label="WhatsApp Number (any BD format — auto-normalized)"
             name="whatsapp_number"
             defaultValue={data.whatsapp_number}
             placeholder="8801687072001"
