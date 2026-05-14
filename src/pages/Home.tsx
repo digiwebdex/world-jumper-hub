@@ -11,7 +11,7 @@ import { ServiceCard, SectionHeading, FancyIcon } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem, CountUp } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
-import { VisaSearchCard } from "@/components/site/VisaSearchCard";
+import { HeroSearchTabs } from "@/components/site/HeroSearchTabs";
 import { api, type Package, type VisaCountry } from "@/lib/api";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
@@ -291,7 +291,7 @@ export default function Home() {
       <section className="relative px-6 pt-16 md:px-10 md:pt-20">
         <div className="mx-auto max-w-7xl">
           <Reveal>
-            <VisaSearchCard />
+            <HeroSearchTabs />
           </Reveal>
         </div>
       </section>
