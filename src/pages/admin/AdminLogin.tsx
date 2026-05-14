@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { adminSignIn, useAdminAuth } from "@/lib/use-admin-auth";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE } from "@/lib/site-config";
@@ -48,6 +48,10 @@ export default function AdminLogin() {
             className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-gradient-brand px-4 py-2.5 text-sm font-semibold text-white shadow-brand disabled:opacity-60">
             {busy && <Loader2 className="h-4 w-4 animate-spin" />} Sign in
           </button>
+          <div className="flex items-center justify-between pt-1 text-xs">
+            <Link to="/forgot-password" className="text-primary hover:underline">Forgot password?</Link>
+            <Link to="/admin/signup" className="text-muted-foreground hover:underline">Create account</Link>
+          </div>
         </div>
       </form>
     </div>
