@@ -134,8 +134,11 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   useEffect(() => {
     api
       .get<{ countries: VisaCountry[] }>("/visa-countries")
-      .then((r) => setCountries(r.countries || []))
-      .catch(() => setCountries([]));
+      .then((r) => {
+        const list = r.countries || [];
+        setCountries(list.length ? list : FALLBACK_COUNTRIES);
+      })
+      .catch(() => setCountries(FALLBACK_COUNTRIES));
   }, []);
 
   const selectedDest = useMemo(
