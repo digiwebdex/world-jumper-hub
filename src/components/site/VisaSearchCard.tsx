@@ -316,27 +316,43 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
               {category || "Visa Category (optional)"}
             </Pill>
             <Dropdown open={openCat} onClose={() => setOpenCat(false)}>
+              <div className="sticky top-0 z-10 -mx-1 mb-1 bg-white px-1 pb-2">
+                <input
+                  autoFocus
+                  type="text"
+                  value={catQuery}
+                  onChange={(e) => setCatQuery(e.target.value)}
+                  placeholder="Search visa category…"
+                  className="w-full rounded-lg border border-border bg-[color:var(--cream)] px-3 py-2 text-sm outline-none focus:border-[color:var(--brand-blue-deep)]"
+                />
+              </div>
               <Option
                 active={category === ""}
                 onClick={() => {
                   setCategory("");
                   setOpenCat(false);
+                  setCatQuery("");
                 }}
               >
                 <span className="text-muted-foreground">Any category</span>
               </Option>
-              {VISA_CATEGORIES.map((c) => (
-                <Option
-                  key={c}
-                  active={category === c}
-                  onClick={() => {
-                    setCategory(c);
-                    setOpenCat(false);
-                  }}
-                >
-                  {c}
-                </Option>
-              ))}
+              {filteredCategories.length === 0 ? (
+                <p className="px-3 py-2 text-sm text-muted-foreground">No categories match “{catQuery}”.</p>
+              ) : (
+                filteredCategories.map((c) => (
+                  <Option
+                    key={c}
+                    active={category === c}
+                    onClick={() => {
+                      setCategory(c);
+                      setOpenCat(false);
+                      setCatQuery("");
+                    }}
+                  >
+                    {c}
+                  </Option>
+                ))
+              )}
             </Dropdown>
           </div>
         </Field>
