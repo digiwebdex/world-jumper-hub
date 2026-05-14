@@ -271,7 +271,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
                 "Select country"
               )}
             </Pill>
-            <Dropdown open={openDest} onClose={() => setOpenDest(false)}>
+            <Dropdown open={openDest} onClose={() => setOpenDest(false)} anchorRef={destBtnRef}>
               <div className="sticky top-0 z-10 -mx-1 mb-1 bg-white px-1 pb-2">
                 <input
                   autoFocus
