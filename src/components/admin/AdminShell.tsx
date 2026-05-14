@@ -10,6 +10,7 @@ const NAV = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/visa-countries", label: "Visa Countries", icon: Globe2 },
   { to: "/admin/visa-requirements", label: "Visa Requirements", icon: FileCheck2 },
+  { to: "/admin/visa-services", label: "Visa Services CMS", icon: FileCheck2 },
   { to: "/admin/packages", label: "Packages", icon: Package },
   { to: "/admin/inquiries", label: "Inquiries", icon: Inbox },
   { to: "/admin/settings", label: "Settings", icon: Settings },
