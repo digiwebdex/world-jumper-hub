@@ -566,10 +566,10 @@ export default function Home() {
                 { name: "CAAB", kind: "authority", country: "Bangladesh", cc: "BD" },
                 { name: "Bangladesh Tourism Board", kind: "authority", country: "Bangladesh", cc: "BD" },
               ];
-              const flagEmoji = (cc: string) => {
-                if (cc === "UN") return "🌐";
-                return cc.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
-              };
+              const flagSrc = (cc: string) =>
+                cc === "UN"
+                  ? "https://flagcdn.com/w160/un.png"
+                  : `https://flagcdn.com/w160/${cc.toLowerCase()}.png`;
               const palette: Record<string, string> = {
                 airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
                 hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
