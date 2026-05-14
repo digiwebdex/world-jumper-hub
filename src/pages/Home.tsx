@@ -529,6 +529,60 @@ export default function Home() {
         </div>
       </section>
 
+      {/* COUNTRY FLAG GALLERY */}
+      <section className="relative px-6 py-16 md:px-10">
+        <div className="mx-auto max-w-7xl">
+          <Reveal>
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-[color:var(--brand-orange)]">
+                  Global reach
+                </p>
+                <h2 className="mt-2 font-display text-3xl font-black text-[color:var(--brand-blue-deep)] md:text-4xl">
+                  Countries we serve
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+                  Visa, ticketing, and travel support across 35+ destinations — every flag below is a route we operate daily.
+                </p>
+              </div>
+              <span className="rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[color:var(--brand-blue-deep)]">
+                35+ destinations
+              </span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+              {[
+                ["Bangladesh", "BD"], ["India", "IN"], ["Thailand", "TH"], ["Malaysia", "MY"],
+                ["Singapore", "SG"], ["Indonesia", "ID"], ["Vietnam", "VN"], ["Sri Lanka", "LK"],
+                ["Nepal", "NP"], ["Bhutan", "BT"], ["Maldives", "MV"], ["China", "CN"],
+                ["Japan", "JP"], ["South Korea", "KR"], ["UAE", "AE"], ["Saudi Arabia", "SA"],
+                ["Qatar", "QA"], ["Oman", "OM"], ["Türkiye", "TR"], ["Egypt", "EG"],
+                ["United Kingdom", "GB"], ["United States", "US"], ["Canada", "CA"], ["Australia", "AU"],
+                ["New Zealand", "NZ"], ["Germany", "DE"], ["France", "FR"], ["Italy", "IT"],
+                ["Spain", "ES"], ["Netherlands", "NL"], ["Switzerland", "CH"], ["Sweden", "SE"],
+                ["Norway", "NO"], ["Denmark", "DK"], ["Russia", "RU"], ["South Africa", "ZA"],
+              ].map(([name, cc]) => (
+                <div
+                  key={cc}
+                  className="group flex flex-col items-center gap-2 rounded-2xl border border-border bg-card p-3 text-center transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
+                >
+                  <div className="relative h-12 w-16 overflow-hidden rounded-md ring-1 ring-border">
+                    <img
+                      src={`https://flagcdn.com/w160/${cc.toLowerCase()}.png`}
+                      alt={`${name} flag`}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition group-hover:scale-105"
+                    />
+                  </div>
+                  <span className="font-display text-[11px] font-bold uppercase tracking-wide text-[color:var(--brand-blue-deep)]">
+                    {name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* TRUSTED PARTNERS — Marquee */}
       <section className="relative overflow-hidden border-y border-border bg-gradient-warm py-14">
         <div className="mx-auto mb-6 max-w-7xl px-6 md:px-10">
@@ -566,10 +620,10 @@ export default function Home() {
                 { name: "CAAB", kind: "authority", country: "Bangladesh", cc: "BD" },
                 { name: "Bangladesh Tourism Board", kind: "authority", country: "Bangladesh", cc: "BD" },
               ];
-              const flagEmoji = (cc: string) => {
-                if (cc === "UN") return "🌐";
-                return cc.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
-              };
+              const flagSrc = (cc: string) =>
+                cc === "UN"
+                  ? "https://flagcdn.com/w160/un.png"
+                  : `https://flagcdn.com/w160/${cc.toLowerCase()}.png`;
               const palette: Record<string, string> = {
                 airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
                 hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
@@ -586,8 +640,13 @@ export default function Home() {
                       key={`${loop}-${p.name}-${i}`}
                       className="group flex h-16 min-w-[240px] items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 font-display text-sm font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
                     >
-                      <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${palette[p.kind]} text-white shadow-sm`}>
-                        <span className="text-2xl leading-none" aria-hidden>{flagEmoji(p.cc)}</span>
+                      <span className={`relative flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm`}>
+                        <img
+                          src={flagSrc(p.cc)}
+                          alt={`${p.country} flag`}
+                          loading="lazy"
+                          className="h-full w-full rounded-md object-cover"
+                        />
                         <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border">
                           <Icon kind={p.kind} />
                         </span>
