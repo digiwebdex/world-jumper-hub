@@ -586,8 +586,13 @@ export default function Home() {
                       key={`${loop}-${p.name}-${i}`}
                       className="group flex h-16 min-w-[240px] items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 font-display text-sm font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
                     >
-                      <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${palette[p.kind]} text-white shadow-sm`}>
-                        <span className="text-2xl leading-none" aria-hidden>{flagEmoji(p.cc)}</span>
+                      <span className={`relative flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm`}>
+                        <img
+                          src={flagSrc(p.cc)}
+                          alt={`${p.country} flag`}
+                          loading="lazy"
+                          className="h-full w-full rounded-md object-cover"
+                        />
                         <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border">
                           <Icon kind={p.kind} />
                         </span>
