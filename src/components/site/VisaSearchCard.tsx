@@ -262,16 +262,29 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
               )}
             </Pill>
             <Dropdown open={openDest} onClose={() => setOpenDest(false)}>
+              <div className="sticky top-0 z-10 -mx-1 mb-1 bg-white px-1 pb-2">
+                <input
+                  autoFocus
+                  type="text"
+                  value={destQuery}
+                  onChange={(e) => setDestQuery(e.target.value)}
+                  placeholder="Search country…"
+                  className="w-full rounded-lg border border-border bg-[color:var(--cream)] px-3 py-2 text-sm outline-none focus:border-[color:var(--brand-blue-deep)]"
+                />
+              </div>
               {countries.length === 0 ? (
                 <p className="px-3 py-2 text-sm text-muted-foreground">Loading countries…</p>
+              ) : filteredCountries.length === 0 ? (
+                <p className="px-3 py-2 text-sm text-muted-foreground">No countries match “{destQuery}”.</p>
               ) : (
-                countries.map((c) => (
+                filteredCountries.map((c) => (
                   <Option
                     key={c.id}
                     active={c.slug === destSlug}
                     onClick={() => {
                       setDestSlug(c.slug);
                       setOpenDest(false);
+                      setDestQuery("");
                     }}
                   >
                     {c.flag_url && (
