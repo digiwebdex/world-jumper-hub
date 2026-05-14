@@ -17,6 +17,7 @@ import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { flagUrl, onFlagError } from "@/lib/flag-url";
 import { usePartners } from "@/lib/partners-db";
+import { useMemberships } from "@/lib/memberships-db";
 
 const SERVICES = [
   { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa", accent: "orange" as const },
