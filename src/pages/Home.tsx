@@ -11,7 +11,6 @@ import { ServiceCard, SectionHeading, FancyIcon } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem, CountUp } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
-import { VisaSearchCard } from "@/components/site/VisaSearchCard";
 import { HeroSearchTabs } from "@/components/site/HeroSearchTabs";
 import { api, type Package, type VisaCountry } from "@/lib/api";
 import { usePageTitle } from "@/lib/use-page-title";
