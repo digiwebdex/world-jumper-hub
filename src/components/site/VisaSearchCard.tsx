@@ -138,7 +138,7 @@ function Dropdown({
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.15 }}
-        className="absolute left-0 right-0 bottom-[calc(100%+6px)] z-40 max-h-72 overflow-y-auto rounded-xl border border-border bg-white p-1.5 shadow-[0_-20px_50px_-12px_rgba(8,12,32,0.25)]"
+        className="absolute left-0 right-0 bottom-[calc(100%+6px)] z-40 max-h-[26rem] overflow-y-auto overscroll-contain rounded-xl border border-border bg-white p-1.5 shadow-[0_-20px_50px_-12px_rgba(8,12,32,0.25)] scrollbar-thin scrollbar-thumb-[color:var(--brand-blue-deep)]/30 scrollbar-track-transparent [scrollbar-gutter:stable]"
       >
         {children}
       </motion.div>
