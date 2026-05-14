@@ -139,4 +139,17 @@ export const FALLBACK_REQUIREMENTS: Record<string, VisaRequirement[]> = {
       invitation_letter: "Acceptance + MOE approval letter from Thai institution.",
       medical_documents: "Medical certificate (no contagious disease).",
       processing_time: "10–15 working days", embassy_fee: "BDT 8,000", service_charge: "BDT 6,000",
-      important_notes: "Valid 90 days initially, extendable up to 1
+      important_notes: "Valid 90 days initially, extendable up to 1 year inside Thailand at Immigration Bureau.",
+      eligibility_notes: "Students, language learners and short-course participants.",
+    }),
+    r("Business Visa (Non-B)", {
+      required_documents: "Invitation from Thai company, BOI/MOL approval (for work), employer NOC, financial papers.",
+      invitation_letter: "Invitation on Thai company letterhead with company registration documents.",
+      job_certificate: "NOC + cover letter from Bangladeshi company.",
+      processing_time: "7–10 working days", embassy_fee: "BDT 6,000 (single) / BDT 15,000 (multiple)",
+      service_charge: "BDT 5,000",
+      important_notes: "Non-B visa is gateway to Thai work permit. 90 days; extendable to 1 year after work permit.",
+      eligibility_notes: "Business meetings, conferences, exhibitions, pre-employment travel.",
+    }),
+  ],
+};
