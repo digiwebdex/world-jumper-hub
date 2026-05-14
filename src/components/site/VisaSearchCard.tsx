@@ -178,6 +178,22 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
 
   const [openDest, setOpenDest] = useState(false);
   const [openCat, setOpenCat] = useState(false);
+  const [destQuery, setDestQuery] = useState("");
+  const [catQuery, setCatQuery] = useState("");
+
+  const filteredCountries = useMemo(() => {
+    const q = destQuery.trim().toLowerCase();
+    if (!q) return countries;
+    return countries.filter((c) => c.country_name.toLowerCase().includes(q));
+  }, [countries, destQuery]);
+
+  const filteredCategories = useMemo(() => {
+    const q = catQuery.trim().toLowerCase();
+    if (!q) return VISA_CATEGORIES as readonly string[];
+    return (VISA_CATEGORIES as readonly string[]).filter((c) =>
+      c.toLowerCase().includes(q),
+    );
+  }, [catQuery]);
 
   useEffect(() => {
     api
