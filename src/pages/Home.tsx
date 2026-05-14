@@ -292,7 +292,7 @@ export default function Home() {
       <section className="relative px-6 pt-16 md:px-10 md:pt-20">
         <div className="mx-auto max-w-7xl">
           <Reveal>
-            <VisaSearchCard />
+            <HeroSearchTabs />
           </Reveal>
         </div>
       </section>
