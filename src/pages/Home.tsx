@@ -587,22 +587,22 @@ export default function Home() {
       </section>
 
       {/* TRUSTED PARTNERS — Marquee */}
-      <section className="relative overflow-hidden border-y border-border bg-gradient-warm py-14">
-        <div className="mx-auto mb-6 max-w-7xl px-6 md:px-10">
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
+      <section className="relative overflow-hidden border-y border-border bg-gradient-warm py-10 md:py-14">
+        <div className="mx-auto mb-5 max-w-7xl px-4 sm:px-6 md:mb-6 md:px-10">
+          <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:flex-wrap sm:items-end">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs sm:tracking-[0.25em]">
               Trusted by travelers · Recognized by industry
             </p>
-            <p className="text-xs font-semibold text-muted-foreground">
+            <p className="text-[10px] font-semibold text-muted-foreground sm:text-xs">
               50+ airline partners · 30+ embassies · 200+ hotel chains
             </p>
           </div>
         </div>
-        <div className="relative">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[color:var(--cream)] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[color:var(--cream)] to-transparent" />
-          <div className="flex gap-3 overflow-hidden">
-            {[0, 1].map(loop => {
+        <div className="relative marquee-pause">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
+          <div className="flex w-max gap-2 overflow-hidden sm:gap-3">
+            {(() => {
               const partners: { name: string; kind: "airline" | "hotel" | "authority"; country: string; cc: string }[] = [
                 { name: "Emirates", kind: "airline", country: "UAE", cc: "AE" },
                 { name: "Qatar Airways", kind: "airline", country: "Qatar", cc: "QA" },
@@ -629,40 +629,40 @@ export default function Home() {
                 authority: "from-[color:var(--brand-blue-deep)] to-[color:var(--ink-deep)]",
               };
               const Icon = ({ kind }: { kind: string }) =>
-                kind === "airline" ? <Plane className="h-3.5 w-3.5" /> :
-                kind === "hotel" ? <Hotel className="h-3.5 w-3.5" /> :
-                <ShieldCheck className="h-3.5 w-3.5" />;
-              return (
-                <div key={loop} className="flex shrink-0 items-center gap-3 animate-marquee" aria-hidden={loop === 1}>
+                kind === "airline" ? <Plane className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> :
+                kind === "hotel" ? <Hotel className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> :
+                <ShieldCheck className="h-3 w-3 sm:h-3.5 sm:w-3.5" />;
+              return [0, 1].map(loop => (
+                <div key={loop} className="flex shrink-0 items-center gap-2 animate-marquee sm:gap-3" aria-hidden={loop === 1}>
                   {partners.map((p, i) => (
                     <div
                       key={`${loop}-${p.name}-${i}`}
-                      className="group flex h-16 min-w-[240px] items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 font-display text-sm font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
+                      className="group flex h-14 min-w-[180px] items-center gap-2.5 rounded-xl border border-border bg-card/80 px-3 font-display text-xs font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift sm:h-16 sm:min-w-[240px] sm:gap-3 sm:rounded-2xl sm:px-4 sm:text-sm"
                     >
-                      <span className={`relative flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm`}>
+                      <span className={`relative flex h-9 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm sm:h-11 sm:w-14 sm:rounded-lg`}>
                         <img
                           src={flagUrl(p.cc)}
                           data-cc={p.cc}
                           onError={onFlagError}
                           alt={`${p.country} flag`}
                           loading="lazy"
-                          className="h-full w-full rounded-md object-cover"
+                          className="h-full w-full rounded-sm object-cover sm:rounded-md"
                         />
-                        <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border">
+                        <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border sm:h-5 sm:w-5">
                           <Icon kind={p.kind} />
                         </span>
                       </span>
-                      <span className="flex flex-col leading-tight">
+                      <span className="flex min-w-0 flex-col leading-tight">
                         <span className="truncate">{p.name}</span>
-                        <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                        <span className="truncate text-[9px] font-semibold uppercase tracking-wider text-muted-foreground sm:text-[10px] sm:tracking-widest">
                           {p.country} · {p.kind === "airline" ? "Airline" : p.kind === "hotel" ? "Hotel" : "Authority"}
                         </span>
                       </span>
                     </div>
                   ))}
                 </div>
-              );
-            })}
+              ));
+            })()}
           </div>
         </div>
       </section>
