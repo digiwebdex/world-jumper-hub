@@ -90,8 +90,29 @@ export function InquiryForm({
       setStatus({ ok: false, msg: "Could not submit. Please try again or call us directly." });
       return;
     }
+
+    // Build WhatsApp message with inquiry details and open chat with company number
+    const lines = [
+      "*New Inquiry — World Jumper website*",
+      `From page: ${sourcePage}`,
+      "",
+      `*Name:* ${payload.full_name}`,
+      `*Mobile:* ${payload.mobile_number}`,
+      payload.email ? `*Email:* ${payload.email}` : null,
+      payload.service_type ? `*Service:* ${payload.service_type}` : null,
+      payload.destination_country ? `*Destination:* ${payload.destination_country}` : null,
+      payload.journey_from ? `*From:* ${payload.journey_from}` : null,
+      payload.journey_to ? `*To:* ${payload.journey_to}` : null,
+      payload.departure_date ? `*Departure:* ${payload.departure_date}` : null,
+      payload.return_date ? `*Return:* ${payload.return_date}` : null,
+      payload.travel_date ? `*Travel date:* ${payload.travel_date}` : null,
+      payload.passengers ? `*Passengers:* ${payload.passengers}` : null,
+      payload.message ? `\n*Message:*\n${payload.message}` : null,
+    ].filter(Boolean).join("\n");
+    try { window.open(whatsappLink(lines), "_blank", "noopener,noreferrer"); } catch { /* ignore popup blocked */ }
+
     setSubmitting(false);
-    setStatus({ ok: true, msg: "Inquiry submitted! Our team will contact you soon." });
+    setStatus({ ok: true, msg: "Inquiry submitted! Opening WhatsApp to send your details…" });
     (e.target as HTMLFormElement).reset();
   };
 
