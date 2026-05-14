@@ -326,8 +326,8 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   if (bare) return inner;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white p-6 text-foreground shadow-[0_30px_80px_-20px_rgba(8,12,32,0.55)] md:p-7">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-brand" />
+    <div className="relative rounded-3xl border border-white/15 bg-white p-6 text-foreground shadow-[0_30px_80px_-20px_rgba(8,12,32,0.55)] md:p-7">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1.5 rounded-t-3xl bg-gradient-brand" />
       <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[color:var(--brand-orange)]">
         Visa Quick Check
       </p>
