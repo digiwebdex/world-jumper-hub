@@ -48,6 +48,6 @@ export async function saveWhatsAppSettings(input: WhatsAppSettings) {
     .upsert({ id: 1, ...input }, { onConflict: "id" });
   if (error) throw error;
   // Mirror onto SITE for the rest of the session.
-  SITE.whatsappIntl = input.whatsapp_number.replace(/[^0-9]/g, "");
+  SITE.whatsappIntl = normalizeBdPhone(input.whatsapp_number);
   SITE.whatsappMessage = input.whatsapp_message;
 }
