@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  LayoutDashboard, Globe2, FileCheck2, Package, Inbox, Settings, LogOut, Menu, Users,
+  LayoutDashboard, Globe2, FileCheck2, Package, Inbox, Settings, LogOut, Menu, Users, Award,
 } from "lucide-react";
 import { useAdminAuth, adminSignOut } from "@/lib/use-admin-auth";
 import { SITE } from "@/lib/site-config";
@@ -12,6 +12,7 @@ const NAV = [
   { to: "/admin/visa-requirements", label: "Visa Requirements", icon: FileCheck2 },
   { to: "/admin/visa-services", label: "Visa Services CMS", icon: FileCheck2 },
   { to: "/admin/partners", label: "Partners", icon: Users },
+  { to: "/admin/memberships", label: "Memberships", icon: Award },
   { to: "/admin/packages", label: "Packages", icon: Package },
   { to: "/admin/inquiries", label: "Inquiries", icon: Inbox },
   { to: "/admin/settings", label: "Settings", icon: Settings },

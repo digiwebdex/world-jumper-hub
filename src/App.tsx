@@ -22,6 +22,7 @@ import AdminVisaRequirements from "@/pages/admin/AdminVisaRequirements";
 import AdminVisaServices from "@/pages/admin/AdminVisaServices";
 import AdminVisaServiceEditor from "@/pages/admin/AdminVisaServiceEditor";
 import AdminPartners from "@/pages/admin/AdminPartners";
+import AdminMemberships from "@/pages/admin/AdminMemberships";
 import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
@@ -68,6 +69,7 @@ export default function App() {
       <Route path="/admin/visa-services/new" element={<AdminVisaServiceEditor />} />
       <Route path="/admin/visa-services/:id" element={<AdminVisaServiceEditor />} />
       <Route path="/admin/partners" element={<AdminPartners />} />
+      <Route path="/admin/memberships" element={<AdminMemberships />} />
       <Route path="/admin/packages" element={<AdminPackages />} />
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />

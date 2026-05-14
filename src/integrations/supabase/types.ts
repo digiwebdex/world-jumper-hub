@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      memberships: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          link_url: string | null
+          logo_url: string | null
+          name: string
+          published: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          link_url?: string | null
+          logo_url?: string | null
+          name: string
+          published?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          link_url?: string | null
+          logo_url?: string | null
+          name?: string
+          published?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           cc: string
