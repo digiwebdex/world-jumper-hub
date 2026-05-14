@@ -3,6 +3,7 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { Card, Field, PrimaryButton } from "@/components/admin/form-bits";
 import { usePageTitle } from "@/lib/use-page-title";
 import { useWhatsAppSettings, saveWhatsAppSettings } from "@/lib/whatsapp-settings";
+import { normalizeBdPhone, formatBdPhoneDisplay } from "@/lib/phone";
 import { MessageCircle, ExternalLink } from "lucide-react";
 
 export default function AdminWhatsApp() {
