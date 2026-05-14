@@ -248,6 +248,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
         <Field label="Traveling to" required>
           <div className="relative">
             <Pill
+              pillRef={destBtnRef}
               open={openDest}
               placeholder={!selectedDest}
               onClick={() => {
