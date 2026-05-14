@@ -271,7 +271,6 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
           Check Details
         </button>
       </div>
-    </div>
   );
 
   if (bare) return inner;
