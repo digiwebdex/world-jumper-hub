@@ -266,4 +266,21 @@
     background-size: 18px 18px, 36px 36px;
     background-position: 0 0, 9px 9px;
   }
+
+  /* Generic admin form input */
+  .input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--background));
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+    outline: none;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .input:focus {
+    border-color: var(--brand-orange);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-orange) 20%, transparent);
+  }
 }
