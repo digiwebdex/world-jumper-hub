@@ -623,10 +623,6 @@ export default function Home() {
                 { name: "CAAB", kind: "authority", country: "Bangladesh", cc: "BD" },
                 { name: "Bangladesh Tourism Board", kind: "authority", country: "Bangladesh", cc: "BD" },
               ];
-              const flagSrc = (cc: string) =>
-                cc === "UN"
-                  ? "https://flagcdn.com/w160/un.png"
-                  : `https://flagcdn.com/w160/${cc.toLowerCase()}.png`;
               const palette: Record<string, string> = {
                 airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
                 hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
@@ -645,7 +641,9 @@ export default function Home() {
                     >
                       <span className={`relative flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm`}>
                         <img
-                          src={flagSrc(p.cc)}
+                          src={flagUrl(p.cc)}
+                          data-cc={p.cc}
+                          onError={onFlagError}
                           alt={`${p.country} flag`}
                           loading="lazy"
                           className="h-full w-full rounded-md object-cover"
