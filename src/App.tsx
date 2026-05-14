@@ -6,6 +6,8 @@ import About from "@/pages/About";
 import Services from "@/pages/Services";
 import Visa from "@/pages/Visa";
 import VisaCountryDetail from "@/pages/VisaCountryDetail";
+import VisaServices from "@/pages/VisaServices";
+import VisaServiceDetail from "@/pages/VisaServiceDetail";
 import Contact from "@/pages/Contact";
 import Faq from "@/pages/Faq";
 import { Tours, Umrah, Medical, AirTicketing } from "@/pages/Packages";
@@ -39,6 +41,8 @@ export default function App() {
       <Route path="/about" element={<About />} />
       <Route path="/services" element={<Services />} />
       <Route path="/visa" element={<Visa />} />
+      <Route path="/visa/services" element={<VisaServices />} />
+      <Route path="/visa/services/:slug" element={<VisaServiceDetail />} />
       <Route path="/visa/:slug" element={<VisaCountryDetail />} />
       <Route path="/tours" element={<Tours />} />
       <Route path="/umrah" element={<Umrah />} />
