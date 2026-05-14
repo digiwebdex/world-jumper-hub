@@ -546,46 +546,48 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[color:var(--cream)] to-transparent" />
           <div className="flex gap-3 overflow-hidden">
             {[0, 1].map(loop => {
-              const partners: { name: string; kind: "airline" | "hotel" | "authority" }[] = [
-                { name: "Emirates", kind: "airline" },
-                { name: "Qatar Airways", kind: "airline" },
-                { name: "Singapore Airlines", kind: "airline" },
-                { name: "Turkish Airlines", kind: "airline" },
-                { name: "Etihad", kind: "airline" },
-                { name: "Biman Bangladesh", kind: "airline" },
-                { name: "Saudia", kind: "airline" },
-                { name: "Cathay Pacific", kind: "airline" },
-                { name: "Thai Airways", kind: "airline" },
-                { name: "Malaysia Airlines", kind: "airline" },
-                { name: "Marriott Hotels", kind: "hotel" },
-                { name: "Hilton Worldwide", kind: "hotel" },
-                { name: "Accor Group", kind: "hotel" },
-                { name: "IATA", kind: "authority" },
-                { name: "ATAB", kind: "authority" },
-                { name: "TOAB", kind: "authority" },
-                { name: "CAAB", kind: "authority" },
-                { name: "Bangladesh Tourism Board", kind: "authority" },
+              const partners: { name: string; kind: "airline" | "hotel" | "authority"; country: string; cc: string }[] = [
+                { name: "Emirates", kind: "airline", country: "UAE", cc: "AE" },
+                { name: "Qatar Airways", kind: "airline", country: "Qatar", cc: "QA" },
+                { name: "Singapore Airlines", kind: "airline", country: "Singapore", cc: "SG" },
+                { name: "Turkish Airlines", kind: "airline", country: "Türkiye", cc: "TR" },
+                { name: "Etihad", kind: "airline", country: "UAE", cc: "AE" },
+                { name: "Biman Bangladesh", kind: "airline", country: "Bangladesh", cc: "BD" },
+                { name: "Saudia", kind: "airline", country: "Saudi Arabia", cc: "SA" },
+                { name: "Cathay Pacific", kind: "airline", country: "Hong Kong", cc: "HK" },
+                { name: "Thai Airways", kind: "airline", country: "Thailand", cc: "TH" },
+                { name: "Malaysia Airlines", kind: "airline", country: "Malaysia", cc: "MY" },
+                { name: "Marriott Hotels", kind: "hotel", country: "USA", cc: "US" },
+                { name: "Hilton Worldwide", kind: "hotel", country: "USA", cc: "US" },
+                { name: "Accor Group", kind: "hotel", country: "France", cc: "FR" },
+                { name: "IATA", kind: "authority", country: "Global", cc: "UN" },
+                { name: "ATAB", kind: "authority", country: "Bangladesh", cc: "BD" },
+                { name: "TOAB", kind: "authority", country: "Bangladesh", cc: "BD" },
+                { name: "CAAB", kind: "authority", country: "Bangladesh", cc: "BD" },
+                { name: "Bangladesh Tourism Board", kind: "authority", country: "Bangladesh", cc: "BD" },
               ];
-              const initials = (s: string) =>
-                s.split(" ").filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+              const flagEmoji = (cc: string) => {
+                if (cc === "UN") return "🌐";
+                return cc.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
+              };
               const palette: Record<string, string> = {
                 airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
                 hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
                 authority: "from-[color:var(--brand-blue-deep)] to-[color:var(--ink-deep)]",
               };
               const Icon = ({ kind }: { kind: string }) =>
-                kind === "airline" ? <Plane className="h-4 w-4" /> :
-                kind === "hotel" ? <Hotel className="h-4 w-4" /> :
-                <ShieldCheck className="h-4 w-4" />;
+                kind === "airline" ? <Plane className="h-3.5 w-3.5" /> :
+                kind === "hotel" ? <Hotel className="h-3.5 w-3.5" /> :
+                <ShieldCheck className="h-3.5 w-3.5" />;
               return (
                 <div key={loop} className="flex shrink-0 items-center gap-3 animate-marquee" aria-hidden={loop === 1}>
                   {partners.map((p, i) => (
                     <div
                       key={`${loop}-${p.name}-${i}`}
-                      className="group flex h-16 min-w-[220px] items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 font-display text-sm font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
+                      className="group flex h-16 min-w-[240px] items-center gap-3 rounded-2xl border border-border bg-card/80 px-4 font-display text-sm font-bold text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift"
                     >
-                      <span className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${palette[p.kind]} text-white shadow-sm`}>
-                        <span className="text-[11px] font-extrabold tracking-tight">{initials(p.name)}</span>
+                      <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${palette[p.kind]} text-white shadow-sm`}>
+                        <span className="text-2xl leading-none" aria-hidden>{flagEmoji(p.cc)}</span>
                         <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[color:var(--brand-blue-deep)] shadow ring-1 ring-border">
                           <Icon kind={p.kind} />
                         </span>
@@ -593,7 +595,7 @@ export default function Home() {
                       <span className="flex flex-col leading-tight">
                         <span className="truncate">{p.name}</span>
                         <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                          {p.kind === "airline" ? "Airline Partner" : p.kind === "hotel" ? "Hotel Partner" : "Industry Body"}
+                          {p.country} · {p.kind === "airline" ? "Airline" : p.kind === "hotel" ? "Hotel" : "Authority"}
                         </span>
                       </span>
                     </div>
