@@ -67,6 +67,7 @@ export default function App() {
       <Route path="/admin/visa-services" element={<AdminVisaServices />} />
       <Route path="/admin/visa-services/new" element={<AdminVisaServiceEditor />} />
       <Route path="/admin/visa-services/:id" element={<AdminVisaServiceEditor />} />
+      <Route path="/admin/partners" element={<AdminPartners />} />
       <Route path="/admin/packages" element={<AdminPackages />} />
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
