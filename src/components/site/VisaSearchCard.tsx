@@ -87,7 +87,7 @@ function Dropdown({
 }: {
   open: boolean;
   onClose: () => void;
-  anchorRef: React.RefObject<HTMLButtonElement>;
+  anchorRef: React.RefObject<HTMLButtonElement | null>;
   children: React.ReactNode;
 }) {
   const [pos, setPos] = useState<{
