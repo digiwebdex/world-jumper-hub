@@ -83,12 +83,11 @@ export function InquiryForm({
       status: "New",
     };
 
+    // Best-effort: try to persist to backend, but never block the WhatsApp handoff.
     try {
       await api.post("/inquiries", payload);
-    } catch {
-      setSubmitting(false);
-      setStatus({ ok: false, msg: "Could not submit. Please try again or call us directly." });
-      return;
+    } catch (err) {
+      console.warn("Inquiry API save failed (continuing to WhatsApp):", err);
     }
 
     // Build WhatsApp message with inquiry details and open chat with company number
@@ -109,10 +108,21 @@ export function InquiryForm({
       payload.passengers ? `*Passengers:* ${payload.passengers}` : null,
       payload.message ? `\n*Message:*\n${payload.message}` : null,
     ].filter(Boolean).join("\n");
-    try { window.open(whatsappLink(lines), "_blank", "noopener,noreferrer"); } catch { /* ignore popup blocked */ }
+
+    const waUrl = whatsappLink(lines);
+    let opened: Window | null = null;
+    try {
+      opened = window.open(waUrl, "_blank", "noopener,noreferrer");
+    } catch {
+      opened = null;
+    }
+    // Popup-blocked fallback — navigate the current tab so the user still reaches WhatsApp.
+    if (!opened) {
+      window.location.href = waUrl;
+    }
 
     setSubmitting(false);
-    setStatus({ ok: true, msg: "Inquiry submitted! Opening WhatsApp to send your details…" });
+    setStatus({ ok: true, msg: "Opening WhatsApp to send your details…" });
     (e.target as HTMLFormElement).reset();
   };
 
