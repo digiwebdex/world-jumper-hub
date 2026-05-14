@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone, Instagram, Facebook } from "lucide-react";
 import { SITE, whatsappLink } from "@/lib/site-config";
+import caabLogo from "@/assets/memberships/caab.png";
+import iataLogo from "@/assets/memberships/iata.png";
+import atabLogo from "@/assets/memberships/atab.png";
+import toabLogo from "@/assets/memberships/toab.png";
+import botofLogo from "@/assets/memberships/botof.jpg";
+import etabLogo from "@/assets/memberships/etab.png";
+import ecabLogo from "@/assets/memberships/ecab.png";
+import lionsLogo from "@/assets/memberships/lions.png";
 
 export function Footer() {
   return (
