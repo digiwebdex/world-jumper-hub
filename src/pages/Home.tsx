@@ -568,7 +568,9 @@ export default function Home() {
                 >
                   <div className="relative h-12 w-16 overflow-hidden rounded-md ring-1 ring-border">
                     <img
-                      src={`https://flagcdn.com/w160/${cc.toLowerCase()}.png`}
+                      src={flagUrl(cc)}
+                      data-cc={cc}
+                      onError={onFlagError}
                       alt={`${name} flag`}
                       loading="lazy"
                       className="h-full w-full object-cover transition group-hover:scale-105"
