@@ -38,7 +38,8 @@ export default function AdminWhatsApp() {
     }
   };
 
-  const previewNumber = data.whatsapp_number.replace(/[^0-9]/g, "");
+  const previewNumber = normalizeBdPhone(data.whatsapp_number);
+  const previewDisplay = formatBdPhoneDisplay(data.whatsapp_number);
   const previewUrl = `https://wa.me/${previewNumber}?text=${encodeURIComponent(data.whatsapp_message)}`;
 
   return (
