@@ -20,6 +20,54 @@ const VISA_CATEGORIES = [
   "Document Legalization",
 ] as const;
 
+const FALLBACK_COUNTRIES: VisaCountry[] = [
+  ["India", "india", "in"],
+  ["Thailand", "thailand", "th"],
+  ["Malaysia", "malaysia", "my"],
+  ["Singapore", "singapore", "sg"],
+  ["Indonesia", "indonesia", "id"],
+  ["Vietnam", "vietnam", "vn"],
+  ["Sri Lanka", "sri-lanka", "lk"],
+  ["Nepal", "nepal", "np"],
+  ["Bhutan", "bhutan", "bt"],
+  ["Maldives", "maldives", "mv"],
+  ["China", "china", "cn"],
+  ["Japan", "japan", "jp"],
+  ["South Korea", "south-korea", "kr"],
+  ["United Arab Emirates", "united-arab-emirates", "ae"],
+  ["Saudi Arabia", "saudi-arabia", "sa"],
+  ["Qatar", "qatar", "qa"],
+  ["Oman", "oman", "om"],
+  ["Turkey", "turkey", "tr"],
+  ["Egypt", "egypt", "eg"],
+  ["United Kingdom", "united-kingdom", "gb"],
+  ["United States", "united-states", "us"],
+  ["Canada", "canada", "ca"],
+  ["Australia", "australia", "au"],
+  ["New Zealand", "new-zealand", "nz"],
+  ["Germany", "germany", "de"],
+  ["France", "france", "fr"],
+  ["Italy", "italy", "it"],
+  ["Spain", "spain", "es"],
+  ["Netherlands", "netherlands", "nl"],
+  ["Switzerland", "switzerland", "ch"],
+  ["Sweden", "sweden", "se"],
+  ["Norway", "norway", "no"],
+  ["Denmark", "denmark", "dk"],
+  ["Finland", "finland", "fi"],
+  ["Russia", "russia", "ru"],
+  ["South Africa", "south-africa", "za"],
+  ["Brazil", "brazil", "br"],
+].map(([country_name, slug, cc]) => ({
+  id: slug,
+  country_name,
+  slug,
+  flag_url: `https://flagcdn.com/w160/${cc}.png`,
+  short_description: null,
+  is_featured: false,
+  is_active: true,
+}));
+
 type FieldProps = {
   label: string;
   required?: boolean;
@@ -134,8 +182,11 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   useEffect(() => {
     api
       .get<{ countries: VisaCountry[] }>("/visa-countries")
-      .then((r) => setCountries(r.countries || []))
-      .catch(() => setCountries([]));
+      .then((r) => {
+        const list = r.countries || [];
+        setCountries(list.length ? list : FALLBACK_COUNTRIES);
+      })
+      .catch(() => setCountries(FALLBACK_COUNTRIES));
   }, []);
 
   const selectedDest = useMemo(
