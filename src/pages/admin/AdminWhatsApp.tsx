@@ -77,8 +77,12 @@ export default function AdminWhatsApp() {
           />
 
           <div className="md:col-span-2 rounded-xl border border-border bg-muted/40 p-4">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Preview</p>
-            <p className="break-all font-mono text-xs text-foreground/80">{previewUrl}</p>
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Preview (auto-normalized)</p>
+            <p className="text-sm text-foreground"><span className="font-semibold">Number:</span> {previewDisplay} <span className="ml-2 font-mono text-xs text-muted-foreground">({previewNumber})</span></p>
+            <p className="mt-2 break-all font-mono text-xs text-foreground/80">{previewUrl}</p>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              Accepted formats: <code>01687072001</code>, <code>+880 1687-072001</code>, <code>8801687072001</code>. Spaces, dashes and the leading <code>+</code> are stripped automatically.
+            </p>
             <a
               href={previewUrl}
               target="_blank"
