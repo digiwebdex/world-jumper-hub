@@ -208,4 +208,18 @@ export const FALLBACK_REQUIREMENTS: Record<string, VisaRequirement[]> = {
       invitation_letter: "In-Principle Approval (IPA) letter from ICA via the Singapore institution.",
       medical_documents: "ICA medical report (chest X-ray + HIV).",
       processing_time: "4–6 weeks (SOLAR + IPA + e-Form 16)",
-      embassy_fee: "SGD 30 (issuance) + SGD 60 (Student Pass)", service_charge: "
+      embassy_fee: "SGD 30 (issuance) + SGD 60 (Student Pass)", service_charge: "BDT 12,000",
+      important_notes: "After arrival: complete e-Form 16, biometrics at SP Services Centre.",
+      eligibility_notes: "NUS, NTU, SMU, SUTD, polytechnics and MOE-registered private institutions.",
+    }),
+    r("Employment Pass (EP)", {
+      required_documents: "Job offer, MOM EP application, qualifications, employer support.",
+      invitation_letter: "Employment contract + MOM In-Principle Approval (IPA).",
+      job_certificate: "BD employer NOC, complete CV and work history.",
+      processing_time: "3–8 weeks (MOM)",
+      embassy_fee: "SGD 105 + SGD 225 (issuance)", service_charge: "BDT 18,000",
+      important_notes: "Min fixed monthly salary SGD 5,000+ (higher for older/financial roles). COMPASS scoring applies.",
+      eligibility_notes: "Skilled professionals, executives, specialists with degree.",
+    }),
+  ],
+};
