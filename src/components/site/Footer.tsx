@@ -90,7 +90,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-4">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Explore</h4>
             <ul className="mt-5 space-y-3 text-sm">
               {[["/", "Home"], ["/about", "About"], ["/visa", "Visa"], ["/tours", "Tours"], ["/umrah", "Umrah"], ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"], ["/contact", "Contact"]].map(([to, label]) => (
@@ -99,7 +99,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-4">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Reach Us</h4>
             <ul className="mt-5 space-y-3 text-sm text-cream/80">
               <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-accent" strokeWidth={1.5} />{SITE.address}</li>
@@ -109,36 +109,37 @@ export function Footer() {
               <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-accent" strokeWidth={1.5} /><a href={`mailto:${SITE.email}`} className="transition-colors hover:text-accent">{SITE.email}</a></li>
             </ul>
           </div>
+        </div>
 
-          <div className="md:col-span-2">
-            <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Member of</h4>
-            <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {[
-                { name: "CAAB", src: caabLogo },
-                { name: "IATA", src: iataLogo },
-                { name: "ATAB", src: atabLogo },
-                { name: "TOAB", src: toabLogo },
-                { name: "BOTOF", src: botofLogo },
-                { name: "ETAB", src: etabLogo },
-                { name: "e-CAB", src: ecabLogo },
-                { name: "Lions Int'l", src: lionsLogo },
-              ].map(m => (
-                <li key={m.name} title={m.name} className="group">
-                  <div className="flex h-32 items-center justify-center rounded-xl bg-white p-4 ring-[0.5px] ring-cream/15 transition duration-200 group-hover:-translate-y-0.5 group-hover:ring-accent/50">
-                    <img
-                      src={m.src}
-                      alt={`${m.name} logo`}
-                      loading="lazy"
-                      className="max-h-full max-w-full object-contain"
-                    />
-                  </div>
-                  <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-cream/60 group-hover:text-accent">
-                    {m.name}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Member of - full width band */}
+        <div className="mx-auto max-w-7xl px-6 pb-12 md:px-10">
+          <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Member of</h4>
+          <ul className="mt-6 grid grid-cols-4 gap-4 sm:grid-cols-4 md:grid-cols-8">
+            {[
+              { name: "CAAB", src: caabLogo },
+              { name: "IATA", src: iataLogo },
+              { name: "ATAB", src: atabLogo },
+              { name: "TOAB", src: toabLogo },
+              { name: "BOTOF", src: botofLogo },
+              { name: "ETAB", src: etabLogo },
+              { name: "e-CAB", src: ecabLogo },
+              { name: "Lions Int'l", src: lionsLogo },
+            ].map(m => (
+              <li key={m.name} title={m.name} className="group">
+                <div className="flex h-24 items-center justify-center rounded-lg bg-white p-3 ring-1 ring-cream/15 transition duration-200 group-hover:-translate-y-0.5 group-hover:ring-accent/60">
+                  <img
+                    src={m.src}
+                    alt={`${m.name} logo`}
+                    loading="lazy"
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-cream/60 group-hover:text-accent">
+                  {m.name}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="border-t border-cream/10">
