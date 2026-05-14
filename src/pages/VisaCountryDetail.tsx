@@ -57,7 +57,11 @@ export default function VisaCountryDetail() {
       .get<{ countries: VisaCountry[] }>("/visa-countries")
       .then((r) => {
         if (cancelled) return;
-        const found = (r.countries || []).find((c) => c.slug === slug);
+        const list = r.countries || [];
+        let found = list.find((c) => c.slug === slug);
+        if (!found) {
+          found = FALLBACK_COUNTRIES.find((c) => c.slug === slug);
+        }
         if (!found) {
           setCountry(null);
           setNotFound(true);
@@ -66,7 +70,13 @@ export default function VisaCountryDetail() {
         }
       })
       .catch(() => {
-        if (!cancelled) setNotFound(true);
+        if (cancelled) return;
+        const found = FALLBACK_COUNTRIES.find((c) => c.slug === slug);
+        if (found) {
+          setCountry(found);
+        } else {
+          setNotFound(true);
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
