@@ -15,6 +15,7 @@ import { HeroSearchTabs } from "@/components/site/HeroSearchTabs";
 import { api, type Package, type VisaCountry } from "@/lib/api";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
+import { flagUrl, onFlagError } from "@/lib/flag-url";
 
 const SERVICES = [
   { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa", accent: "orange" as const },
@@ -567,7 +568,9 @@ export default function Home() {
                 >
                   <div className="relative h-12 w-16 overflow-hidden rounded-md ring-1 ring-border">
                     <img
-                      src={`https://flagcdn.com/w160/${cc.toLowerCase()}.png`}
+                      src={flagUrl(cc)}
+                      data-cc={cc}
+                      onError={onFlagError}
                       alt={`${name} flag`}
                       loading="lazy"
                       className="h-full w-full object-cover transition group-hover:scale-105"
@@ -620,10 +623,6 @@ export default function Home() {
                 { name: "CAAB", kind: "authority", country: "Bangladesh", cc: "BD" },
                 { name: "Bangladesh Tourism Board", kind: "authority", country: "Bangladesh", cc: "BD" },
               ];
-              const flagSrc = (cc: string) =>
-                cc === "UN"
-                  ? "https://flagcdn.com/w160/un.png"
-                  : `https://flagcdn.com/w160/${cc.toLowerCase()}.png`;
               const palette: Record<string, string> = {
                 airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
                 hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
@@ -642,7 +641,9 @@ export default function Home() {
                     >
                       <span className={`relative flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br ${palette[p.kind]} p-0.5 shadow-sm`}>
                         <img
-                          src={flagSrc(p.cc)}
+                          src={flagUrl(p.cc)}
+                          data-cc={p.cc}
+                          onError={onFlagError}
                           alt={`${p.country} flag`}
                           loading="lazy"
                           className="h-full w-full rounded-md object-cover"
