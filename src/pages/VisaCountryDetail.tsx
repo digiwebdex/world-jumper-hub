@@ -92,12 +92,16 @@ export default function VisaCountryDetail() {
       setReqs([]);
       return;
     }
+    const fallback = FALLBACK_REQUIREMENTS[country.slug] || [];
     api
       .get<{ requirements: VisaRequirement[] }>(
         `/visa-requirements?country_id=${country.id}`,
       )
-      .then((r) => setReqs(r.requirements || []))
-      .catch(() => setReqs([]));
+      .then((r) => {
+        const apiReqs = r.requirements || [];
+        setReqs(apiReqs.length > 0 ? apiReqs : fallback);
+      })
+      .catch(() => setReqs(fallback));
   }, [country]);
 
   const sortedReqs = useMemo(() => {
