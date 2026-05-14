@@ -26,6 +26,9 @@ import AdminMemberships from "@/pages/admin/AdminMemberships";
 import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
+import AdminWhatsApp from "@/pages/admin/AdminWhatsApp";
+import { useEffect } from "react";
+import { bootWhatsAppSettings } from "@/lib/whatsapp-settings";
 
 function NotFound() {
   return (
@@ -42,6 +45,7 @@ function NotFound() {
 }
 
 export default function App() {
+  useEffect(() => { bootWhatsAppSettings().catch(() => {}); }, []);
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -73,6 +77,7 @@ export default function App() {
       <Route path="/admin/packages" element={<AdminPackages />} />
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
+      <Route path="/admin/whatsapp" element={<AdminWhatsApp />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
