@@ -104,10 +104,40 @@ export function Footer() {
 
           <div className="md:col-span-2">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Member of</h4>
-            <ul className="mt-5 flex flex-wrap gap-2 text-[10px]">
-              {SITE.memberships.map(m => (
-                <li key={m} className="rounded-full border border-cream/20 px-3 py-1 font-mono uppercase tracking-[0.18em] text-cream/70">
-                  {m}
+            <ul className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+              {[
+                { name: "CAAB", domain: "caab.gov.bd" },
+                { name: "IATA", domain: "iata.org" },
+                { name: "ATAB", domain: "atab.org.bd" },
+                { name: "TOAB", domain: "toab.com.bd" },
+                { name: "BOTOF", domain: "botof.org" },
+                { name: "ETAB", domain: "etab.org.bd" },
+                { name: "e-CAB", domain: "e-cab.net" },
+                { name: "Lions International", domain: "lionsclubs.org" },
+              ].map(m => (
+                <li
+                  key={m.name}
+                  title={m.name}
+                  className="flex h-16 items-center justify-center rounded-lg border border-cream/15 bg-cream/95 p-2 transition hover:border-accent/50 hover:bg-cream"
+                >
+                  <img
+                    src={`https://logo.clearbit.com/${m.domain}?size=128`}
+                    alt={`${m.name} logo`}
+                    loading="lazy"
+                    className="max-h-full max-w-full object-contain"
+                    onError={(e) => {
+                      const img = e.currentTarget as HTMLImageElement;
+                      img.style.display = "none";
+                      const fb = img.nextElementSibling as HTMLElement | null;
+                      if (fb) fb.style.display = "flex";
+                    }}
+                  />
+                  <span
+                    style={{ display: "none" }}
+                    className="h-full w-full items-center justify-center text-center font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[color:var(--brand-blue-deep)]"
+                  >
+                    {m.name}
+                  </span>
                 </li>
               ))}
             </ul>
