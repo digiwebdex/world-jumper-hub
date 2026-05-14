@@ -45,6 +45,7 @@ function NotFound() {
 }
 
 export default function App() {
+  useEffect(() => { bootWhatsAppSettings().catch(() => {}); }, []);
   return (
     <Routes>
       <Route path="/" element={<Home />} />
