@@ -18,6 +18,7 @@ import { InquiryForm } from "@/components/site/InquiryForm";
 import { usePageTitle } from "@/lib/use-page-title";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
 import { FALLBACK_COUNTRIES } from "@/lib/fallback-countries";
+import { FALLBACK_REQUIREMENTS } from "@/lib/fallback-requirements";
 
 type TabKey = "visa" | "tours" | "umrah" | "medical" | "airticket";
 
@@ -91,12 +92,16 @@ export default function VisaCountryDetail() {
       setReqs([]);
       return;
     }
+    const fallback = FALLBACK_REQUIREMENTS[country.slug] || [];
     api
       .get<{ requirements: VisaRequirement[] }>(
         `/visa-requirements?country_id=${country.id}`,
       )
-      .then((r) => setReqs(r.requirements || []))
-      .catch(() => setReqs([]));
+      .then((r) => {
+        const apiReqs = r.requirements || [];
+        setReqs(apiReqs.length > 0 ? apiReqs : fallback);
+      })
+      .catch(() => setReqs(fallback));
   }, [country]);
 
   const sortedReqs = useMemo(() => {
