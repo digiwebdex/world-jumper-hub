@@ -202,12 +202,24 @@
     width: 2.5rem; height: 1px; background: var(--terracotta); margin-right: 0.75rem;
   }
 
-  /* Marquee */
+  /* Marquee — seamless infinite scroll. Two identical tracks slide together;
+     translating one full track width (-50% of the wrapper) creates a perfect loop. */
   @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
   }
-  .animate-marquee { animation: marquee 40s linear infinite; }
+  .animate-marquee {
+    animation: marquee 50s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  @media (min-width: 768px) {
+    .animate-marquee { animation-duration: 60s; }
+  }
+  .marquee-pause:hover .animate-marquee { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee { animation: none; }
+  }
 
   /* Float */
   @keyframes float-slow {
