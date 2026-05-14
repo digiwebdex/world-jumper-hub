@@ -261,27 +261,31 @@ export default function Home() {
         <div className="relative border-t border-white/10 bg-black/30 backdrop-blur-md">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-5 gap-y-3 px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-white/80 md:px-10">
             <span className="text-white/90">Member of</span>
-            {SITE.memberships.map(m => {
-              const slug = m.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-              const initials = m.replace(/[^A-Za-z0-9 ]/g, "").split(/\s+/).map(w => w[0]).join("").slice(0, 3).toUpperCase();
+            {memberships.map(m => {
+              const initials = m.name.replace(/[^A-Za-z0-9 ]/g, "").split(/\s+/).map(w => w[0]).join("").slice(0, 3).toUpperCase();
+              const Tag: any = m.link_url ? "a" : "span";
+              const tagProps = m.link_url ? { href: m.link_url, target: "_blank", rel: "noopener noreferrer" } : {};
               return (
-                <span
-                  key={m}
-                  title={m}
+                <Tag
+                  key={m.id}
+                  title={m.name}
+                  {...tagProps}
                   className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 py-1 pl-1 pr-3 backdrop-blur-md transition hover:border-white/30 hover:bg-white/20"
                 >
                   <span className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-white text-[9px] font-extrabold text-[color:var(--brand-blue-deep)] ring-1 ring-white/30">
                     <span className="absolute inset-0 flex items-center justify-center">{initials}</span>
-                    <img
-                      src={`/logos/${slug}.png`}
-                      alt={`${m} logo`}
-                      loading="lazy"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                      className="relative h-full w-full bg-white object-contain"
-                    />
+                    {m.logo_url && (
+                      <img
+                        src={m.logo_url}
+                        alt={`${m.name} logo`}
+                        loading="lazy"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                        className="relative h-full w-full bg-white object-contain"
+                      />
+                    )}
                   </span>
-                  <span className="leading-none">{m}</span>
-                </span>
+                  <span className="leading-none">{m.name}</span>
+                </Tag>
               );
             })}
           </div>
