@@ -23,7 +23,7 @@ export async function fetchWhatsAppSettings(): Promise<WhatsAppSettings | null> 
 export async function bootWhatsAppSettings(): Promise<void> {
   const s = await fetchWhatsAppSettings();
   if (!s) return;
-  if (s.whatsapp_number) SITE.whatsappIntl = s.whatsapp_number.replace(/[^0-9]/g, "");
+  if (s.whatsapp_number) SITE.whatsappIntl = normalizeBdPhone(s.whatsapp_number);
   if (s.whatsapp_message) SITE.whatsappMessage = s.whatsapp_message;
 }
 
