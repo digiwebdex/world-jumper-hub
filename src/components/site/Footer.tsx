@@ -104,19 +104,31 @@ export function Footer() {
 
           <div className="md:col-span-2">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Member of</h4>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {SITE.memberships.map(m => (
+            <ul className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+              {[
+                { name: "CAAB", src: caabLogo },
+                { name: "IATA", src: iataLogo },
+                { name: "ATAB", src: atabLogo },
+                { name: "TOAB", src: toabLogo },
+                { name: "BOTOF", src: botofLogo },
+                { name: "ETAB", src: etabLogo },
+                { name: "e-CAB", src: ecabLogo },
+                { name: "Lions International", src: lionsLogo },
+              ].map(m => (
                 <li
-                  key={m}
-                  className="rounded-md border border-cream/20 bg-cream/[0.04] px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-cream/85 transition hover:border-accent/50 hover:text-accent"
+                  key={m.name}
+                  title={m.name}
+                  className="flex h-16 items-center justify-center rounded-lg border border-cream/15 bg-cream/95 p-2 transition hover:border-accent/50 hover:bg-cream"
                 >
-                  {m}
+                  <img
+                    src={m.src}
+                    alt={`${m.name} logo`}
+                    loading="lazy"
+                    className="max-h-full max-w-full object-contain"
+                  />
                 </li>
               ))}
             </ul>
-            <p className="mt-3 text-[11px] text-cream/50">
-              Want real logos here? Upload PNG/SVG files and I'll wire them in.
-            </p>
           </div>
         </div>
 
