@@ -41,19 +41,22 @@ function Field({ label, required, children }: FieldProps) {
   );
 }
 
-function Pill({
+const Pill = ({
   children,
   onClick,
   open,
   placeholder,
+  pillRef,
 }: {
   children: React.ReactNode;
   onClick: () => void;
   open: boolean;
   placeholder?: boolean;
-}) {
+  pillRef?: React.Ref<HTMLButtonElement>;
+}) => {
   return (
     <button
+      ref={pillRef}
       type="button"
       onClick={onClick}
         className={`group flex h-12 w-full min-w-0 items-center justify-between gap-3 rounded-xl border bg-white px-4 text-left transition ${
@@ -74,30 +77,79 @@ function Pill({
       />
     </button>
   );
-}
+};
 
 function Dropdown({
   open,
   onClose,
+  anchorRef,
   children,
 }: {
   open: boolean;
   onClose: () => void;
+  anchorRef: React.RefObject<HTMLButtonElement>;
   children: React.ReactNode;
 }) {
-  if (!open) return null;
-  return (
+  const [pos, setPos] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    maxHeight: number;
+    placement: "bottom" | "top";
+  } | null>(null);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    const update = () => {
+      const el = anchorRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
+      const gap = 8;
+      const margin = 12;
+      const spaceBelow = vh - rect.bottom - gap - margin;
+      const spaceAbove = rect.top - gap - margin;
+      const placement: "bottom" | "top" = spaceBelow >= 280 || spaceBelow >= spaceAbove ? "bottom" : "top";
+      const maxHeight = Math.max(220, Math.min(560, placement === "bottom" ? spaceBelow : spaceAbove));
+      const minWidth = Math.max(rect.width, 260);
+      const width = Math.min(minWidth, vw - margin * 2);
+      let left = rect.left;
+      if (left + width > vw - margin) left = Math.max(margin, vw - margin - width);
+      const top = placement === "bottom" ? rect.bottom + gap : rect.top - gap - 0; // top is bottom of menu when placement=top
+      setPos({ top, left, width, maxHeight, placement });
+    };
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [open, anchorRef]);
+
+  if (!open || typeof document === "undefined") return null;
+
+  const style: React.CSSProperties = pos
+    ? pos.placement === "bottom"
+      ? { top: pos.top, left: pos.left, width: pos.width, maxHeight: pos.maxHeight }
+      : { top: pos.top - pos.maxHeight, left: pos.left, width: pos.width, maxHeight: pos.maxHeight }
+    : { visibility: "hidden" };
+
+  return createPortal(
     <>
-      <div className="fixed inset-0 z-30" onClick={onClose} />
+      <div className="fixed inset-0 z-[60]" onClick={onClose} />
       <motion.div
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.15 }}
-        className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[min(36rem,calc(100vh-8rem))] min-w-[260px] w-max max-w-[min(420px,90vw)] overflow-y-auto overscroll-contain rounded-xl border border-border bg-white p-1.5 shadow-[0_24px_60px_-16px_rgba(8,12,32,0.28)] scrollbar-thin scrollbar-thumb-[color:var(--brand-blue-deep)]/30 scrollbar-track-transparent [scrollbar-gutter:stable]"
+        style={style}
+        className="fixed z-[70] overflow-y-auto overscroll-contain rounded-xl border border-border bg-white p-1.5 shadow-[0_24px_60px_-16px_rgba(8,12,32,0.28)] scrollbar-thin scrollbar-thumb-[color:var(--brand-blue-deep)]/30 scrollbar-track-transparent [scrollbar-gutter:stable]"
       >
         {children}
       </motion.div>
-    </>
+    </>,
+    document.body,
   );
 }
 
