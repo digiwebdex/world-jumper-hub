@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import {
   Plane, Stamp, MapPin, Stethoscope, Moon, Ticket, ArrowRight, ArrowUpRight, Star,
   ShieldCheck, Clock, HeartHandshake, Globe2, Sparkles, FileCheck2, Send, PhoneCall, Search,
-  ChevronLeft, ChevronRight, Play,
+  ChevronLeft, ChevronRight, Play, Hotel,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ServiceCard, SectionHeading, FancyIcon } from "@/components/site/ui";
