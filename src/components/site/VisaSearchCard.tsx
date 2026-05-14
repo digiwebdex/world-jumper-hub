@@ -220,7 +220,7 @@ export function VisaSearchCard({ bare = false }: { bare?: boolean } = {}) {
   }
 
   const inner = (
-    <div className="grid gap-3 md:grid-cols-[0.7fr_1.6fr_1.3fr_auto] md:items-end">
+    <div className="grid gap-3 md:grid-cols-[0.6fr_2.2fr_1.4fr_auto] md:items-end">
         {/* Citizen — fixed Bangladesh */}
         <Field label="I'm a Citizen of" required>
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-[color:var(--cream)] px-3.5 py-2.5">
