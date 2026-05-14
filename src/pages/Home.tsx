@@ -271,14 +271,14 @@ export default function Home() {
                   className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 py-1 pl-1 pr-3 backdrop-blur-md transition hover:border-white/30 hover:bg-white/20"
                 >
                   <span className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-white text-[9px] font-extrabold text-[color:var(--brand-blue-deep)] ring-1 ring-white/30">
+                    <span className="absolute inset-0 flex items-center justify-center">{initials}</span>
                     <img
                       src={`/logos/${slug}.png`}
                       alt={`${m} logo`}
                       loading="lazy"
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                      className="h-full w-full object-contain"
+                      className="relative h-full w-full bg-white object-contain"
                     />
-                    <span className="pointer-events-none absolute inset-0 flex items-center justify-center">{initials}</span>
                   </span>
                   <span className="leading-none">{m}</span>
                 </span>
