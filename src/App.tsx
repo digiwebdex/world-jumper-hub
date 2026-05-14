@@ -77,6 +77,7 @@ export default function App() {
       <Route path="/admin/packages" element={<AdminPackages />} />
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
+      <Route path="/admin/whatsapp" element={<AdminWhatsApp />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
