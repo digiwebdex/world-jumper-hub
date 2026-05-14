@@ -1,5 +1,6 @@
 // Static fallback config. Admin panel (Phase 2) will overlay site_settings from Supabase.
 import logoUrl from "@/assets/world-jumper-logo.png";
+import { normalizeBdPhone } from "@/lib/phone";
 
 export const SITE = {
   companyName: "World Jumper",
@@ -19,5 +20,11 @@ export const SITE = {
   logoUrl,
 };
 
-export const whatsappLink = (msg: string = SITE.whatsappMessage) =>
-  `https://wa.me/${SITE.whatsappIntl}?text=${encodeURIComponent(msg)}`;
+export const whatsappLink = (msg: string = SITE.whatsappMessage) => {
+  // Always normalize at link-build time so any stray formatting in the
+  // configured number (e.g. +880, dashes, spaces, leading 0) still produces
+  // a valid wa.me URL.
+  const num = normalizeBdPhone(SITE.whatsappIntl);
+  return `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+};
+

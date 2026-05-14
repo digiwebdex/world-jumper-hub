@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { SITE } from "@/lib/site-config";
+import { normalizeBdPhone } from "@/lib/phone";
 
 export interface WhatsAppSettings {
   whatsapp_number: string;
@@ -22,7 +23,7 @@ export async function fetchWhatsAppSettings(): Promise<WhatsAppSettings | null> 
 export async function bootWhatsAppSettings(): Promise<void> {
   const s = await fetchWhatsAppSettings();
   if (!s) return;
-  if (s.whatsapp_number) SITE.whatsappIntl = s.whatsapp_number.replace(/[^0-9]/g, "");
+  if (s.whatsapp_number) SITE.whatsappIntl = normalizeBdPhone(s.whatsapp_number);
   if (s.whatsapp_message) SITE.whatsappMessage = s.whatsapp_message;
 }
 
@@ -47,6 +48,6 @@ export async function saveWhatsAppSettings(input: WhatsAppSettings) {
     .upsert({ id: 1, ...input }, { onConflict: "id" });
   if (error) throw error;
   // Mirror onto SITE for the rest of the session.
-  SITE.whatsappIntl = input.whatsapp_number.replace(/[^0-9]/g, "");
+  SITE.whatsappIntl = normalizeBdPhone(input.whatsapp_number);
   SITE.whatsappMessage = input.whatsapp_message;
 }

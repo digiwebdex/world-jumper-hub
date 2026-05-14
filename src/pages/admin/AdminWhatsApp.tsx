@@ -3,6 +3,7 @@ import { AdminShell } from "@/components/admin/AdminShell";
 import { Card, Field, PrimaryButton } from "@/components/admin/form-bits";
 import { usePageTitle } from "@/lib/use-page-title";
 import { useWhatsAppSettings, saveWhatsAppSettings } from "@/lib/whatsapp-settings";
+import { normalizeBdPhone, formatBdPhoneDisplay } from "@/lib/phone";
 import { MessageCircle, ExternalLink } from "lucide-react";
 
 export default function AdminWhatsApp() {
@@ -37,7 +38,8 @@ export default function AdminWhatsApp() {
     }
   };
 
-  const previewNumber = data.whatsapp_number.replace(/[^0-9]/g, "");
+  const previewNumber = normalizeBdPhone(data.whatsapp_number);
+  const previewDisplay = formatBdPhoneDisplay(data.whatsapp_number);
   const previewUrl = `https://wa.me/${previewNumber}?text=${encodeURIComponent(data.whatsapp_message)}`;
 
   return (
@@ -57,7 +59,7 @@ export default function AdminWhatsApp() {
         <form onSubmit={submit} className="grid gap-4 md:grid-cols-2">
           <Field
             full
-            label="WhatsApp Number (international format, digits only)"
+            label="WhatsApp Number (any BD format — auto-normalized)"
             name="whatsapp_number"
             defaultValue={data.whatsapp_number}
             placeholder="8801687072001"
@@ -75,8 +77,12 @@ export default function AdminWhatsApp() {
           />
 
           <div className="md:col-span-2 rounded-xl border border-border bg-muted/40 p-4">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Preview</p>
-            <p className="break-all font-mono text-xs text-foreground/80">{previewUrl}</p>
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Preview (auto-normalized)</p>
+            <p className="text-sm text-foreground"><span className="font-semibold">Number:</span> {previewDisplay} <span className="ml-2 font-mono text-xs text-muted-foreground">({previewNumber})</span></p>
+            <p className="mt-2 break-all font-mono text-xs text-foreground/80">{previewUrl}</p>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              Accepted formats: <code>01687072001</code>, <code>+880 1687-072001</code>, <code>8801687072001</code>. Spaces, dashes and the leading <code>+</code> are stripped automatically.
+            </p>
             <a
               href={previewUrl}
               target="_blank"
