@@ -626,37 +626,83 @@ export default function Home() {
           </div>
         </div>
         {(() => {
-          const groups: { title: string; icon: typeof Plane; items: string[] }[] = [
+          type Brand = { name: string; domain: string };
+          const groups: { title: string; icon: typeof Plane; items: Brand[] }[] = [
             {
               title: "Airlines",
               icon: Plane,
               items: [
-                "Emirates", "Qatar Airways", "Singapore Airlines", "Turkish Airlines",
-                "Etihad Airways", "Biman Bangladesh", "Saudia", "Malaysia Airlines",
-                "Thai Airways", "Cathay Pacific", "Oman Air", "Air India",
-                "IndiGo", "Fly Dubai", "Air Arabia", "US-Bangla Airlines",
+                { name: "Emirates", domain: "emirates.com" },
+                { name: "Qatar Airways", domain: "qatarairways.com" },
+                { name: "Singapore Airlines", domain: "singaporeair.com" },
+                { name: "Turkish Airlines", domain: "turkishairlines.com" },
+                { name: "Etihad Airways", domain: "etihad.com" },
+                { name: "Biman Bangladesh", domain: "biman-airlines.com" },
+                { name: "Saudia", domain: "saudia.com" },
+                { name: "Malaysia Airlines", domain: "malaysiaairlines.com" },
+                { name: "Thai Airways", domain: "thaiairways.com" },
+                { name: "Cathay Pacific", domain: "cathaypacific.com" },
+                { name: "Oman Air", domain: "omanair.com" },
+                { name: "Air India", domain: "airindia.com" },
+                { name: "IndiGo", domain: "goindigo.in" },
+                { name: "Fly Dubai", domain: "flydubai.com" },
+                { name: "Air Arabia", domain: "airarabia.com" },
+                { name: "US-Bangla Airlines", domain: "usbair.com" },
               ],
             },
             {
               title: "Hotels",
               icon: Hotel,
               items: [
-                "Marriott", "Hilton", "Hyatt", "Accor", "InterContinental",
-                "Radisson", "Sheraton", "Movenpick", "Pullman", "Le Méridien",
-                "Swissôtel", "Anantara", "Shangri-La",
+                { name: "Marriott", domain: "marriott.com" },
+                { name: "Hilton", domain: "hilton.com" },
+                { name: "Hyatt", domain: "hyatt.com" },
+                { name: "Accor", domain: "accor.com" },
+                { name: "InterContinental", domain: "ihg.com" },
+                { name: "Radisson", domain: "radissonhotels.com" },
+                { name: "Sheraton", domain: "marriott.com" },
+                { name: "Mövenpick", domain: "movenpick.com" },
+                { name: "Pullman", domain: "pullmanhotels.com" },
+                { name: "Le Méridien", domain: "marriott.com" },
+                { name: "Swissôtel", domain: "swissotel.com" },
+                { name: "Anantara", domain: "anantara.com" },
+                { name: "Shangri-La", domain: "shangri-la.com" },
               ],
             },
             {
               title: "Authorities & Memberships",
               icon: ShieldCheck,
-              items: ["IATA", "ATAB", "TOAB", "PATA", "UFTAA", "Hajj Agencies Association"],
+              items: [
+                { name: "IATA", domain: "iata.org" },
+                { name: "ATAB", domain: "atab.org.bd" },
+                { name: "TOAB", domain: "toab.org" },
+                { name: "PATA", domain: "pata.org" },
+                { name: "UFTAA", domain: "uftaa.org" },
+                { name: "HAAB", domain: "haab.com.bd" },
+              ],
             },
           ];
-          const all = groups.flatMap(g => g.items.map(name => ({ name, icon: g.icon })));
-          const Pill = ({ name, Icon }: { name: string; Icon: typeof Plane }) => (
-            <div className="flex h-12 shrink-0 items-center gap-2 rounded-xl border border-border bg-card/80 px-4 font-display text-xs font-bold uppercase tracking-wider text-[color:var(--brand-blue-deep)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift sm:h-14 sm:rounded-2xl sm:px-5 sm:text-[13px]">
-              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)] text-white sm:h-8 sm:w-8">
-                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          const all = groups.flatMap(g => g.items.map(b => ({ ...b, icon: g.icon })));
+          const logoUrl = (d: string) => `https://logo.clearbit.com/${d}?size=128`;
+          const onLogoError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+            const el = e.currentTarget;
+            el.style.display = "none";
+            const fb = el.nextElementSibling as HTMLElement | null;
+            if (fb) fb.style.display = "inline-flex";
+          };
+          const Pill = ({ name, domain, Icon }: { name: string; domain: string; Icon: typeof Plane }) => (
+            <div className="flex h-14 shrink-0 items-center gap-3 rounded-2xl border border-border bg-white/90 px-4 font-display text-[13px] font-bold text-[color:var(--brand-blue-deep)] shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift sm:h-16 sm:px-5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white ring-1 ring-border sm:h-11 sm:w-11">
+                <img
+                  src={logoUrl(domain)}
+                  alt={`${name} logo`}
+                  loading="lazy"
+                  onError={onLogoError}
+                  className="h-full w-full object-contain p-1"
+                />
+                <span style={{ display: "none" }} className="h-full w-full items-center justify-center bg-gradient-to-br from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)] text-white">
+                  <Icon className="h-4 w-4" />
+                </span>
               </span>
               <span className="whitespace-nowrap">{name}</span>
             </div>
@@ -669,7 +715,7 @@ export default function Home() {
                 <div className="flex w-max gap-2 overflow-hidden sm:gap-3">
                   {[0, 1].map(loop => (
                     <div key={loop} className="flex shrink-0 items-center gap-2 animate-marquee sm:gap-3" aria-hidden={loop === 1}>
-                      {all.map((p, i) => <Pill key={`${loop}-${p.name}-${i}`} name={p.name} Icon={p.icon} />)}
+                      {all.map((p, i) => <Pill key={`${loop}-${p.name}-${i}`} name={p.name} domain={p.domain} Icon={p.icon} />)}
                     </div>
                   ))}
                 </div>
@@ -684,7 +730,7 @@ export default function Home() {
                         {g.title}
                       </div>
                       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                        {g.items.join(" · ")}
+                        {g.items.map(i => i.name).join(" · ")}
                       </p>
                     </div>
                   );
