@@ -18,6 +18,7 @@ import { InquiryForm } from "@/components/site/InquiryForm";
 import { usePageTitle } from "@/lib/use-page-title";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
 import { FALLBACK_COUNTRIES } from "@/lib/fallback-countries";
+import { FALLBACK_REQUIREMENTS } from "@/lib/fallback-requirements";
 
 type TabKey = "visa" | "tours" | "umrah" | "medical" | "airticket";
 
