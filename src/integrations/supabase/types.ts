@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      partners: {
+        Row: {
+          cc: string
+          country: string
+          created_at: string
+          display_order: number
+          id: string
+          kind: string
+          name: string
+          published: boolean
+          updated_at: string
+        }
+        Insert: {
+          cc?: string
+          country?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          kind: string
+          name: string
+          published?: boolean
+          updated_at?: string
+        }
+        Update: {
+          cc?: string
+          country?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          kind?: string
+          name?: string
+          published?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

@@ -16,6 +16,7 @@ import { api, type Package, type VisaCountry } from "@/lib/api";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { flagUrl, onFlagError } from "@/lib/flag-url";
+import { usePartners } from "@/lib/partners-db";
 
 const SERVICES = [
   { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa", accent: "orange" as const },
@@ -55,6 +56,7 @@ export default function Home() {
   );
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
+  const { data: partnersData } = usePartners();
   const [destIndex, setDestIndex] = useState(0);
   const [tab, setTab] = useState<typeof QUICK_TABS[number]["key"]>("visa");
   const [query, setQuery] = useState("");
@@ -603,26 +605,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[color:var(--cream)] to-transparent sm:w-16 md:w-24" />
           <div className="flex w-max gap-2 overflow-hidden sm:gap-3">
             {(() => {
-              const partners: { name: string; kind: "airline" | "hotel" | "authority"; country: string; cc: string }[] = [
-                { name: "Emirates", kind: "airline", country: "UAE", cc: "AE" },
-                { name: "Qatar Airways", kind: "airline", country: "Qatar", cc: "QA" },
-                { name: "Singapore Airlines", kind: "airline", country: "Singapore", cc: "SG" },
-                { name: "Turkish Airlines", kind: "airline", country: "Türkiye", cc: "TR" },
-                { name: "Etihad", kind: "airline", country: "UAE", cc: "AE" },
-                { name: "Biman Bangladesh", kind: "airline", country: "Bangladesh", cc: "BD" },
-                { name: "Saudia", kind: "airline", country: "Saudi Arabia", cc: "SA" },
-                { name: "Cathay Pacific", kind: "airline", country: "Hong Kong", cc: "HK" },
-                { name: "Thai Airways", kind: "airline", country: "Thailand", cc: "TH" },
-                { name: "Malaysia Airlines", kind: "airline", country: "Malaysia", cc: "MY" },
-                { name: "Marriott Hotels", kind: "hotel", country: "USA", cc: "US" },
-                { name: "Hilton Worldwide", kind: "hotel", country: "USA", cc: "US" },
-                { name: "Accor Group", kind: "hotel", country: "France", cc: "FR" },
-                { name: "IATA", kind: "authority", country: "Global", cc: "UN" },
-                { name: "ATAB", kind: "authority", country: "Bangladesh", cc: "BD" },
-                { name: "TOAB", kind: "authority", country: "Bangladesh", cc: "BD" },
-                { name: "CAAB", kind: "authority", country: "Bangladesh", cc: "BD" },
-                { name: "Bangladesh Tourism Board", kind: "authority", country: "Bangladesh", cc: "BD" },
-              ];
+              const partners = partnersData;
               const palette: Record<string, string> = {
                 airline: "from-[color:var(--brand-blue)] to-[color:var(--brand-blue-deep)]",
                 hotel: "from-[color:var(--brand-orange)] to-[color:var(--brand-red)]",
