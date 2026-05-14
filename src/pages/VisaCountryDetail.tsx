@@ -17,6 +17,7 @@ import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { usePageTitle } from "@/lib/use-page-title";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
+import { FALLBACK_COUNTRIES } from "@/lib/fallback-countries";
 
 type TabKey = "visa" | "tours" | "umrah" | "medical" | "airticket";
 
