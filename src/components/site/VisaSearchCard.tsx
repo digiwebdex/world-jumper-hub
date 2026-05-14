@@ -55,14 +55,14 @@ function Pill({
     <button
       type="button"
       onClick={onClick}
-      className={`group flex items-center justify-between gap-3 rounded-xl border bg-white px-3.5 py-2.5 text-left transition ${
+        className={`group flex h-12 w-full min-w-0 items-center justify-between gap-3 rounded-xl border bg-white px-4 text-left transition ${
         open
           ? "border-[color:var(--brand-orange)] ring-2 ring-[color:var(--brand-orange)]/20"
           : "border-border hover:border-[color:var(--brand-blue-deep)]/40"
       }`}
     >
       <span
-        className={`truncate text-sm font-semibold ${
+        className={`min-w-0 truncate text-sm font-semibold ${
           placeholder ? "text-muted-foreground" : "text-foreground"
         }`}
       >
@@ -92,7 +92,7 @@ function Dropdown({
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.15 }}
-        className="absolute left-0 right-0 bottom-[calc(100%+6px)] z-40 max-h-[26rem] overflow-y-auto overscroll-contain rounded-xl border border-border bg-white p-1.5 shadow-[0_-20px_50px_-12px_rgba(8,12,32,0.25)] scrollbar-thin scrollbar-thumb-[color:var(--brand-blue-deep)]/30 scrollbar-track-transparent [scrollbar-gutter:stable]"
+        className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[min(28rem,calc(100vh-12rem))] min-w-full overflow-y-auto overscroll-contain rounded-xl border border-border bg-white p-1.5 shadow-[0_24px_60px_-16px_rgba(8,12,32,0.28)] scrollbar-thin scrollbar-thumb-[color:var(--brand-blue-deep)]/30 scrollbar-track-transparent [scrollbar-gutter:stable]"
       >
         {children}
       </motion.div>
