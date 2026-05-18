@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { updatePassword } from "@/lib/use-admin-auth";
-import { supabase } from "@/integrations/supabase/client";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { resetPasswordWithToken, verifyResetToken } from "@/lib/use-admin-auth";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE } from "@/lib/site-config";
 import { Loader2, CheckCircle2 } from "lucide-react";
@@ -9,6 +8,9 @@ import { Loader2, CheckCircle2 } from "lucide-react";
 export default function ResetPassword() {
   usePageTitle("Reset Password");
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const token = params.get("token") || "";
+
   const [ready, setReady] = useState(false);
   const [validSession, setValidSession] = useState(false);
   const [password, setPassword] = useState("");
@@ -17,20 +19,13 @@ export default function ResetPassword() {
   const [err, setErr] = useState<string | null>(null);
   const [done, setDone] = useState(false);
 
-  // The recovery link puts a token in the URL hash; supabase client picks it up.
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
-        setValidSession(true);
-      }
+    if (!token) { setReady(true); setValidSession(false); return; }
+    verifyResetToken(token).then((ok) => {
+      setValidSession(ok);
       setReady(true);
     });
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setValidSession(true);
-      setReady(true);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  }, [token]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +34,7 @@ export default function ResetPassword() {
     if (password !== confirm) { setErr("Passwords do not match."); return; }
     setBusy(true);
     try {
-      await updatePassword(password);
+      await resetPasswordWithToken(token, password);
       setDone(true);
       setTimeout(() => navigate("/admin/login"), 2500);
     } catch (e) {

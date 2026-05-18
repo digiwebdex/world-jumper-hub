@@ -1,8 +1,8 @@
-// Supabase-backed admin auth. Replaces the previous VPS API based helper.
-// `isAdmin` is true only when the signed-in user has the 'admin' role in user_roles.
+// Admin auth backed by the VPS Express API (cookie session).
+// Replaces the previous Supabase Auth integration.
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 
 export interface AdminAuthState {
   loading: boolean;
@@ -11,83 +11,78 @@ export interface AdminAuthState {
   userId: string | null;
 }
 
-async function checkAdmin(userId: string): Promise<boolean> {
-  const { data, error } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", userId)
-    .eq("role", "admin")
-    .maybeSingle();
-  if (error) return false;
-  return !!data;
+interface MeResponse {
+  admin: { id: string; email: string };
 }
 
 export function useAdminAuth(): AdminAuthState {
   const [state, setState] = useState<AdminAuthState>({
-    loading: true, isAdmin: false, email: null, userId: null,
+    loading: true,
+    isAdmin: false,
+    email: null,
+    userId: null,
   });
 
   useEffect(() => {
     let active = true;
-
-    const apply = async (userId: string | null, email: string | null) => {
-      if (!userId) {
-        if (active) setState({ loading: false, isAdmin: false, email: null, userId: null });
-        return;
-      }
-      const isAdmin = await checkAdmin(userId);
-      if (active) setState({ loading: false, isAdmin, email, userId });
+    api
+      .get<MeResponse>("/auth/me")
+      .then((r) => {
+        if (!active) return;
+        setState({
+          loading: false,
+          isAdmin: true,
+          email: r.admin.email,
+          userId: r.admin.id,
+        });
+      })
+      .catch(() => {
+        if (!active) return;
+        setState({ loading: false, isAdmin: false, email: null, userId: null });
+      });
+    return () => {
+      active = false;
     };
-
-    // Listener FIRST, then session check
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      // defer to avoid deadlocks
-      setTimeout(() => apply(session?.user?.id ?? null, session?.user?.email ?? null), 0);
-    });
-    supabase.auth.getSession().then(({ data }) => {
-      apply(data.session?.user?.id ?? null, data.session?.user?.email ?? null);
-    });
-
-    return () => { active = false; subscription.unsubscribe(); };
   }, []);
 
   return state;
 }
 
 export async function adminSignIn(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw new Error(error.message);
-  if (!data.user) throw new Error("Sign in failed");
-  const isAdmin = await checkAdmin(data.user.id);
-  if (!isAdmin) {
-    await supabase.auth.signOut();
-    throw new Error("This account does not have admin access.");
-  }
-  return { admin: { id: data.user.id, email: data.user.email ?? "" } };
+  return api.post<MeResponse>("/auth/login", { email, password });
 }
 
 export async function adminSignOut() {
-  await supabase.auth.signOut();
+  try {
+    await api.post("/auth/logout");
+  } catch {
+    /* ignore */
+  }
 }
 
 export async function adminSignUp(email: string, password: string, fullName?: string) {
-  const redirectUrl = `${window.location.origin}/admin/login`;
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { emailRedirectTo: redirectUrl, data: { full_name: fullName ?? "" } },
-  });
-  if (error) throw new Error(error.message);
+  await api.post("/auth/signup", { email, password, fullName });
 }
 
 export async function sendPasswordReset(email: string) {
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}/reset-password`,
-  });
-  if (error) throw new Error(error.message);
+  await api.post("/auth/forgot", { email });
+}
+
+export async function verifyResetToken(token: string): Promise<boolean> {
+  try {
+    const r = await api.get<{ valid: boolean }>(
+      `/auth/reset/verify?token=${encodeURIComponent(token)}`
+    );
+    return !!r.valid;
+  } catch {
+    return false;
+  }
+}
+
+export async function resetPasswordWithToken(token: string, newPassword: string) {
+  await api.post("/auth/reset", { token, password: newPassword });
 }
 
 export async function updatePassword(newPassword: string) {
-  const { error } = await supabase.auth.updateUser({ password: newPassword });
-  if (error) throw new Error(error.message);
+  await api.post("/auth/update-password", { password: newPassword });
 }
