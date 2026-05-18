@@ -31,6 +31,7 @@ import AdminHomeCms from "@/pages/admin/AdminHomeCms";
 import AdminAboutCms from "@/pages/admin/AdminAboutCms";
 import AdminServicesFaqs from "@/pages/admin/AdminServicesFaqs";
 import AdminNavFooter from "@/pages/admin/AdminNavFooter";
+import AdminSeo from "@/pages/admin/AdminSeo";
 import { useEffect } from "react";
 import { bootWhatsAppSettings } from "@/lib/whatsapp-settings";
 
