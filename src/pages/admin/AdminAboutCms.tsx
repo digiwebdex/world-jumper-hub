@@ -19,7 +19,7 @@ const pageFields: FieldDef[] = [
 ];
 const pillarFields: FieldDef[] = [
   { name: "title", label: "Title" },
-  { name: "image_url", label: "Image URL", type: "url" },
+  { name: "image_url", label: "Image", type: "image" },
   { name: "body", label: "Body", type: "textarea", rows: 3, full: true },
 ];
 const teamFields: FieldDef[] = [
