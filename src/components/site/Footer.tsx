@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 import { Mail, MapPin, Phone, Instagram, Facebook } from "lucide-react";
 import { SITE, whatsappLink } from "@/lib/site-config";
+import { useFooterLinks } from "@/lib/cms";
 import caabLogo from "@/assets/memberships/caab.png";
 import iataLogo from "@/assets/memberships/iata.png";
 import atabLogo from "@/assets/memberships/atab.png";
@@ -9,6 +11,15 @@ import botofLogo from "@/assets/memberships/botof.jpg";
 import etabLogo from "@/assets/memberships/etab.png";
 import ecabLogo from "@/assets/memberships/ecab.png";
 import lionsLogo from "@/assets/memberships/lions.png";
+
+const FALLBACK_GROUPS: Record<string, [string, string][]> = {
+  Explore: [
+    ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
+    ["/tours", "Tours"], ["/umrah", "Umrah"],
+    ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
+    ["/contact", "Contact"],
+  ],
+};
 
 export function Footer() {
   return (
