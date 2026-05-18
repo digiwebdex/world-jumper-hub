@@ -67,6 +67,13 @@ const FALLBACK_WHY_US = [
   { icon: "Sparkles", title: "Curated, Not Generic", description: "Itineraries hand-built for your taste, budget and travel style." },
   { icon: "ShieldCheck", title: "After-Trip Care", description: "24/7 emergency support while you're abroad. We answer when others don't." },
 ];
+const QUICK_TABS = [
+  { key: "visa",     label: "Visa",     icon: Stamp,       to: "/visa",            placeholder: "Search country (e.g. Schengen)" },
+  { key: "tour",     label: "Tours",    icon: MapPin,      to: "/tours",           placeholder: "Search destination (e.g. Bali)" },
+  { key: "air",      label: "Air",      icon: Plane,       to: "/air-ticketing",   placeholder: "From DAC to ..." },
+  { key: "umrah",    label: "Umrah",    icon: Moon,        to: "/umrah",           placeholder: "Choose Umrah package" },
+  { key: "medical",  label: "Medical",  icon: Stethoscope, to: "/medical-tourism", placeholder: "Hospital or city" },
+] as const;
 
 
 export default function Home() {
@@ -77,6 +84,37 @@ export default function Home() {
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
   const { data: memberships } = useMemberships();
+
+  // CMS-driven content (with safe fallbacks)
+  const { data: svcRows } = useHomeServices();
+  const { data: testRows } = useHomeTestimonials();
+  const { data: destRows } = useHomeDestinations();
+  const { data: statRows } = useHomeStats();
+  const { data: whyRows } = useHomeWhyUs();
+
+  const SERVICES = svcRows.length
+    ? svcRows.map((r, i) => ({
+        icon: iconFor(r.icon, Stamp),
+        title: r.title,
+        description: r.description,
+        to: r.link || "/contact",
+        accent: toAccent(r.accent, i),
+      }))
+    : FALLBACK_SERVICES;
+
+  const TESTIMONIALS = testRows.length
+    ? testRows.map(r => ({ name: r.name, trip: r.trip, quote: r.quote }))
+    : FALLBACK_TESTIMONIALS;
+
+  const DESTINATIONS = destRows.length
+    ? destRows.map(r => ({ name: r.name, tag: r.tag, img: r.image_url }))
+    : FALLBACK_DESTINATIONS;
+
+  const STATS = statRows.length ? statRows : FALLBACK_STATS;
+  const WHY_US = whyRows.length
+    ? whyRows.map(r => ({ icon: r.icon, title: r.title, description: r.description }))
+    : FALLBACK_WHY_US;
+
   const [destIndex, setDestIndex] = useState(0);
   const [tab, setTab] = useState<typeof QUICK_TABS[number]["key"]>("visa");
   const [query, setQuery] = useState("");
