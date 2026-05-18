@@ -154,7 +154,7 @@ export function Footer() {
             </div>
           ))}
 
-          <div className={groups.length > 1 ? "md:col-span-" + Math.max(2, 8 - groups.length * 2) : "md:col-span-4"}>
+          <div className="md:col-span-4">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Reach Us</h4>
             <ul className="mt-5 space-y-3 text-sm text-cream/80">
               <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-accent" strokeWidth={1.5} />{contact.address}</li>
