@@ -13,7 +13,7 @@ import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { HeroSearchTabs } from "@/components/site/HeroSearchTabs";
 import { api, type Package, type VisaCountry } from "@/lib/api";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { flagUrl, onFlagError } from "@/lib/flag-url";
 
