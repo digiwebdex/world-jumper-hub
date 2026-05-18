@@ -7,10 +7,11 @@ import { useSeo } from "@/lib/use-seo";
 import { useVisaServices } from "@/lib/visa-services-db";
 
 export default function VisaServices() {
-  usePageTitle(
-    "Visa Services — Consultancy, E-Visa, Cross-Border & Legalisation",
-    "End-to-end visa services for Bangladeshi travellers."
-  );
+  useSeo("visa-services", {
+    title: "Visa Services — Consultancy, E-Visa, Cross-Border & Legalisation",
+    description: "End-to-end visa services for Bangladeshi travellers.",
+    path: "/visa-services",
+  });
   const { data: services } = useVisaServices();
   return (
     <SiteLayout>
