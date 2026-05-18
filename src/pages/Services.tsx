@@ -2,9 +2,11 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, ServiceCard, SectionHeading } from "@/components/site/ui";
 import { StaggerGroup, StaggerItem } from "@/components/site/motion";
 import { usePageTitle } from "@/lib/use-page-title";
+import { useServiceItems } from "@/lib/cms";
+import { iconFor } from "@/lib/icon-map";
 import { Plane, Stamp, MapPin, Stethoscope, Moon, Ticket } from "lucide-react";
 
-const ITEMS = [
+const FALLBACK = [
   { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical, student & work visa across 30+ countries.", to: "/visa" },
   { icon: MapPin, title: "Tour Packages", description: "Curated holidays — Asia, Europe, Middle East, Maldives & beyond.", to: "/tours" },
   { icon: Plane, title: "Air Ticketing", description: "IATA-approved fares from 50+ international airlines.", to: "/air-ticketing" },
@@ -18,6 +20,10 @@ export default function Services() {
     "Our Services",
     "Visa, tour packages, air ticketing, Umrah programs, medical tourism and bespoke itineraries — six trusted travel services under one Bangladeshi roof."
   );
+  const { data: items } = useServiceItems();
+  const list = items.length
+    ? items.map(i => ({ icon: iconFor(i.icon, Stamp), title: i.title, description: i.description, to: i.link || "/contact" }))
+    : FALLBACK;
   return (
     <SiteLayout>
       <PageHero
@@ -30,7 +36,7 @@ export default function Services() {
       <section className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
         <SectionHeading eyebrow="Disciplines" title="Six pillars of our practice." />
         <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {ITEMS.map((s, i) => (
+          {list.map((s, i) => (
             <StaggerItem key={s.title}><ServiceCard {...s} index={i} /></StaggerItem>
           ))}
         </StaggerGroup>

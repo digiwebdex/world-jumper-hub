@@ -4,9 +4,10 @@ import { PageHero, SectionHeading } from "@/components/site/ui";
 import { Reveal } from "@/components/site/motion";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageTitle } from "@/lib/use-page-title";
+import { useFaqs } from "@/lib/cms";
 import { Plus } from "lucide-react";
 
-const FAQS = [
+const FALLBACK_FAQS = [
   { q: "How long does visa processing take?", a: "It depends on the country — typically 7 to 21 working days after the embassy receives all documents. We share the exact timeline before any payment." },
   { q: "Do you provide air tickets only?", a: "Yes — we are an IATA-approved agent and issue tickets for 50+ international airlines, with or without a tour package." },
   { q: "Can I customize a tour package?", a: "Absolutely. Share your dates, destination and budget and a consultant will design a tailored plan within 24 hours." },
@@ -16,6 +17,10 @@ const FAQS = [
 ];
 
 export default function Faq() {
+  const { data: faqRows } = useFaqs();
+  const FAQS = faqRows.length
+    ? faqRows.map(r => ({ q: r.question, a: r.answer }))
+    : FALLBACK_FAQS;
   usePageTitle(
     "FAQ",
     "Answers to common questions about visa processing, payment, refunds, embassy appointments and travel support from World Jumper Tours & Travels."

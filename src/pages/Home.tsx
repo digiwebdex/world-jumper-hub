@@ -18,8 +18,18 @@ import { SITE, whatsappLink } from "@/lib/site-config";
 import { flagUrl, onFlagError } from "@/lib/flag-url";
 
 import { useMemberships } from "@/lib/memberships-db";
+import {
+  useHomeServices, useHomeTestimonials, useHomeDestinations,
+  useHomeStats, useHomeWhyUs,
+} from "@/lib/cms";
+import { iconFor } from "@/lib/icon-map";
 
-const SERVICES = [
+type Accent = "orange" | "blue" | "deep" | "sand";
+const ACCENTS: Accent[] = ["orange", "blue", "deep", "sand"];
+const toAccent = (s: string | null | undefined, i = 0): Accent =>
+  (ACCENTS.includes(s as Accent) ? (s as Accent) : ACCENTS[i % ACCENTS.length]);
+
+const FALLBACK_SERVICES = [
   { icon: Stamp, title: "Visa Services", description: "Tourist, business, medical & student visas processed for 30+ countries with full documentation support.", to: "/visa", accent: "orange" as const },
   { icon: MapPin, title: "Tour Packages", description: "Hand-curated international holidays across Asia, Europe, Middle East and beyond.", to: "/tours", accent: "blue" as const },
   { icon: Plane, title: "Air Ticketing", description: "IATA-approved fares from 50+ airlines — competitive prices, instant confirmation.", to: "/air-ticketing", accent: "deep" as const },
@@ -28,13 +38,13 @@ const SERVICES = [
   { icon: Ticket, title: "Bespoke Itineraries", description: "Custom-designed journeys tailored entirely around your timeline and taste.", to: "/contact", accent: "blue" as const },
 ];
 
-const TESTIMONIALS = [
+const FALLBACK_TESTIMONIALS = [
   { name: "Rashed Hossain", trip: "Dubai · Family Holiday", quote: "From visa to hotel — every detail was effortless. We just packed and flew." },
   { name: "Nusrat Jahan", trip: "Umrah · 2024", quote: "The team treated my parents like their own. The hotel near Haram was perfect." },
   { name: "Tanvir Ahmed", trip: "Bangkok · Medical", quote: "World Jumper coordinated the hospital, hotel and translator. Truly stress-free." },
 ];
 
-const DESTINATIONS = [
+const FALLBACK_DESTINATIONS = [
   { name: "Maldives",  tag: "Island Escape",   img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=2400&q=70" },
   { name: "Dubai",     tag: "City of Gold",    img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2400&q=70" },
   { name: "Makkah",    tag: "Umrah & Hajj",    img: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=2400&q=70" },
@@ -42,6 +52,21 @@ const DESTINATIONS = [
   { name: "Switzerland", tag: "Alps & Lakes",  img: "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=2400&q=70" },
 ];
 
+const FALLBACK_STATS = [
+  { value: "10000", suffix: "+", label: "Travelers Served" },
+  { value: "30", suffix: "+", label: "Countries Covered" },
+  { value: "50", suffix: "+", label: "Airline Partners" },
+  { value: "12", suffix: " yrs", label: "Of Experience" },
+];
+
+const FALLBACK_WHY_US = [
+  { icon: "ShieldCheck", title: "Govt. Approved", description: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
+  { icon: "HeartHandshake", title: "Human Consultants", description: "A real person handles your file end-to-end — no chatbots, no scripts." },
+  { icon: "Clock", title: "On-Time Processing", description: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
+  { icon: "Globe2", title: "30+ Destinations", description: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
+  { icon: "Sparkles", title: "Curated, Not Generic", description: "Itineraries hand-built for your taste, budget and travel style." },
+  { icon: "ShieldCheck", title: "After-Trip Care", description: "24/7 emergency support while you're abroad. We answer when others don't." },
+];
 const QUICK_TABS = [
   { key: "visa",     label: "Visa",     icon: Stamp,       to: "/visa",            placeholder: "Search country (e.g. Schengen)" },
   { key: "tour",     label: "Tours",    icon: MapPin,      to: "/tours",           placeholder: "Search destination (e.g. Bali)" },
@@ -49,6 +74,7 @@ const QUICK_TABS = [
   { key: "umrah",    label: "Umrah",    icon: Moon,        to: "/umrah",           placeholder: "Choose Umrah package" },
   { key: "medical",  label: "Medical",  icon: Stethoscope, to: "/medical-tourism", placeholder: "Hospital or city" },
 ] as const;
+
 
 export default function Home() {
   usePageTitle(
@@ -58,6 +84,37 @@ export default function Home() {
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
   const { data: memberships } = useMemberships();
+
+  // CMS-driven content (with safe fallbacks)
+  const { data: svcRows } = useHomeServices();
+  const { data: testRows } = useHomeTestimonials();
+  const { data: destRows } = useHomeDestinations();
+  const { data: statRows } = useHomeStats();
+  const { data: whyRows } = useHomeWhyUs();
+
+  const SERVICES = svcRows.length
+    ? svcRows.map((r, i) => ({
+        icon: iconFor(r.icon, Stamp),
+        title: r.title,
+        description: r.description,
+        to: r.link || "/contact",
+        accent: toAccent(r.accent, i),
+      }))
+    : FALLBACK_SERVICES;
+
+  const TESTIMONIALS = testRows.length
+    ? testRows.map(r => ({ name: r.name, trip: r.trip, quote: r.quote }))
+    : FALLBACK_TESTIMONIALS;
+
+  const DESTINATIONS = destRows.length
+    ? destRows.map(r => ({ name: r.name, tag: r.tag, img: r.image_url }))
+    : FALLBACK_DESTINATIONS;
+
+  const STATS = statRows.length ? statRows : FALLBACK_STATS;
+  const WHY_US = whyRows.length
+    ? whyRows.map(r => ({ icon: r.icon, title: r.title, description: r.description }))
+    : FALLBACK_WHY_US;
+
   const [destIndex, setDestIndex] = useState(0);
   const [tab, setTab] = useState<typeof QUICK_TABS[number]["key"]>("visa");
   const [query, setQuery] = useState("");
@@ -297,19 +354,17 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <div className="grid gap-px overflow-hidden rounded-3xl bg-border shadow-lift sm:grid-cols-2 md:grid-cols-4">
-              {[
-                { n: 10000, s: "+", l: "Travelers Served" },
-                { n: 30, s: "+", l: "Countries Covered" },
-                { n: 50, s: "+", l: "Airline Partners" },
-                { n: 12, s: " yrs", l: "Of Experience" },
-              ].map(({ n, s, l }) => (
-                <div key={l} className="bg-card px-6 py-7 text-center md:px-8 md:py-9">
-                  <p className="font-display text-4xl font-extrabold text-[color:var(--brand-blue-deep)] md:text-5xl">
-                    <CountUp to={n} suffix={s} />
-                  </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{l}</p>
-                </div>
-              ))}
+              {STATS.map(s => {
+                const n = Number(s.value) || 0;
+                return (
+                  <div key={s.label} className="bg-card px-6 py-7 text-center md:px-8 md:py-9">
+                    <p className="font-display text-4xl font-extrabold text-[color:var(--brand-blue-deep)] md:text-5xl">
+                      <CountUp to={n} suffix={s.suffix || ""} />
+                    </p>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{s.label}</p>
+                  </div>
+                );
+              })}
             </div>
           </Reveal>
         </div>
@@ -359,22 +414,19 @@ export default function Home() {
             intro="A 12-year-old travel house staffed by real consultants who answer the phone, walk you through your visa file, and stand by you long after departure."
           />
           <StaggerGroup className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: ShieldCheck,    accent: "orange" as const, title: "Govt. Approved",       body: "Fully licensed by Bangladesh Tourism Board. CAAB · IATA · ATAB · TOAB member." },
-              { icon: HeartHandshake, accent: "blue"   as const, title: "Human Consultants",     body: "A real person handles your file end-to-end — no chatbots, no scripts." },
-              { icon: Clock,          accent: "deep"   as const, title: "On-Time Processing",    body: "Transparent visa timelines, ticket confirmations and reminders so you never miss a deadline." },
-              { icon: Globe2,         accent: "sand"   as const, title: "30+ Destinations",      body: "Visa, hotel and ground support across Asia, Europe, Middle East, USA, UK & Schengen." },
-              { icon: Sparkles,       accent: "orange" as const, title: "Curated, Not Generic",  body: "Itineraries hand-built for your taste, budget and travel style." },
-              { icon: ShieldCheck,    accent: "blue"   as const, title: "After-Trip Care",       body: "24/7 emergency support while you're abroad. We answer when others don't." },
-            ].map(({ icon: I, accent, title, body }) => (
-              <StaggerItem key={title}>
-                <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card/80 p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift">
-                  <FancyIcon icon={I} accent={accent} />
-                  <h3 className="mt-6 font-display text-xl font-bold text-foreground">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-                </div>
-              </StaggerItem>
-            ))}
+            {WHY_US.map((w, i) => {
+              const I = iconFor(w.icon, ShieldCheck);
+              const accent = toAccent(undefined, i);
+              return (
+                <StaggerItem key={`${w.title}-${i}`}>
+                  <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card/80 p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--brand-orange)]/40 hover:shadow-lift">
+                    <FancyIcon icon={I} accent={accent} />
+                    <h3 className="mt-6 font-display text-xl font-bold text-foreground">{w.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{w.description}</p>
+                  </div>
+                </StaggerItem>
+              );
+            })}
           </StaggerGroup>
         </div>
       </section>
