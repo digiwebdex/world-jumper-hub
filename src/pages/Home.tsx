@@ -354,19 +354,17 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <div className="grid gap-px overflow-hidden rounded-3xl bg-border shadow-lift sm:grid-cols-2 md:grid-cols-4">
-              {[
-                { n: 10000, s: "+", l: "Travelers Served" },
-                { n: 30, s: "+", l: "Countries Covered" },
-                { n: 50, s: "+", l: "Airline Partners" },
-                { n: 12, s: " yrs", l: "Of Experience" },
-              ].map(({ n, s, l }) => (
-                <div key={l} className="bg-card px-6 py-7 text-center md:px-8 md:py-9">
-                  <p className="font-display text-4xl font-extrabold text-[color:var(--brand-blue-deep)] md:text-5xl">
-                    <CountUp to={n} suffix={s} />
-                  </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{l}</p>
-                </div>
-              ))}
+              {STATS.map(s => {
+                const n = Number(s.value) || 0;
+                return (
+                  <div key={s.label} className="bg-card px-6 py-7 text-center md:px-8 md:py-9">
+                    <p className="font-display text-4xl font-extrabold text-[color:var(--brand-blue-deep)] md:text-5xl">
+                      <CountUp to={n} suffix={s.suffix || ""} />
+                    </p>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">{s.label}</p>
+                  </div>
+                );
+              })}
             </div>
           </Reveal>
         </div>
