@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { AdminShell } from "@/components/admin/AdminShell";
-import { supabase } from "@/integrations/supabase/client";
-import { ICON_NAMES } from "@/lib/visa-services-db";
+import { api } from "@/lib/api";
+import { ICON_NAMES, type Row } from "@/lib/visa-services-db";
 import { Loader2, Plus, Trash2, ArrowLeft, Save } from "lucide-react";
 
 type FormState = {
@@ -30,19 +30,22 @@ export default function AdminVisaServiceEditor() {
 
   useEffect(() => {
     if (isNew) return;
-    supabase.from("visa_services").select("*").eq("id", id).maybeSingle().then(({ data, error }) => {
-      if (error || !data) { setErr("Service not found"); setLoading(false); return; }
-      setForm({
-        slug: data.slug, number: data.number, title: data.title, short_title: data.short_title,
-        tagline: data.tagline, summary: data.summary, icon: data.icon, intro: data.intro,
-        highlights: (data.highlights as string[]) || [""],
-        process: (data.process as { step: string; detail: string }[]) || [{ step: "", detail: "" }],
-        who_is_it_for: (data.who_is_it_for as string[]) || [""],
-        faqs: (data.faqs as { q: string; a: string }[]) || [{ q: "", a: "" }],
-        display_order: data.display_order, published: data.published,
-      });
-      setLoading(false);
-    });
+    api.get<{ service: Row | null }>(`/visa-services/${id}`)
+      .then((res) => {
+        const data = res.service;
+        if (!data) { setErr("Service not found"); setLoading(false); return; }
+        setForm({
+          slug: data.slug, number: data.number, title: data.title, short_title: data.short_title,
+          tagline: data.tagline, summary: data.summary, icon: data.icon, intro: data.intro,
+          highlights: (data.highlights as string[]) || [""],
+          process: (data.process as { step: string; detail: string }[]) || [{ step: "", detail: "" }],
+          who_is_it_for: (data.who_is_it_for as string[]) || [""],
+          faqs: (data.faqs as { q: string; a: string }[]) || [{ q: "", a: "" }],
+          display_order: data.display_order, published: data.published,
+        });
+        setLoading(false);
+      })
+      .catch((e) => { setErr(e instanceof Error ? e.message : "Failed to load"); setLoading(false); });
   }, [id, isNew]);
 
   const save = async (e: React.FormEvent) => {
@@ -55,12 +58,18 @@ export default function AdminVisaServiceEditor() {
       process: form.process.filter(p => p.step || p.detail),
       faqs: form.faqs.filter(f => f.q || f.a),
     };
-    const res = isNew
-      ? await supabase.from("visa_services").insert(payload).select("id").single()
-      : await supabase.from("visa_services").update(payload).eq("id", id!).select("id").single();
-    setBusy(false);
-    if (res.error) { setErr(res.error.message); return; }
-    navigate("/admin/visa-services");
+    try {
+      if (isNew) {
+        await api.post("/visa-services", payload);
+      } else {
+        await api.put(`/visa-services/${id}`, payload);
+      }
+      navigate("/admin/visa-services");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Save failed");
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (loading) return <AdminShell title="Edit Service"><Loader2 className="h-5 w-5 animate-spin" /></AdminShell>;
