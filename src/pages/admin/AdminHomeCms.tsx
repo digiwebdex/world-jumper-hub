@@ -12,7 +12,7 @@ const heroFields: FieldDef[] = [
   { name: "highlight_word", label: "Highlight word (italic accent)" },
   { name: "headline", label: "Headline", full: true },
   { name: "subheadline", label: "Subheadline", type: "textarea", rows: 2, full: true },
-  { name: "background_image_url", label: "Background image URL", type: "url", full: true },
+  { name: "background_image_url", label: "Background image", type: "image", full: true },
   { name: "primary_cta_label", label: "Primary CTA label" },
   { name: "primary_cta_link", label: "Primary CTA link" },
   { name: "secondary_cta_label", label: "Secondary CTA label" },
