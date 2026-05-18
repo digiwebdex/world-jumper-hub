@@ -6,7 +6,7 @@ import { PageHero, SectionHeading } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
 import { VISA_SERVICES } from "@/lib/visa-services";
 
