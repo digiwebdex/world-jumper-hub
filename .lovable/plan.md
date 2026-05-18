@@ -1,70 +1,160 @@
-# CMS + Password Reset Plan
+## Goal
 
-This is a large scope (4 CMS surfaces + auth flows). I'll split into 3 phases so each ships working before moving on. You approve, I build Phase 1, you test, then I do Phase 2, etc.
+Make **every piece of content** on the website editable from the admin panel, then move everything off Supabase onto your VPS (Express + Postgres). After this, you control 100% of the site through `/admin` with zero code deploys for content changes.
 
-## Foundation (built once, used by all phases)
+---
 
-1. **Enable Lovable Cloud** — database, auth, email.
-2. **Auth tables**
-   - `profiles` (id → auth.users, email, full_name)
-   - `user_roles` + `app_role` enum (`admin`, `editor`) + `has_role()` security-definer function
-   - Trigger to auto-create profile on signup
-   - Seed your account as `admin` (you'll sign up first; I'll mark it admin)
-3. **Auth pages**
-   - `/login` — email + password, "Forgot password?" link
-   - `/signup` — email + password (only used for first admin; can disable later)
-   - `/forgot-password` — sends reset email via Lovable Email
-   - `/reset-password` — handles `type=recovery`, sets new password
-   - `/admin/*` routes protected by `_authenticated` layout + admin role check
-4. **Email domain setup** — required for password reset emails. I'll prompt this when needed.
+## Phase 1 — Build CMS for hardcoded content (VPS Express + Postgres)
 
-## Phase 1 — Visa Services CMS
+Add new admin pages + DB tables for content that's currently hardcoded in the React code.
 
-Replaces hardcoded `src/lib/visa-services.ts` with DB-driven content.
+### 1.1 Home page CMS (`/admin/home`)
+New tables on VPS Postgres:
+- `home_hero` (singleton): headline, subheadline, background_image_url, primary_cta_label, primary_cta_link, secondary_cta_label, secondary_cta_link
+- `home_stats` (list): label, value, icon, display_order
+- `home_services` (list): title, description, icon, link, display_order, is_active — replaces hardcoded `SERVICES`
+- `home_destinations` (list): name, image_url, country_slug, display_order — replaces `DESTINATIONS`
+- `home_testimonials` (list): name, role, photo_url, quote, rating, display_order, is_active — replaces `TESTIMONIALS`
+- `home_why_choose_us` (list): title, description, icon, display_order
 
-- Table `visa_services`: slug, title, summary, description, highlights[], process[], faqs[], icon, order, published
-- Public `/visa/services` and `/visa/services/:slug` read from DB (server fn + `supabaseAdmin`)
-- Admin pages:
-  - `/admin/visa-services` — list, reorder, publish toggle, delete
-  - `/admin/visa-services/new` and `/admin/visa-services/:id/edit` — full form (rich text for description, dynamic arrays for highlights/process/FAQs)
-- Migration seeds existing 6 services so nothing disappears
+### 1.2 About page CMS (`/admin/about`)
+- `about_page` (singleton): hero_title, hero_text, mission, vision, story_html, image_url
+- `about_pillars` (list): title, description, icon, display_order — replaces `PILLARS`
+- `about_team` (list): name, role, photo_url, bio, display_order
 
-## Phase 2 — Page Sections CMS (Homepage + Medical/Tour/Education)
+### 1.3 Services page CMS (`/admin/services-page`)
+- `services_items` (list): title, description, icon, link, display_order — replaces `ITEMS`
 
-Structured editing — NOT a free-form drag-drop builder (that's Phase 3).
+### 1.4 FAQ CMS (`/admin/faqs`)
+- `faqs` (list): question, answer, category, display_order, is_active — replaces hardcoded `FAQS`
 
-- Table `page_sections`: page_key (`home`/`medical`/`tour`/`education`), section_type (`hero`/`features`/`cta`/`text`/`image_text`), order, data (jsonb), published
-- Each section_type has a typed editor form
-- Public pages render sections from DB in order
-- Admin: `/admin/pages` → pick page → reorder/add/edit/delete sections
-- Seeds existing copy so the site looks unchanged after migration
+### 1.5 Header & Footer CMS (`/admin/navigation`)
+- `nav_menu` (list): label, url, parent_id, display_order, opens_new_tab — header menu
+- `footer_links` (list): label, url, column_group (Explore / Reach Us / Legal), display_order
+- `footer_about_text` → already in site_settings (add column)
 
-## Phase 3 — Generic Page Builder (optional / after Phase 2 is solid)
+### 1.6 Memberships → migrate from Supabase to VPS
+- New `memberships` table on VPS (name, logo_url, link_url, display_order, is_published)
+- Migrate `/admin/memberships` page to call VPS API
+- Footer reads from API (no more hardcoded logo imports)
 
-Only if you still want it after using Phase 2. This is the biggest piece.
+### 1.7 Partners → migrate from Supabase to VPS
+- New `partners` table on VPS (name, kind, country, cc, display_order, is_published)
+- Migrate `/admin/partners` to VPS API
 
-- Table `pages` (slug, title, meta) + `page_blocks` (page_id, type, order, data jsonb)
-- Block library: hero, heading, rich text, image, gallery, columns, cards, CTA, FAQ, embed
-- Admin builder UI: drag-drop reorder, inline edit, preview, publish/draft
-- Dynamic public route `/$slug` renders any custom page
-- Image uploads via Lovable Cloud Storage
+### 1.8 Visa Services → migrate from Supabase to VPS
+- New `visa_services` table on VPS with all JSONB fields (highlights, process, who_is_it_for, faqs)
+- Migrate `/admin/visa-services` + editor to VPS API
+- Public `/visa/services` and `/visa/services/:slug` read from VPS
 
-I recommend stopping after Phase 2 unless you have a real need for arbitrary new pages — Phases 1+2 already let you edit ~all visible content.
+### 1.9 WhatsApp settings → migrate from Supabase to VPS
+- Add `whatsapp_number`, `whatsapp_message` columns to existing `site_settings` (or new `app_settings` table)
+- Migrate `/admin/whatsapp` to VPS API
 
-## Technical notes
+### 1.10 Admin Authentication → migrate from Supabase Auth to VPS
+- Already have `admin_users` table + bcrypt + JWT cookie in `server/src/routes/auth.ts`
+- Rewrite `src/lib/use-admin-auth.ts` to call `/api/auth/login`, `/api/auth/logout`, `/api/auth/me`
+- Rewrite `AdminLogin`, `AdminSignup`, `ForgotPassword`, `ResetPassword` to use VPS endpoints
+- Add `/api/auth/forgot` + `/api/auth/reset` endpoints (email link with token in `admin_password_resets` table)
 
-- All CMS reads on public pages go through `createServerFn` + `supabaseAdmin` with `published=true` filter (no RLS leakage, fast SSR).
-- All CMS writes go through `createServerFn` + `requireSupabaseAuth` + `has_role(uid,'admin')` check.
-- RLS: public tables readable by `anon` only where `published=true`; writes admin-only.
-- Forms use `react-hook-form` + `zod`.
-- Rich text: `@tiptap/react` (lightweight, good DX).
-- Reordering: `@dnd-kit/sortable`.
+---
 
-## What I'll do right after you approve
+## Phase 2 — Rewire frontend to load from CMS
 
-1. Enable Lovable Cloud
-2. Build the **Foundation** (auth + roles + login/forgot/reset pages + admin shell)
-3. Build **Phase 1** (Visa Services CMS) end-to-end
-4. Stop and ask you to test + create your admin account before moving to Phase 2
+For each public page, replace hardcoded arrays with API calls:
+- `Home.tsx` → fetch hero/stats/services/destinations/testimonials/why-choose-us
+- `About.tsx` → fetch about_page + pillars + team
+- `Services.tsx` → fetch services_items
+- `Faq.tsx` → fetch faqs
+- `Footer.tsx` → fetch memberships + footer_links from API (remove hardcoded imports)
+- `Header.tsx` → fetch nav_menu from API
 
-Approve to start, or tell me which phases to drop / reorder.
+Add a small in-memory cache + `staleTime` so pages stay fast.
+
+---
+
+## Phase 3 — Remove Supabase entirely
+
+- Delete `src/integrations/supabase/*`
+- Delete `src/lib/memberships-db.ts`, `partners-db.ts`, `visa-services-db.ts`, `whatsapp-settings.ts` (Supabase versions)
+- Remove `@supabase/supabase-js` from `package.json`
+- Remove `VITE_SUPABASE_*` from `.env`
+- Cloud connection stays disabled — site is 100% VPS
+
+---
+
+## Phase 4 — Migration & seeding
+
+- Write SQL migrations under `server/migrations/004_*.sql` … `010_*.sql` for all new tables
+- Write a one-time seed script that copies existing Supabase data (memberships, partners, visa_services) into VPS Postgres so nothing is lost
+- Seed default values for new tables (current hardcoded SERVICES/FAQS/PILLARS arrays become initial DB rows so the site looks identical on day 1)
+
+---
+
+## Technical Section
+
+**Stack stays the same**: Express + Postgres on VPS, JWT cookie auth, React frontend reads from `/api/*`.
+
+**File structure additions:**
+```text
+server/
+  migrations/
+    004_home_cms.sql
+    005_about_cms.sql
+    006_services_faqs.sql
+    007_navigation_footer.sql
+    008_memberships_vps.sql
+    009_partners_vps.sql
+    010_visa_services_vps.sql
+    011_admin_password_resets.sql
+  src/routes/
+    home-content.ts
+    about-content.ts
+    services-content.ts
+    faqs.ts
+    navigation.ts
+    memberships.ts
+    partners.ts
+    visa-services.ts
+    auth.ts            (extend with forgot/reset)
+
+src/
+  lib/
+    cms-api.ts         (typed fetchers for all new endpoints)
+  pages/admin/
+    AdminHome.tsx
+    AdminAbout.tsx
+    AdminServicesPage.tsx
+    AdminFaqs.tsx
+    AdminNavigation.tsx
+    AdminFooter.tsx
+```
+
+**Auth model**: JWT in httpOnly cookie (already implemented). Admin signup will be locked behind a server-side `ADMIN_SIGNUP_TOKEN` env var so randoms can't create admins.
+
+**Image uploads**: keep using existing `/api/uploads` → `uploads.worldjumperbd.com/...`. Every image field in every admin form gets the same upload widget you already have.
+
+**No downtime migration**: Phase 1 keeps Supabase live. We only delete Supabase code in Phase 3 after Phase 2 is verified working on the VPS.
+
+---
+
+## Order of work (what I'll ship per turn)
+
+1. **Migrations + seed** for all new tables (one approval)
+2. **Express routes** for all new endpoints
+3. **Admin pages** — Home, About, Services, FAQs, Navigation, Footer (one big batch)
+4. **Migrate admin auth** to VPS (login/signup/forgot/reset)
+5. **Migrate Memberships + Partners + Visa Services + WhatsApp** admin pages to VPS
+6. **Rewire public pages** to read from API
+7. **Delete Supabase code** + give you the final VPS deploy commands
+
+---
+
+## What you'll need to do on the VPS
+
+After each phase I'll give you exact bash commands:
+- `cd /var/www/worldjumper && git pull && npm ci && npm run build`
+- `cd /var/www/worldjumper/server && npm ci && npm run migrate && pm2 restart worldjumper-api`
+- `systemctl reload nginx`
+
+Approve this plan and I'll start with **Phase 1 step 1: the SQL migrations**.
