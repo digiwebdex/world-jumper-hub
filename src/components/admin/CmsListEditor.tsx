@@ -4,12 +4,13 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import type { ListRow } from "@/lib/cms-hooks";
 import { Field, PrimaryButton, GhostButton, Modal, Card } from "@/components/admin/form-bits";
+import { ImageField } from "@/components/admin/ImageField";
 import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Loader2, Save, X } from "lucide-react";
 
 export interface FieldDef {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "url";
+  type?: "text" | "textarea" | "number" | "url" | "image";
   placeholder?: string;
   rows?: number;
   full?: boolean;
