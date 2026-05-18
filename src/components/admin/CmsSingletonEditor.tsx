@@ -13,7 +13,7 @@ interface Props<T> {
   fields: FieldDef[];
 }
 
-export function CmsSingletonEditor<T extends Record<string, unknown>>({
+export function CmsSingletonEditor<T>({
   basePath, data, loading, reload, fields,
 }: Props<T>) {
   const [saving, setSaving] = useState(false);
