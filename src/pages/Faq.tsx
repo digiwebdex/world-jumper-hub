@@ -21,10 +21,11 @@ export default function Faq() {
   const FAQS = faqRows.length
     ? faqRows.map(r => ({ q: r.question, a: r.answer }))
     : FALLBACK_FAQS;
-  usePageTitle(
-    "FAQ",
-    "Answers to common questions about visa processing, payment, refunds, embassy appointments and travel support from World Jumper Tours & Travels."
-  );
+  useSeo("faq", {
+    title: "FAQ",
+    description: "Answers to common questions about visa processing, payment, refunds, embassy appointments and travel support from World Jumper Tours & Travels.",
+    path: "/faq",
+  });
   const [open, setOpen] = useState<number | null>(0);
   return (
     <SiteLayout>
