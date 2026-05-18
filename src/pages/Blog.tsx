@@ -133,8 +133,4 @@ export default function Blog() {
               ))}
             </div>
           )}
-        </Container>
-      </section>
-    </SiteLayout>
-  );
-}
+
