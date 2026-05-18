@@ -12,7 +12,7 @@ const heroFields: FieldDef[] = [
   { name: "highlight_word", label: "Highlight word (italic accent)" },
   { name: "headline", label: "Headline", full: true },
   { name: "subheadline", label: "Subheadline", type: "textarea", rows: 2, full: true },
-  { name: "background_image_url", label: "Background image URL", type: "url", full: true },
+  { name: "background_image_url", label: "Background image", type: "image", full: true },
   { name: "primary_cta_label", label: "Primary CTA label" },
   { name: "primary_cta_link", label: "Primary CTA link" },
   { name: "secondary_cta_label", label: "Secondary CTA label" },
@@ -33,14 +33,14 @@ const servicesFields: FieldDef[] = [
 const destFields: FieldDef[] = [
   { name: "name", label: "Destination name" },
   { name: "tag", label: "Tag line (small text)" },
-  { name: "image_url", label: "Image URL", type: "url", full: true },
+  { name: "image_url", label: "Image", type: "image", full: true },
   { name: "link", label: "Link URL" },
 ];
 const testimonialFields: FieldDef[] = [
   { name: "name", label: "Customer name" },
   { name: "trip", label: "Trip / context" },
   { name: "quote", label: "Quote", type: "textarea", rows: 3, full: true },
-  { name: "photo_url", label: "Photo URL", type: "url" },
+  { name: "photo_url", label: "Photo", type: "image" },
   { name: "rating", label: "Rating (1-5)", type: "number", default: 5 },
 ];
 const whyFields: FieldDef[] = [

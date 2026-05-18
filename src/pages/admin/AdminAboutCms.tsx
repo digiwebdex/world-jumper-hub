@@ -9,23 +9,23 @@ const pageFields: FieldDef[] = [
   { name: "hero_kicker", label: "Hero kicker" },
   { name: "hero_title", label: "Hero title", full: true },
   { name: "hero_subtitle", label: "Hero subtitle", type: "textarea", rows: 2, full: true },
-  { name: "hero_image_url", label: "Hero image URL", type: "url", full: true },
+  { name: "hero_image_url", label: "Hero image", type: "image", full: true },
   { name: "founding_label", label: "Founding note label" },
   { name: "founding_title", label: "Founding note title" },
   { name: "story_paragraph_1", label: "Story paragraph 1", type: "textarea", rows: 4, full: true },
   { name: "story_paragraph_2", label: "Story paragraph 2", type: "textarea", rows: 4, full: true },
   { name: "quote_text", label: "Quote text", type: "textarea", rows: 2, full: true },
-  { name: "quote_image_url", label: "Quote background image", type: "url", full: true },
+  { name: "quote_image_url", label: "Quote background image", type: "image", full: true },
 ];
 const pillarFields: FieldDef[] = [
   { name: "title", label: "Title" },
-  { name: "image_url", label: "Image URL", type: "url" },
+  { name: "image_url", label: "Image", type: "image" },
   { name: "body", label: "Body", type: "textarea", rows: 3, full: true },
 ];
 const teamFields: FieldDef[] = [
   { name: "name", label: "Name" },
   { name: "role", label: "Role" },
-  { name: "photo_url", label: "Photo URL", type: "url" },
+  { name: "photo_url", label: "Photo", type: "image" },
   { name: "bio", label: "Bio", type: "textarea", rows: 3, full: true },
 ];
 const statsFields: FieldDef[] = [

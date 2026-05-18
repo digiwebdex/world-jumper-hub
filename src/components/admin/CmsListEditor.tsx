@@ -4,12 +4,13 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import type { ListRow } from "@/lib/cms-hooks";
 import { Field, PrimaryButton, GhostButton, Modal, Card } from "@/components/admin/form-bits";
+import { ImageField } from "@/components/admin/ImageField";
 import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Loader2, Save, X } from "lucide-react";
 
 export interface FieldDef {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "url";
+  type?: "text" | "textarea" | "number" | "url" | "image";
   placeholder?: string;
   rows?: number;
   full?: boolean;
@@ -129,18 +130,28 @@ export function CmsListEditor<T extends ListRow>({
       <Modal open={creating || editing !== null} onClose={cancel} title={editing ? "Edit item" : "New item"} wide>
         <form onSubmit={(e) => { e.preventDefault(); save(e.currentTarget); }} className="grid gap-4 md:grid-cols-2">
           {fields.map((f) => (
-            <Field
-              key={f.name}
-              label={f.label}
-              name={f.name}
-              type={f.type === "textarea" ? "text" : (f.type ?? "text")}
-              textarea={f.type === "textarea"}
-              rows={f.rows}
-              placeholder={f.placeholder}
-              full={f.full}
-              options={f.options}
-              defaultValue={editing ? (editing[f.name] as string | number | null) : (f.default ?? "")}
-            />
+            f.type === "image" ? (
+              <ImageField
+                key={f.name}
+                label={f.label}
+                name={f.name}
+                full={f.full}
+                defaultValue={editing ? (editing[f.name] as string | null) : ""}
+              />
+            ) : (
+              <Field
+                key={f.name}
+                label={f.label}
+                name={f.name}
+                type={f.type === "textarea" ? "text" : (f.type ?? "text")}
+                textarea={f.type === "textarea"}
+                rows={f.rows}
+                placeholder={f.placeholder}
+                full={f.full}
+                options={f.options}
+                defaultValue={editing ? (editing[f.name] as string | number | null) : (f.default ?? "")}
+              />
+            )
           ))}
           <Field
             label="Display order"

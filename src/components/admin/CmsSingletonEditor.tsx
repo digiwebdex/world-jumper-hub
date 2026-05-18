@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Field, PrimaryButton, Card } from "@/components/admin/form-bits";
+import { ImageField } from "@/components/admin/ImageField";
 import { Save, Loader2 } from "lucide-react";
 import type { FieldDef } from "@/components/admin/CmsListEditor";
 
@@ -49,17 +50,27 @@ export function CmsSingletonEditor<T>({
     <Card>
       <form onSubmit={submit} className="grid gap-4 md:grid-cols-2">
         {fields.map((f) => (
-          <Field
-            key={f.name}
-            label={f.label}
-            name={f.name}
-            type={f.type === "textarea" ? "text" : (f.type ?? "text")}
-            textarea={f.type === "textarea"}
-            rows={f.rows}
-            placeholder={f.placeholder}
-            full={f.full}
-            defaultValue={((data as unknown as Record<string, unknown>)?.[f.name] as string | number | null) ?? ""}
-          />
+          f.type === "image" ? (
+            <ImageField
+              key={f.name}
+              label={f.label}
+              name={f.name}
+              full={f.full}
+              defaultValue={((data as unknown as Record<string, unknown>)?.[f.name] as string | null) ?? ""}
+            />
+          ) : (
+            <Field
+              key={f.name}
+              label={f.label}
+              name={f.name}
+              type={f.type === "textarea" ? "text" : (f.type ?? "text")}
+              textarea={f.type === "textarea"}
+              rows={f.rows}
+              placeholder={f.placeholder}
+              full={f.full}
+              defaultValue={((data as unknown as Record<string, unknown>)?.[f.name] as string | number | null) ?? ""}
+            />
+          )
         ))}
         <div className="md:col-span-2 flex items-center justify-end gap-3 pt-2">
           {saved && <span className="text-xs text-emerald-600">Saved ✓</span>}
