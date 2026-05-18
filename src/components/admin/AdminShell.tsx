@@ -50,7 +50,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
           <img src={SITE.logoUrl} alt="World Jumper" className="h-8 w-auto brightness-0 invert" />
           <span className="font-display text-lg">Admin</span>
         </div>
-        <nav className="flex flex-col gap-0.5 p-3">
+        <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pb-24" style={{ maxHeight: "calc(100vh - 4rem - 5rem)" }}>
           {NAV.map((n) => {
             const active = n.to === "/admin" ? path === n.to : path.startsWith(n.to);
             return (
