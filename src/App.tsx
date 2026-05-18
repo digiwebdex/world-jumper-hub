@@ -87,6 +87,7 @@ export default function App() {
       <Route path="/admin/about-cms" element={<AdminAboutCms />} />
       <Route path="/admin/services-faqs" element={<AdminServicesFaqs />} />
       <Route path="/admin/nav-footer" element={<AdminNavFooter />} />
+      <Route path="/admin/seo" element={<AdminSeo />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
