@@ -130,18 +130,28 @@ export function CmsListEditor<T extends ListRow>({
       <Modal open={creating || editing !== null} onClose={cancel} title={editing ? "Edit item" : "New item"} wide>
         <form onSubmit={(e) => { e.preventDefault(); save(e.currentTarget); }} className="grid gap-4 md:grid-cols-2">
           {fields.map((f) => (
-            <Field
-              key={f.name}
-              label={f.label}
-              name={f.name}
-              type={f.type === "textarea" ? "text" : (f.type ?? "text")}
-              textarea={f.type === "textarea"}
-              rows={f.rows}
-              placeholder={f.placeholder}
-              full={f.full}
-              options={f.options}
-              defaultValue={editing ? (editing[f.name] as string | number | null) : (f.default ?? "")}
-            />
+            f.type === "image" ? (
+              <ImageField
+                key={f.name}
+                label={f.label}
+                name={f.name}
+                full={f.full}
+                defaultValue={editing ? (editing[f.name] as string | null) : ""}
+              />
+            ) : (
+              <Field
+                key={f.name}
+                label={f.label}
+                name={f.name}
+                type={f.type === "textarea" ? "text" : (f.type ?? "text")}
+                textarea={f.type === "textarea"}
+                rows={f.rows}
+                placeholder={f.placeholder}
+                full={f.full}
+                options={f.options}
+                defaultValue={editing ? (editing[f.name] as string | number | null) : (f.default ?? "")}
+              />
+            )
           ))}
           <Field
             label="Display order"
