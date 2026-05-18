@@ -16,6 +16,7 @@ const FALLBACK_NAV: NavItem[] = [
   { to: "/umrah", label: "Umrah" },
   { to: "/medical-tourism", label: "Medical" },
   { to: "/air-ticketing", label: "Air Ticket" },
+  { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact" },
 ];
 
