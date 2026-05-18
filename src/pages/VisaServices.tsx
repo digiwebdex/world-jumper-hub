@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, SectionHeading } from "@/components/site/ui";
 import { StaggerGroup, StaggerItem } from "@/components/site/motion";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { useVisaServices } from "@/lib/visa-services-db";
 
 export default function VisaServices() {
