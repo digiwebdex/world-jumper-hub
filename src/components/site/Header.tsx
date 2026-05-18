@@ -1,13 +1,14 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE } from "@/lib/site-config";
 import { VISA_SERVICES } from "@/lib/visa-services";
+import { useNavMenu } from "@/lib/cms";
 
 type NavItem = { to: string; label: string; end?: boolean; hasDropdown?: boolean };
 
-const NAV: NavItem[] = [
+const FALLBACK_NAV: NavItem[] = [
   { to: "/", label: "Home", end: true },
   { to: "/about", label: "About" },
   { to: "/visa", label: "Visa", hasDropdown: true },
