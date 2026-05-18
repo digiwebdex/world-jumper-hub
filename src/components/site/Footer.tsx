@@ -22,6 +22,13 @@ const FALLBACK_GROUPS: Record<string, [string, string][]> = {
 };
 
 export function Footer() {
+  const { data: footerLinks } = useFooterLinks();
+  const exploreLinks = useMemo<[string, string][]>(() => {
+    const fromCms = footerLinks
+      .filter((l) => (l.column_group || "Explore").toLowerCase() === "explore")
+      .map((l) => [l.url, l.label] as [string, string]);
+    return fromCms.length ? fromCms : FALLBACK_GROUPS.Explore;
+  }, [footerLinks]);
   return (
     <footer className="relative overflow-hidden bg-ink text-cream">
       {/* Seamless top transition — replaces the old cream gap */}
