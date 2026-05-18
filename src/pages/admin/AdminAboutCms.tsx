@@ -25,7 +25,7 @@ const pillarFields: FieldDef[] = [
 const teamFields: FieldDef[] = [
   { name: "name", label: "Name" },
   { name: "role", label: "Role" },
-  { name: "photo_url", label: "Photo URL", type: "url" },
+  { name: "photo_url", label: "Photo", type: "image" },
   { name: "bio", label: "Bio", type: "textarea", rows: 3, full: true },
 ];
 const statsFields: FieldDef[] = [
