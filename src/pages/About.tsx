@@ -1,7 +1,7 @@
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, EditorialItem } from "@/components/site/ui";
 import { Reveal, ParallaxImage, CountUp } from "@/components/site/motion";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { SITE } from "@/lib/site-config";
 import { useAboutPage, useAboutPillars, useAboutStats, useAboutTeam } from "@/lib/cms";
 
