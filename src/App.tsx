@@ -32,6 +32,10 @@ import AdminAboutCms from "@/pages/admin/AdminAboutCms";
 import AdminServicesFaqs from "@/pages/admin/AdminServicesFaqs";
 import AdminNavFooter from "@/pages/admin/AdminNavFooter";
 import AdminSeo from "@/pages/admin/AdminSeo";
+import AdminBlog from "@/pages/admin/AdminBlog";
+import AdminBlogEditor from "@/pages/admin/AdminBlogEditor";
+import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
 import { useEffect } from "react";
 import { bootWhatsAppSettings } from "@/lib/whatsapp-settings";
 
@@ -68,6 +72,8 @@ export default function App() {
       <Route path="/faq" element={<Faq />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
 
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/signup" element={<AdminSignup />} />
@@ -88,6 +94,9 @@ export default function App() {
       <Route path="/admin/services-faqs" element={<AdminServicesFaqs />} />
       <Route path="/admin/nav-footer" element={<AdminNavFooter />} />
       <Route path="/admin/seo" element={<AdminSeo />} />
+      <Route path="/admin/blog" element={<AdminBlog />} />
+      <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
+      <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

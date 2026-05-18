@@ -32,6 +32,7 @@ export const SEO_PAGES = [
   { key: "packages",      label: "Packages (/packages)",     path: "/packages" },
   { key: "contact",       label: "Contact (/contact)",       path: "/contact" },
   { key: "faq",           label: "FAQ (/faq)",               path: "/faq" },
+  { key: "blog",          label: "Blog list (/blog)",        path: "/blog" },
 ] as const;
 
 export function useSeo(pageKey: string, fallback: SeoFallback) {
