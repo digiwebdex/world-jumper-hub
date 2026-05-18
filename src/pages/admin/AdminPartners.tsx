@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { usePartners, type Partner, type PartnerKind } from "@/lib/partners-db";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 import { flagUrl, onFlagError } from "@/lib/flag-url";
 import {
   Plus, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Loader2, Save, X,
@@ -43,19 +43,24 @@ export default function AdminPartners() {
     }
     const payload = { ...form, cc: form.cc.toUpperCase().trim() };
     setBusy("save");
-    if (editing) {
-      await supabase.from("partners").update(payload).eq("id", editing.id);
-    } else {
-      await supabase.from("partners").insert(payload);
+    try {
+      if (editing) {
+        await api.put(`/partners/${editing.id}`, payload);
+      } else {
+        await api.post("/partners", payload);
+      }
+    } catch (e) {
+      alert(`Save failed: ${e instanceof Error ? e.message : "Unknown error"}`);
+    } finally {
+      setBusy(null);
     }
-    setBusy(null);
     cancelForm();
     reload();
   };
 
   const togglePublished = async (p: Partner) => {
     setBusy(p.id);
-    await supabase.from("partners").update({ published: !p.published }).eq("id", p.id);
+    await api.put(`/partners/${p.id}`, { published: !p.published });
     setBusy(null);
     reload();
   };
@@ -63,7 +68,7 @@ export default function AdminPartners() {
   const remove = async (p: Partner) => {
     if (!confirm(`Delete "${p.name}"? This cannot be undone.`)) return;
     setBusy(p.id);
-    await supabase.from("partners").delete().eq("id", p.id);
+    await api.delete(`/partners/${p.id}`);
     setBusy(null);
     reload();
   };
@@ -74,8 +79,8 @@ export default function AdminPartners() {
     if (swap < 0 || swap >= data.length) return;
     const a = data[idx]; const b = data[swap];
     setBusy(p.id);
-    await supabase.from("partners").update({ display_order: b.display_order }).eq("id", a.id);
-    await supabase.from("partners").update({ display_order: a.display_order }).eq("id", b.id);
+    await api.put(`/partners/${a.id}`, { display_order: b.display_order });
+    await api.put(`/partners/${b.id}`, { display_order: a.display_order });
     setBusy(null);
     reload();
   };

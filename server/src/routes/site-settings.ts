@@ -7,9 +7,9 @@ export const siteSettingsRouter = Router();
 
 const FIELDS = [
   "company_name", "brand_name", "license_no", "primary_phone", "secondary_phone",
-  "other_phones", "whatsapp_number", "email", "address", "memberships",
+  "other_phones", "whatsapp_number", "whatsapp_message", "email", "address", "memberships",
   "logo_url", "banner_url", "facebook_url", "instagram_url", "linkedin_url",
-  "youtube_url", "website_url",
+  "youtube_url", "website_url", "footer_about_text",
 ] as const;
 
 const settingsSchema = z.object(

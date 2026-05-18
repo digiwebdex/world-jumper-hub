@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
-import { useMemberships, membershipLogoPublicUrl, MEMBERSHIP_LOGO_BUCKET, type Membership } from "@/lib/memberships-db";
-import { supabase } from "@/integrations/supabase/client";
+import { useMemberships, type Membership } from "@/lib/memberships-db";
+import { api } from "@/lib/api";
 import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Loader2, Save, X, Upload } from "lucide-react";
 
 const EMPTY: Omit<Membership, "id"> = {
@@ -37,12 +37,17 @@ export default function AdminMemberships() {
   const save = async () => {
     if (!form.name.trim()) { alert("Name is required."); return; }
     setBusy("save");
-    if (editing) {
-      await supabase.from("memberships").update(form).eq("id", editing.id);
-    } else {
-      await supabase.from("memberships").insert(form);
+    try {
+      if (editing) {
+        await api.put(`/memberships/${editing.id}`, form);
+      } else {
+        await api.post("/memberships", form);
+      }
+    } catch (e) {
+      alert(`Save failed: ${e instanceof Error ? e.message : "Unknown error"}`);
+    } finally {
+      setBusy(null);
     }
-    setBusy(null);
     cancelForm();
     reload();
   };
@@ -50,20 +55,21 @@ export default function AdminMemberships() {
   const handleUpload = async (file: File) => {
     if (!file) return;
     setUploading(true);
-    const ext = file.name.split(".").pop()?.toLowerCase() || "png";
-    const slug = (form.name || "logo").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "logo";
-    const path = `${slug}-${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from(MEMBERSHIP_LOGO_BUCKET).upload(path, file, {
-      cacheControl: "3600", upsert: true, contentType: file.type,
-    });
-    setUploading(false);
-    if (error) { alert(`Upload failed: ${error.message}`); return; }
-    setForm(f => ({ ...f, logo_url: membershipLogoPublicUrl(path) }));
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await api.upload<{ url: string }>("/admin/uploads?category=memberships", fd);
+      setForm(f => ({ ...f, logo_url: res.url }));
+    } catch (e) {
+      alert(`Upload failed: ${e instanceof Error ? e.message : "Unknown error"}`);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const togglePublished = async (m: Membership) => {
     setBusy(m.id);
-    await supabase.from("memberships").update({ published: !m.published }).eq("id", m.id);
+    await api.put(`/memberships/${m.id}`, { published: !m.published });
     setBusy(null);
     reload();
   };
@@ -75,8 +81,8 @@ export default function AdminMemberships() {
     if (!swap) return;
     setBusy(m.id);
     await Promise.all([
-      supabase.from("memberships").update({ display_order: swap.display_order }).eq("id", m.id),
-      supabase.from("memberships").update({ display_order: m.display_order }).eq("id", swap.id),
+      api.put(`/memberships/${m.id}`, { display_order: swap.display_order }),
+      api.put(`/memberships/${swap.id}`, { display_order: m.display_order }),
     ]);
     setBusy(null);
     reload();
@@ -85,7 +91,7 @@ export default function AdminMemberships() {
   const remove = async (m: Membership) => {
     if (!confirm(`Delete "${m.name}"?`)) return;
     setBusy(m.id);
-    await supabase.from("memberships").delete().eq("id", m.id);
+    await api.delete(`/memberships/${m.id}`);
     setBusy(null);
     reload();
   };

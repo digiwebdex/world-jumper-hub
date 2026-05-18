@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { useVisaServices } from "@/lib/visa-services-db";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Loader2 } from "lucide-react";
 
 export default function AdminVisaServices() {
@@ -11,7 +11,7 @@ export default function AdminVisaServices() {
 
   const togglePublished = async (id: string, current: boolean) => {
     setBusy(id);
-    await supabase.from("visa_services").update({ published: !current }).eq("id", id);
+    await api.put(`/visa-services/${id}`, { published: !current });
     setBusy(null);
     reload();
   };
@@ -19,7 +19,7 @@ export default function AdminVisaServices() {
   const remove = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
     setBusy(id);
-    await supabase.from("visa_services").delete().eq("id", id);
+    await api.delete(`/visa-services/${id}`);
     setBusy(null);
     reload();
   };
@@ -30,8 +30,8 @@ export default function AdminVisaServices() {
     if (swap < 0 || swap >= data.length) return;
     const a = data[idx]; const b = data[swap];
     setBusy(id);
-    await supabase.from("visa_services").update({ display_order: b.displayOrder ?? 0 }).eq("id", a.id!);
-    await supabase.from("visa_services").update({ display_order: a.displayOrder ?? 0 }).eq("id", b.id!);
+    await api.put(`/visa-services/${a.id!}`, { display_order: b.displayOrder ?? 0 });
+    await api.put(`/visa-services/${b.id!}`, { display_order: a.displayOrder ?? 0 });
     setBusy(null);
     reload();
   };
