@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   LayoutDashboard, Globe2, FileCheck2, Package, Inbox, Settings, LogOut, Menu, Users, Award, MessageCircle,
-  Home, Info, ListTree, Navigation, Search,
+  Home, Info, ListTree, Navigation, Search, Newspaper,
 } from "lucide-react";
 import { useAdminAuth, adminSignOut } from "@/lib/use-admin-auth";
 import { SITE } from "@/lib/site-config";
