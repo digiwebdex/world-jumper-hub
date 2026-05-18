@@ -304,7 +304,7 @@ export function HeroSearchTabs() {
         return {
           ...d,
           label: cms?.label || d.label,
-          icon: cms?.icon ? iconFor(cms.icon, d.icon) : d.icon,
+          icon: cms?.icon ? (iconFor(cms.icon) as React.ComponentType<{ className?: string }>) : d.icon,
           order: cms?.display_order ?? 9999,
         };
       })
