@@ -82,6 +82,10 @@ export default function App() {
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
       <Route path="/admin/whatsapp" element={<AdminWhatsApp />} />
+      <Route path="/admin/home-cms" element={<AdminHomeCms />} />
+      <Route path="/admin/about-cms" element={<AdminAboutCms />} />
+      <Route path="/admin/services-faqs" element={<AdminServicesFaqs />} />
+      <Route path="/admin/nav-footer" element={<AdminNavFooter />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
