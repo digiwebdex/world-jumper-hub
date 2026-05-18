@@ -17,7 +17,7 @@ const FALLBACK_EXPLORE: [string, string][] = [
   ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
   ["/tours", "Tours"], ["/umrah", "Umrah"],
   ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
-  ["/contact", "Contact"],
+  ["/blog", "Blog"], ["/contact", "Contact"],
 ];
 
 export function Footer() {
