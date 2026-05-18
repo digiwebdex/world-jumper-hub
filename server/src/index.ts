@@ -21,6 +21,7 @@ import { aboutCmsRouter } from "./routes/about-cms.js";
 import { servicesFaqsRouter } from "./routes/services-faqs.js";
 import { navFooterRouter } from "./routes/nav-footer.js";
 import { seoRouter } from "./routes/seo.js";
+import { blogRouter } from "./routes/blog.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
