@@ -9,7 +9,7 @@ const pageFields: FieldDef[] = [
   { name: "hero_kicker", label: "Hero kicker" },
   { name: "hero_title", label: "Hero title", full: true },
   { name: "hero_subtitle", label: "Hero subtitle", type: "textarea", rows: 2, full: true },
-  { name: "hero_image_url", label: "Hero image URL", type: "url", full: true },
+  { name: "hero_image_url", label: "Hero image", type: "image", full: true },
   { name: "founding_label", label: "Founding note label" },
   { name: "founding_title", label: "Founding note title" },
   { name: "story_paragraph_1", label: "Story paragraph 1", type: "textarea", rows: 4, full: true },
