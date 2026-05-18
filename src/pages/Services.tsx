@@ -16,10 +16,11 @@ const FALLBACK = [
 ];
 
 export default function Services() {
-  usePageTitle(
-    "Our Services",
-    "Visa, tour packages, air ticketing, Umrah programs, medical tourism and bespoke itineraries — six trusted travel services under one Bangladeshi roof."
-  );
+  useSeo("services", {
+    title: "Our Services",
+    description: "Visa, tour packages, air ticketing, Umrah programs, medical tourism and bespoke itineraries — six trusted travel services under one Bangladeshi roof.",
+    path: "/services",
+  });
   const { data: items } = useServiceItems();
   const list = items.length
     ? items.map(i => ({ icon: iconFor(i.icon, Stamp), title: i.title, description: i.description, to: i.link || "/contact" }))
