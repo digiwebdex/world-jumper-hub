@@ -111,7 +111,7 @@ export function Footer() {
           <div className="md:col-span-4">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Explore</h4>
             <ul className="mt-5 space-y-3 text-sm">
-              {[["/", "Home"], ["/about", "About"], ["/visa", "Visa"], ["/tours", "Tours"], ["/umrah", "Umrah"], ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"], ["/contact", "Contact"]].map(([to, label]) => (
+              {exploreLinks.map(([to, label]) => (
                 <li key={to}><Link to={to} className="text-cream/80 transition-colors hover:text-accent">{label}</Link></li>
               ))}
             </ul>
