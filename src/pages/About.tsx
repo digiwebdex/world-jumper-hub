@@ -3,7 +3,7 @@ import { PageHero, EditorialItem } from "@/components/site/ui";
 import { Reveal, ParallaxImage, CountUp } from "@/components/site/motion";
 import { usePageTitle } from "@/lib/use-page-title";
 import { SITE } from "@/lib/site-config";
-import { useAboutPage, useAboutPillars, useAboutStats } from "@/lib/cms";
+import { useAboutPage, useAboutPillars, useAboutStats, useAboutTeam } from "@/lib/cms";
 
 const FALLBACK_PILLARS = [
   { title: "Govt. approved & licensed", body: `Operating under official Bangladesh travel agency license #${SITE.licenseNo} — your trips are documented, audited and protected.`, image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1400&q=70" },
@@ -26,6 +26,7 @@ export default function About() {
   const { data: page } = useAboutPage();
   const { data: pillarRows } = useAboutPillars();
   const { data: statRows } = useAboutStats();
+  const { data: teamRows } = useAboutTeam();
 
   const pillars = pillarRows.length
     ? pillarRows.map(p => ({ title: p.title, body: p.body, image: p.image_url || FALLBACK_PILLARS[0].image }))
@@ -79,6 +80,40 @@ export default function About() {
           {pillars.map((p, i) => <EditorialItem key={p.title} index={i + 1} {...p} />)}
         </div>
       </section>
+
+      {teamRows.length > 0 && (
+        <section className="bg-card py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6 md:px-10">
+            <Reveal>
+              <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-accent">
+                <span className="mr-3 inline-block h-px w-10 bg-accent align-middle" />Our People
+              </p>
+              <h2 className="mt-4 font-display text-4xl leading-[1.05] md:text-5xl">The team behind your journey.</h2>
+            </Reveal>
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {teamRows.map((m) => (
+                <Reveal key={m.id}>
+                  <div className="group">
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted">
+                      {m.photo_url ? (
+                        <img src={m.photo_url} alt={m.name} loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center font-display text-5xl text-muted-foreground/40">
+                          {m.name.split(/\s+/).map((p) => p[0]).join("").slice(0, 2).toUpperCase()}
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="mt-4 font-display text-xl leading-tight text-foreground">{m.name}</h3>
+                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.25em] text-accent">{m.role}</p>
+                    {m.bio && <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{m.bio}</p>}
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="relative h-[60vh] overflow-hidden">
         <ParallaxImage src={page.quote_image_url || "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=2400&q=70"} alt="" className="absolute inset-0" strength={0.3} />

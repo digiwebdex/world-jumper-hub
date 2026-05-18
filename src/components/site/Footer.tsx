@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
-import { Mail, MapPin, Phone, Instagram, Facebook } from "lucide-react";
+import { Mail, MapPin, Phone, Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { useFooterLinks } from "@/lib/cms";
+import { useSiteContact } from "@/lib/site-settings";
 import caabLogo from "@/assets/memberships/caab.png";
 import iataLogo from "@/assets/memberships/iata.png";
 import atabLogo from "@/assets/memberships/atab.png";
@@ -12,22 +13,27 @@ import etabLogo from "@/assets/memberships/etab.png";
 import ecabLogo from "@/assets/memberships/ecab.png";
 import lionsLogo from "@/assets/memberships/lions.png";
 
-const FALLBACK_GROUPS: Record<string, [string, string][]> = {
-  Explore: [
-    ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
-    ["/tours", "Tours"], ["/umrah", "Umrah"],
-    ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
-    ["/contact", "Contact"],
-  ],
-};
+const FALLBACK_EXPLORE: [string, string][] = [
+  ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
+  ["/tours", "Tours"], ["/umrah", "Umrah"],
+  ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
+  ["/contact", "Contact"],
+];
 
 export function Footer() {
   const { data: footerLinks } = useFooterLinks();
-  const exploreLinks = useMemo<[string, string][]>(() => {
-    const fromCms = footerLinks
-      .filter((l) => (l.column_group || "Explore").toLowerCase() === "explore")
-      .map((l) => [l.url, l.label] as [string, string]);
-    return fromCms.length ? fromCms : FALLBACK_GROUPS.Explore;
+  const contact = useSiteContact();
+
+  // Group CMS footer links by column_group, preserving display_order
+  const groups = useMemo<{ name: string; links: [string, string][] }[]>(() => {
+    if (!footerLinks.length) return [{ name: "Explore", links: FALLBACK_EXPLORE }];
+    const map = new Map<string, [string, string][]>();
+    for (const l of footerLinks) {
+      const g = (l.column_group || "Explore").trim() || "Explore";
+      if (!map.has(g)) map.set(g, []);
+      map.get(g)!.push([l.url, l.label]);
+    }
+    return Array.from(map.entries()).map(([name, links]) => ({ name, links }));
   }, [footerLinks]);
   return (
     <footer className="relative overflow-hidden bg-ink text-cream">
@@ -87,44 +93,75 @@ export function Footer() {
         {/* Columns */}
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-12 md:px-10">
           <div className="md:col-span-4">
-            <Link to="/" className="inline-flex items-center" aria-label={SITE.brandName}>
+            <Link to="/" className="inline-flex items-center" aria-label={contact.brandName}>
               <img
                 src={SITE.logoUrl}
-                alt={SITE.brandName}
+                alt={contact.brandName}
                 className="h-14 w-auto object-contain md:h-16"
               />
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/70">{SITE.tagline}</p>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/70">{contact.footerAbout}</p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">
-              License No. {SITE.licenseNo}
+              License No. {contact.licenseNo}
             </p>
             <div className="mt-6 flex gap-3">
-              <a href="#" aria-label="Facebook" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
-                <Facebook className="h-4 w-4" strokeWidth={1.5} />
-              </a>
-              <a href="#" aria-label="Instagram" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
-                <Instagram className="h-4 w-4" strokeWidth={1.5} />
-              </a>
+              {contact.facebook && (
+                <a href={contact.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
+                  <Facebook className="h-4 w-4" strokeWidth={1.5} />
+                </a>
+              )}
+              {contact.instagram && (
+                <a href={contact.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
+                  <Instagram className="h-4 w-4" strokeWidth={1.5} />
+                </a>
+              )}
+              {contact.linkedin && (
+                <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
+                  <Linkedin className="h-4 w-4" strokeWidth={1.5} />
+                </a>
+              )}
+              {contact.youtube && (
+                <a href={contact.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
+                  <Youtube className="h-4 w-4" strokeWidth={1.5} />
+                </a>
+              )}
+              {!contact.facebook && !contact.instagram && !contact.linkedin && !contact.youtube && (
+                <>
+                  <a href="#" aria-label="Facebook" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
+                    <Facebook className="h-4 w-4" strokeWidth={1.5} />
+                  </a>
+                  <a href="#" aria-label="Instagram" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 transition-colors hover:border-accent hover:text-accent">
+                    <Instagram className="h-4 w-4" strokeWidth={1.5} />
+                  </a>
+                </>
+              )}
             </div>
           </div>
 
-          <div className="md:col-span-4">
-            <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Explore</h4>
-            <ul className="mt-5 space-y-3 text-sm">
-              {exploreLinks.map(([to, label]) => (
-                <li key={to}><Link to={to} className="text-cream/80 transition-colors hover:text-accent">{label}</Link></li>
-              ))}
-            </ul>
-          </div>
+          {/* Dynamic link column groups */}
+          {groups.map((g) => (
+            <div key={g.name} className={groups.length > 1 ? "md:col-span-2" : "md:col-span-4"}>
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">{g.name}</h4>
+              <ul className="mt-5 space-y-3 text-sm">
+                {g.links.map(([to, label]) => (
+                  <li key={`${g.name}-${to}-${label}`}>
+                    {/^https?:\/\//i.test(to)
+                      ? <a href={to} target="_blank" rel="noopener noreferrer" className="text-cream/80 transition-colors hover:text-accent">{label}</a>
+                      : <Link to={to} className="text-cream/80 transition-colors hover:text-accent">{label}</Link>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           <div className="md:col-span-4">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Reach Us</h4>
             <ul className="mt-5 space-y-3 text-sm text-cream/80">
-              <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-accent" strokeWidth={1.5} />{SITE.address}</li>
-              {SITE.phones.slice(0, 3).map(p => (
+              <li className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-accent" strokeWidth={1.5} />{contact.address}</li>
+              {contact.phones.slice(0, 3).map(p => (
                 <li key={p}><a href={`tel:${p}`} className="transition-colors hover:text-accent">{p}</a></li>
               ))}
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-accent" strokeWidth={1.5} /><a href={`mailto:${SITE.email}`} className="transition-colors hover:text-accent">{SITE.email}</a></li>
+              <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-accent" strokeWidth={1.5} /><a href={`mailto:${contact.email}`} className="transition-colors hover:text-accent">{contact.email}</a></li>
             </ul>
           </div>
         </div>

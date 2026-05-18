@@ -15,21 +15,27 @@ import {
 } from "lucide-react";
 import { VisaSearchCard } from "./VisaSearchCard";
 import { api, type VisaCountry } from "@/lib/api";
+import { useHomeQuickTabs } from "@/lib/cms";
+import { iconFor } from "@/lib/icon-map";
 
 type TabKey = "visa" | "tours" | "airticket" | "umrah" | "medical";
 
-const TABS: {
+// Default tab metadata — labels/icons can be overridden by CMS (home_quick_tabs).
+// CMS rows are matched by tab_key (visa/tour/air/umrah/medical) and control
+// visibility (is_active) and order (display_order).
+const DEFAULT_TABS: {
   key: TabKey;
+  cmsKey: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   kicker: string;
   title: string;
 }[] = [
-  { key: "visa", label: "Visa", icon: Plane, kicker: "Visa Quick Check", title: "Find your visa requirements in 30 seconds" },
-  { key: "tours", label: "Tours", icon: MapPinned, kicker: "Holiday Tours", title: "Discover handpicked tour packages" },
-  { key: "airticket", label: "Air", icon: Ticket, kicker: "Air Ticketing", title: "Best fares from 800+ airlines" },
-  { key: "umrah", label: "Umrah", icon: Moon, kicker: "Umrah Packages", title: "Plan a blessed Umrah journey" },
-  { key: "medical", label: "Medical", icon: Stethoscope, kicker: "Medical Tourism", title: "Trusted hospitals abroad — assisted end to end" },
+  { key: "visa",      cmsKey: "visa",    label: "Visa",    icon: Plane,       kicker: "Visa Quick Check", title: "Find your visa requirements in 30 seconds" },
+  { key: "tours",     cmsKey: "tour",    label: "Tours",   icon: MapPinned,   kicker: "Holiday Tours",    title: "Discover handpicked tour packages" },
+  { key: "airticket", cmsKey: "air",     label: "Air",     icon: Ticket,      kicker: "Air Ticketing",    title: "Best fares from 800+ airlines" },
+  { key: "umrah",     cmsKey: "umrah",   label: "Umrah",   icon: Moon,        kicker: "Umrah Packages",   title: "Plan a blessed Umrah journey" },
+  { key: "medical",   cmsKey: "medical", label: "Medical", icon: Stethoscope, kicker: "Medical Tourism",  title: "Trusted hospitals abroad — assisted end to end" },
 ];
 
 /* ---------------- shared input atoms ---------------- */
@@ -273,6 +279,7 @@ function AirTicketForm() {
 /* ---------------- unified card ---------------- */
 
 export function HeroSearchTabs() {
+  const { data: cmsTabs } = useHomeQuickTabs();
   const [active, setActive] = useState<TabKey>("visa");
   const [hotCountries, setHotCountries] = useState<string[]>([]);
 
@@ -283,7 +290,29 @@ export function HeroSearchTabs() {
       .catch(() => setHotCountries(["Thailand", "India", "Malaysia", "Dubai"]));
   }, []);
 
-  const activeMeta = TABS.find((t) => t.key === active)!;
+  // Merge CMS overrides (label/icon) and CMS visibility/order with the defaults.
+  const TABS = (() => {
+    if (!cmsTabs.length) return DEFAULT_TABS;
+    const byKey = new Map(cmsTabs.map((t) => [t.tab_key, t]));
+    return DEFAULT_TABS
+      .filter((d) => {
+        const cms = byKey.get(d.cmsKey);
+        return !cms || cms.is_active;
+      })
+      .map((d) => {
+        const cms = byKey.get(d.cmsKey);
+        return {
+          ...d,
+          label: cms?.label || d.label,
+          icon: cms?.icon ? (iconFor(cms.icon) as React.ComponentType<{ className?: string }>) : d.icon,
+          order: cms?.display_order ?? 9999,
+        };
+      })
+      .sort((a, b) => a.order - b.order);
+  })();
+
+  const activeMeta = TABS.find((t) => t.key === active) ?? TABS[0];
+  if (!activeMeta) return null;
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white p-5 text-foreground shadow-[0_30px_80px_-20px_rgba(8,12,32,0.55)] md:p-7">

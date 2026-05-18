@@ -20,7 +20,7 @@ import { flagUrl, onFlagError } from "@/lib/flag-url";
 import { useMemberships } from "@/lib/memberships-db";
 import {
   useHomeServices, useHomeTestimonials, useHomeDestinations,
-  useHomeStats, useHomeWhyUs,
+  useHomeStats, useHomeWhyUs, useHomeHero,
 } from "@/lib/cms";
 import { iconFor } from "@/lib/icon-map";
 
@@ -86,6 +86,7 @@ export default function Home() {
   const { data: memberships } = useMemberships();
 
   // CMS-driven content (with safe fallbacks)
+  const { data: hero } = useHomeHero();
   const { data: svcRows } = useHomeServices();
   const { data: testRows } = useHomeTestimonials();
   const { data: destRows } = useHomeDestinations();
@@ -193,7 +194,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--brand-orange)] animate-pulse" />
-              Govt. Approved · License No. {SITE.licenseNo}
+              {hero.kicker || `Govt. Approved · License No. ${SITE.licenseNo}`}
             </motion.span>
 
             <motion.h1
@@ -259,18 +260,19 @@ export default function Home() {
               className="mt-9 flex flex-wrap items-center gap-4"
             >
               <Link
-                to="/contact"
+                to={hero.primary_cta_link || "/contact"}
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-[color:var(--brand-blue-deep)] shadow-lift transition-all hover:-translate-y-0.5 hover:bg-[color:var(--brand-orange)] hover:text-white"
               >
-                Plan my trip
+                {hero.primary_cta_label || "Plan my trip"}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <a
-                href={whatsappLink()}
-                target="_blank" rel="noopener noreferrer"
+                href={hero.secondary_cta_link?.startsWith("http") ? hero.secondary_cta_link : whatsappLink()}
+                target={hero.secondary_cta_link?.startsWith("http") ? undefined : "_blank"}
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border-2 border-white/50 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-all hover:border-white hover:bg-white/10"
               >
-                <Send className="h-4 w-4" /> WhatsApp us
+                <Send className="h-4 w-4" /> {hero.secondary_cta_label || "WhatsApp us"}
               </a>
             </motion.div>
 
