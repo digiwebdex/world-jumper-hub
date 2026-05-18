@@ -1,7 +1,7 @@
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, ServiceCard, SectionHeading } from "@/components/site/ui";
 import { StaggerGroup, StaggerItem } from "@/components/site/motion";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { useServiceItems } from "@/lib/cms";
 import { iconFor } from "@/lib/icon-map";
 import { Plane, Stamp, MapPin, Stethoscope, Moon, Ticket } from "lucide-react";
