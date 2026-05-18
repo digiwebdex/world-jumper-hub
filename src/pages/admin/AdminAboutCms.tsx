@@ -15,7 +15,7 @@ const pageFields: FieldDef[] = [
   { name: "story_paragraph_1", label: "Story paragraph 1", type: "textarea", rows: 4, full: true },
   { name: "story_paragraph_2", label: "Story paragraph 2", type: "textarea", rows: 4, full: true },
   { name: "quote_text", label: "Quote text", type: "textarea", rows: 2, full: true },
-  { name: "quote_image_url", label: "Quote background image", type: "url", full: true },
+  { name: "quote_image_url", label: "Quote background image", type: "image", full: true },
 ];
 const pillarFields: FieldDef[] = [
   { name: "title", label: "Title" },
