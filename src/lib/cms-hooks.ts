@@ -38,7 +38,7 @@ export function useCmsList<T extends ListRow>(
   return { data, loading, reload };
 }
 
-export function useCmsSingleton<T extends Record<string, unknown>>(
+export function useCmsSingleton<T>(
   basePath: string,
   fallback: T
 ) {
