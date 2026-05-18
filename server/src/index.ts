@@ -53,6 +53,7 @@ app.use("/api/home", homeCmsRouter);
 app.use("/api/about", aboutCmsRouter);
 app.use("/api/services", servicesFaqsRouter);
 app.use("/api/nav-footer", navFooterRouter);
+app.use("/api/seo", seoRouter);
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);
