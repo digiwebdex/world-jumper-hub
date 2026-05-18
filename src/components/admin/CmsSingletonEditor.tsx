@@ -58,7 +58,7 @@ export function CmsSingletonEditor<T>({
             rows={f.rows}
             placeholder={f.placeholder}
             full={f.full}
-            defaultValue={(data?.[f.name] as string | number | null) ?? ""}
+            defaultValue={((data as unknown as Record<string, unknown>)?.[f.name] as string | number | null) ?? ""}
           />
         ))}
         <div className="md:col-span-2 flex items-center justify-end gap-3 pt-2">
