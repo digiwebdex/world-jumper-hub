@@ -13,6 +13,7 @@ const NAV = [
   { to: "/admin/about-cms", label: "About CMS", icon: Info },
   { to: "/admin/services-faqs", label: "Services & FAQs", icon: ListTree },
   { to: "/admin/nav-footer", label: "Nav & Footer", icon: Navigation },
+  { to: "/admin/seo", label: "SEO / Meta", icon: Search },
   { to: "/admin/visa-countries", label: "Visa Countries", icon: Globe2 },
   { to: "/admin/visa-requirements", label: "Visa Requirements", icon: FileCheck2 },
   { to: "/admin/visa-services", label: "Visa Services CMS", icon: FileCheck2 },
