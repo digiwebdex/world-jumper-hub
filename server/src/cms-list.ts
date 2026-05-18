@@ -99,18 +99,13 @@ export function mountSingleton(
       }
     }
     if (!fields.length) return res.json({ ok: true });
-    // upsert
-    const insertCols = ["id", ...columns];
-    const insertVals = [1, ...columns.map((c) => d[c] ?? null)];
-    const insertPlaceholders = insertCols.map((_, idx) => `$${idx + 1}`).join(", ");
+    values.push(1);
+    // Row is pre-seeded by migration; if missing, ensure it exists first.
     await query(
-      `INSERT INTO ${table} (${insertCols.join(", ")}) VALUES (${insertPlaceholders})
-       ON CONFLICT (id) DO UPDATE SET ${fields.join(", ")}, updated_at = now()`,
-      [...insertVals, ...values].slice(0, insertVals.length).concat(values)
+      `INSERT INTO ${table} (id) VALUES (1) ON CONFLICT (id) DO NOTHING`
     );
-    // simpler: just do plain UPDATE (row pre-seeded by migration)
     await query(
-      `UPDATE ${table} SET ${fields.join(", ")}, updated_at = now() WHERE id = 1`,
+      `UPDATE ${table} SET ${fields.join(", ")}, updated_at = now() WHERE id = $${i}`,
       values
     );
     res.json({ ok: true });
