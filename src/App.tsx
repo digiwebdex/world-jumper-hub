@@ -27,6 +27,10 @@ import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
 import AdminWhatsApp from "@/pages/admin/AdminWhatsApp";
+import AdminHomeCms from "@/pages/admin/AdminHomeCms";
+import AdminAboutCms from "@/pages/admin/AdminAboutCms";
+import AdminServicesFaqs from "@/pages/admin/AdminServicesFaqs";
+import AdminNavFooter from "@/pages/admin/AdminNavFooter";
 import { useEffect } from "react";
 import { bootWhatsAppSettings } from "@/lib/whatsapp-settings";
 
@@ -78,6 +82,10 @@ export default function App() {
       <Route path="/admin/inquiries" element={<AdminInquiries />} />
       <Route path="/admin/settings" element={<AdminSettings />} />
       <Route path="/admin/whatsapp" element={<AdminWhatsApp />} />
+      <Route path="/admin/home-cms" element={<AdminHomeCms />} />
+      <Route path="/admin/about-cms" element={<AdminAboutCms />} />
+      <Route path="/admin/services-faqs" element={<AdminServicesFaqs />} />
+      <Route path="/admin/nav-footer" element={<AdminNavFooter />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

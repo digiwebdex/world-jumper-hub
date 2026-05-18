@@ -16,6 +16,10 @@ import { uploadsRouter } from "./routes/uploads.js";
 import { membershipsRouter } from "./routes/memberships.js";
 import { partnersRouter } from "./routes/partners.js";
 import { visaServicesRouter } from "./routes/visa-services.js";
+import { homeCmsRouter } from "./routes/home-cms.js";
+import { aboutCmsRouter } from "./routes/about-cms.js";
+import { servicesFaqsRouter } from "./routes/services-faqs.js";
+import { navFooterRouter } from "./routes/nav-footer.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
@@ -44,6 +48,10 @@ app.use("/api/admin/uploads", uploadsRouter);
 app.use("/api/memberships", membershipsRouter);
 app.use("/api/partners", partnersRouter);
 app.use("/api/visa-services", visaServicesRouter);
+app.use("/api/home", homeCmsRouter);
+app.use("/api/about", aboutCmsRouter);
+app.use("/api/services", servicesFaqsRouter);
+app.use("/api/nav-footer", navFooterRouter);
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);

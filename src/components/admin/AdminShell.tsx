@@ -2,12 +2,17 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   LayoutDashboard, Globe2, FileCheck2, Package, Inbox, Settings, LogOut, Menu, Users, Award, MessageCircle,
+  Home, Info, ListTree, Navigation,
 } from "lucide-react";
 import { useAdminAuth, adminSignOut } from "@/lib/use-admin-auth";
 import { SITE } from "@/lib/site-config";
 
 const NAV = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/admin/home-cms", label: "Home CMS", icon: Home },
+  { to: "/admin/about-cms", label: "About CMS", icon: Info },
+  { to: "/admin/services-faqs", label: "Services & FAQs", icon: ListTree },
+  { to: "/admin/nav-footer", label: "Nav & Footer", icon: Navigation },
   { to: "/admin/visa-countries", label: "Visa Countries", icon: Globe2 },
   { to: "/admin/visa-requirements", label: "Visa Requirements", icon: FileCheck2 },
   { to: "/admin/visa-services", label: "Visa Services CMS", icon: FileCheck2 },
@@ -45,7 +50,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
           <img src={SITE.logoUrl} alt="World Jumper" className="h-8 w-auto brightness-0 invert" />
           <span className="font-display text-lg">Admin</span>
         </div>
-        <nav className="flex flex-col gap-0.5 p-3">
+        <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pb-24" style={{ maxHeight: "calc(100vh - 4rem - 5rem)" }}>
           {NAV.map((n) => {
             const active = n.to === "/admin" ? path === n.to : path.startsWith(n.to);
             return (

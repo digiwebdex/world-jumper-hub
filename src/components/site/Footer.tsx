@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 import { Mail, MapPin, Phone, Instagram, Facebook } from "lucide-react";
 import { SITE, whatsappLink } from "@/lib/site-config";
+import { useFooterLinks } from "@/lib/cms";
 import caabLogo from "@/assets/memberships/caab.png";
 import iataLogo from "@/assets/memberships/iata.png";
 import atabLogo from "@/assets/memberships/atab.png";
@@ -10,7 +12,23 @@ import etabLogo from "@/assets/memberships/etab.png";
 import ecabLogo from "@/assets/memberships/ecab.png";
 import lionsLogo from "@/assets/memberships/lions.png";
 
+const FALLBACK_GROUPS: Record<string, [string, string][]> = {
+  Explore: [
+    ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
+    ["/tours", "Tours"], ["/umrah", "Umrah"],
+    ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
+    ["/contact", "Contact"],
+  ],
+};
+
 export function Footer() {
+  const { data: footerLinks } = useFooterLinks();
+  const exploreLinks = useMemo<[string, string][]>(() => {
+    const fromCms = footerLinks
+      .filter((l) => (l.column_group || "Explore").toLowerCase() === "explore")
+      .map((l) => [l.url, l.label] as [string, string]);
+    return fromCms.length ? fromCms : FALLBACK_GROUPS.Explore;
+  }, [footerLinks]);
   return (
     <footer className="relative overflow-hidden bg-ink text-cream">
       {/* Seamless top transition — replaces the old cream gap */}
@@ -93,7 +111,7 @@ export function Footer() {
           <div className="md:col-span-4">
             <h4 className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream/55">Explore</h4>
             <ul className="mt-5 space-y-3 text-sm">
-              {[["/", "Home"], ["/about", "About"], ["/visa", "Visa"], ["/tours", "Tours"], ["/umrah", "Umrah"], ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"], ["/contact", "Contact"]].map(([to, label]) => (
+              {exploreLinks.map(([to, label]) => (
                 <li key={to}><Link to={to} className="text-cream/80 transition-colors hover:text-accent">{label}</Link></li>
               ))}
             </ul>
