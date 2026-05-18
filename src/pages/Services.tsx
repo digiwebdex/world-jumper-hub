@@ -1,7 +1,7 @@
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, ServiceCard, SectionHeading } from "@/components/site/ui";
 import { StaggerGroup, StaggerItem } from "@/components/site/motion";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { useServiceItems } from "@/lib/cms";
 import { iconFor } from "@/lib/icon-map";
 import { Plane, Stamp, MapPin, Stethoscope, Moon, Ticket } from "lucide-react";
@@ -16,10 +16,11 @@ const FALLBACK = [
 ];
 
 export default function Services() {
-  usePageTitle(
-    "Our Services",
-    "Visa, tour packages, air ticketing, Umrah programs, medical tourism and bespoke itineraries — six trusted travel services under one Bangladeshi roof."
-  );
+  useSeo("services", {
+    title: "Our Services",
+    description: "Visa, tour packages, air ticketing, Umrah programs, medical tourism and bespoke itineraries — six trusted travel services under one Bangladeshi roof.",
+    path: "/services",
+  });
   const { data: items } = useServiceItems();
   const list = items.length
     ? items.map(i => ({ icon: iconFor(i.icon, Stamp), title: i.title, description: i.description, to: i.link || "/contact" }))

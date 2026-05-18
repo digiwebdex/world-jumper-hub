@@ -1,7 +1,7 @@
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, EditorialItem } from "@/components/site/ui";
 import { Reveal, ParallaxImage, CountUp } from "@/components/site/motion";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { SITE } from "@/lib/site-config";
 import { useAboutPage, useAboutPillars, useAboutStats, useAboutTeam } from "@/lib/cms";
 
@@ -19,10 +19,11 @@ const FALLBACK_STATS = [
 ];
 
 export default function About() {
-  usePageTitle(
-    "About Us",
-    "Meet World Jumper — a 12-year-old, Govt. approved travel house in Bangladesh staffed by real consultants who handle your visa, tickets and itinerary end-to-end."
-  );
+  useSeo("about", {
+    title: "About Us",
+    description: "Meet World Jumper — a 12-year-old, Govt. approved travel house in Bangladesh staffed by real consultants who handle your visa, tickets and itinerary end-to-end.",
+    path: "/about",
+  });
   const { data: page } = useAboutPage();
   const { data: pillarRows } = useAboutPillars();
   const { data: statRows } = useAboutStats();

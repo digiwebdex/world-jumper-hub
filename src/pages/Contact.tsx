@@ -2,16 +2,17 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
 import { Reveal } from "@/components/site/motion";
 import { InquiryForm } from "@/components/site/InquiryForm";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { useSiteContact } from "@/lib/site-settings";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
 export default function Contact() {
-  usePageTitle(
-    "Contact Us",
-    "Talk to a senior travel consultant at World Jumper. Call, WhatsApp or send an inquiry — we reply within 24 hours with a tailored visa, tour or ticket plan."
-  );
+  useSeo("contact", {
+    title: "Contact Us",
+    description: "Talk to a senior travel consultant at World Jumper. Call, WhatsApp or send an inquiry — we reply within 24 hours with a tailored visa, tour or ticket plan.",
+    path: "/contact",
+  });
   const contact = useSiteContact();
   return (
     <SiteLayout>

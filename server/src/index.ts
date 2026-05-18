@@ -20,6 +20,7 @@ import { homeCmsRouter } from "./routes/home-cms.js";
 import { aboutCmsRouter } from "./routes/about-cms.js";
 import { servicesFaqsRouter } from "./routes/services-faqs.js";
 import { navFooterRouter } from "./routes/nav-footer.js";
+import { seoRouter } from "./routes/seo.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
@@ -52,6 +53,7 @@ app.use("/api/home", homeCmsRouter);
 app.use("/api/about", aboutCmsRouter);
 app.use("/api/services", servicesFaqsRouter);
 app.use("/api/nav-footer", navFooterRouter);
+app.use("/api/seo", seoRouter);
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);

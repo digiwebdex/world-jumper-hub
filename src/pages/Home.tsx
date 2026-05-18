@@ -13,7 +13,7 @@ import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
 import { HeroSearchTabs } from "@/components/site/HeroSearchTabs";
 import { api, type Package, type VisaCountry } from "@/lib/api";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { flagUrl, onFlagError } from "@/lib/flag-url";
 
@@ -77,10 +77,11 @@ const QUICK_TABS = [
 
 
 export default function Home() {
-  usePageTitle(
-    "World Jumper Tours & Travels — Jump into the World",
-    "Govt. approved travel agency in Bangladesh (License 0013423). Visa processing for 30+ countries, curated tour packages, air tickets, Umrah programs and medical tourism — plan your trip in 30 seconds."
-  );
+  useSeo("home", {
+    title: "World Jumper Tours & Travels — Jump into the World",
+    description: "Govt. approved travel agency in Bangladesh (License 0013423). Visa processing for 30+ countries, curated tour packages, air tickets, Umrah programs and medical tourism — plan your trip in 30 seconds.",
+    path: "/",
+  });
   const [pkgs, setPkgs] = useState<Package[]>([]);
   const [countries, setCountries] = useState<VisaCountry[]>([]);
   const { data: memberships } = useMemberships();

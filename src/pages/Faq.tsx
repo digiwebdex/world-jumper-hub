@@ -3,7 +3,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero, SectionHeading } from "@/components/site/ui";
 import { Reveal } from "@/components/site/motion";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { useFaqs } from "@/lib/cms";
 import { Plus } from "lucide-react";
 
@@ -21,10 +21,11 @@ export default function Faq() {
   const FAQS = faqRows.length
     ? faqRows.map(r => ({ q: r.question, a: r.answer }))
     : FALLBACK_FAQS;
-  usePageTitle(
-    "FAQ",
-    "Answers to common questions about visa processing, payment, refunds, embassy appointments and travel support from World Jumper Tours & Travels."
-  );
+  useSeo("faq", {
+    title: "FAQ",
+    description: "Answers to common questions about visa processing, payment, refunds, embassy appointments and travel support from World Jumper Tours & Travels.",
+    path: "/faq",
+  });
   const [open, setOpen] = useState<number | null>(0);
   return (
     <SiteLayout>

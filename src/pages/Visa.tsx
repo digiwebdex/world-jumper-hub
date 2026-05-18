@@ -6,15 +6,16 @@ import { PageHero, SectionHeading } from "@/components/site/ui";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/motion";
 import { SafeImage } from "@/components/site/SafeImage";
 import { InquiryForm } from "@/components/site/InquiryForm";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { api, type VisaCountry, type VisaRequirement } from "@/lib/api";
 import { VISA_SERVICES } from "@/lib/visa-services";
 
 export default function Visa() {
-  usePageTitle(
-    "Visa Services",
-    "Tourist, business, medical and student visa processing for 30+ countries — full document checklists, embassy fees and processing times from World Jumper, Dhaka."
-  );
+  useSeo("visa", {
+    title: "Visa Services",
+    description: "Tourist, business, medical and student visa processing for 30+ countries — full document checklists, embassy fees and processing times from World Jumper, Dhaka.",
+    path: "/visa",
+  });
   const [countries, setCountries] = useState<VisaCountry[]>([]);
   const [active, setActive] = useState<VisaCountry | null>(null);
   const [reqs, setReqs] = useState<VisaRequirement[]>([]);
