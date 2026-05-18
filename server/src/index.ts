@@ -16,6 +16,10 @@ import { uploadsRouter } from "./routes/uploads.js";
 import { membershipsRouter } from "./routes/memberships.js";
 import { partnersRouter } from "./routes/partners.js";
 import { visaServicesRouter } from "./routes/visa-services.js";
+import { homeCmsRouter } from "./routes/home-cms.js";
+import { aboutCmsRouter } from "./routes/about-cms.js";
+import { servicesFaqsRouter } from "./routes/services-faqs.js";
+import { navFooterRouter } from "./routes/nav-footer.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
