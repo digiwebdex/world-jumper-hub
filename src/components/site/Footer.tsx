@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
-import { Mail, MapPin, Phone, Instagram, Facebook } from "lucide-react";
+import { Mail, MapPin, Phone, Instagram, Facebook, Linkedin, Youtube } from "lucide-react";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { useFooterLinks } from "@/lib/cms";
+import { useSiteContact } from "@/lib/site-settings";
 import caabLogo from "@/assets/memberships/caab.png";
 import iataLogo from "@/assets/memberships/iata.png";
 import atabLogo from "@/assets/memberships/atab.png";
@@ -12,22 +13,27 @@ import etabLogo from "@/assets/memberships/etab.png";
 import ecabLogo from "@/assets/memberships/ecab.png";
 import lionsLogo from "@/assets/memberships/lions.png";
 
-const FALLBACK_GROUPS: Record<string, [string, string][]> = {
-  Explore: [
-    ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
-    ["/tours", "Tours"], ["/umrah", "Umrah"],
-    ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
-    ["/contact", "Contact"],
-  ],
-};
+const FALLBACK_EXPLORE: [string, string][] = [
+  ["/", "Home"], ["/about", "About"], ["/visa", "Visa"],
+  ["/tours", "Tours"], ["/umrah", "Umrah"],
+  ["/medical-tourism", "Medical"], ["/air-ticketing", "Air Ticket"],
+  ["/contact", "Contact"],
+];
 
 export function Footer() {
   const { data: footerLinks } = useFooterLinks();
-  const exploreLinks = useMemo<[string, string][]>(() => {
-    const fromCms = footerLinks
-      .filter((l) => (l.column_group || "Explore").toLowerCase() === "explore")
-      .map((l) => [l.url, l.label] as [string, string]);
-    return fromCms.length ? fromCms : FALLBACK_GROUPS.Explore;
+  const contact = useSiteContact();
+
+  // Group CMS footer links by column_group, preserving display_order
+  const groups = useMemo<{ name: string; links: [string, string][] }[]>(() => {
+    if (!footerLinks.length) return [{ name: "Explore", links: FALLBACK_EXPLORE }];
+    const map = new Map<string, [string, string][]>();
+    for (const l of footerLinks) {
+      const g = (l.column_group || "Explore").trim() || "Explore";
+      if (!map.has(g)) map.set(g, []);
+      map.get(g)!.push([l.url, l.label]);
+    }
+    return Array.from(map.entries()).map(([name, links]) => ({ name, links }));
   }, [footerLinks]);
   return (
     <footer className="relative overflow-hidden bg-ink text-cream">
