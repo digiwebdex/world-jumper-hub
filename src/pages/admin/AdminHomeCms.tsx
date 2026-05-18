@@ -33,7 +33,7 @@ const servicesFields: FieldDef[] = [
 const destFields: FieldDef[] = [
   { name: "name", label: "Destination name" },
   { name: "tag", label: "Tag line (small text)" },
-  { name: "image_url", label: "Image URL", type: "url", full: true },
+  { name: "image_url", label: "Image", type: "image", full: true },
   { name: "link", label: "Link URL" },
 ];
 const testimonialFields: FieldDef[] = [
