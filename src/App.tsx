@@ -27,6 +27,10 @@ import AdminPackages from "@/pages/admin/AdminPackages";
 import AdminInquiries from "@/pages/admin/AdminInquiries";
 import AdminSettings from "@/pages/admin/AdminSettings";
 import AdminWhatsApp from "@/pages/admin/AdminWhatsApp";
+import AdminHomeCms from "@/pages/admin/AdminHomeCms";
+import AdminAboutCms from "@/pages/admin/AdminAboutCms";
+import AdminServicesFaqs from "@/pages/admin/AdminServicesFaqs";
+import AdminNavFooter from "@/pages/admin/AdminNavFooter";
 import { useEffect } from "react";
 import { bootWhatsAppSettings } from "@/lib/whatsapp-settings";
 
