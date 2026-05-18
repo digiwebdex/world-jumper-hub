@@ -8,10 +8,11 @@ import { useSiteContact } from "@/lib/site-settings";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
 export default function Contact() {
-  usePageTitle(
-    "Contact Us",
-    "Talk to a senior travel consultant at World Jumper. Call, WhatsApp or send an inquiry — we reply within 24 hours with a tailored visa, tour or ticket plan."
-  );
+  useSeo("contact", {
+    title: "Contact Us",
+    description: "Talk to a senior travel consultant at World Jumper. Call, WhatsApp or send an inquiry — we reply within 24 hours with a tailored visa, tour or ticket plan.",
+    path: "/contact",
+  });
   const contact = useSiteContact();
   return (
     <SiteLayout>
