@@ -40,7 +40,7 @@ const testimonialFields: FieldDef[] = [
   { name: "name", label: "Customer name" },
   { name: "trip", label: "Trip / context" },
   { name: "quote", label: "Quote", type: "textarea", rows: 3, full: true },
-  { name: "photo_url", label: "Photo URL", type: "url" },
+  { name: "photo_url", label: "Photo", type: "image" },
   { name: "rating", label: "Rating (1-5)", type: "number", default: 5 },
 ];
 const whyFields: FieldDef[] = [
