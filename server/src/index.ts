@@ -13,6 +13,9 @@ import { visaRequirementsRouter } from "./routes/visa-requirements.js";
 import { packagesRouter } from "./routes/packages.js";
 import { inquiriesRouter } from "./routes/inquiries.js";
 import { uploadsRouter } from "./routes/uploads.js";
+import { membershipsRouter } from "./routes/memberships.js";
+import { partnersRouter } from "./routes/partners.js";
+import { visaServicesRouter } from "./routes/visa-services.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
@@ -38,6 +41,9 @@ app.use("/api/visa-requirements", visaRequirementsRouter);
 app.use("/api/packages", packagesRouter);
 app.use("/api/inquiries", inquiriesRouter);
 app.use("/api/admin/uploads", uploadsRouter);
+app.use("/api/memberships", membershipsRouter);
+app.use("/api/partners", partnersRouter);
+app.use("/api/visa-services", visaServicesRouter);
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);
