@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Field, PrimaryButton, Card } from "@/components/admin/form-bits";
+import { ImageField } from "@/components/admin/ImageField";
 import { Save, Loader2 } from "lucide-react";
 import type { FieldDef } from "@/components/admin/CmsListEditor";
 
