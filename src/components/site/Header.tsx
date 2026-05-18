@@ -27,6 +27,17 @@ export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
 
+  const cmsNav = useNavMenu();
+  const NAV: NavItem[] = useMemo(() => {
+    if (!cmsNav.data.length) return FALLBACK_NAV;
+    return cmsNav.data.map((n) => ({
+      to: n.url,
+      label: n.label,
+      end: n.url === "/",
+      hasDropdown: n.url === "/visa",
+    }));
+  }, [cmsNav.data]);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
