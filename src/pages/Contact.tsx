@@ -2,7 +2,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/ui";
 import { Reveal } from "@/components/site/motion";
 import { InquiryForm } from "@/components/site/InquiryForm";
-import { usePageTitle } from "@/lib/use-page-title";
+import { useSeo } from "@/lib/use-seo";
 import { SITE, whatsappLink } from "@/lib/site-config";
 import { useSiteContact } from "@/lib/site-settings";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
