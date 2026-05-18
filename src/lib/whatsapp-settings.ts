@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 import { SITE } from "@/lib/site-config";
 import { normalizeBdPhone } from "@/lib/phone";
 
@@ -8,14 +8,23 @@ export interface WhatsAppSettings {
   whatsapp_message: string;
 }
 
+interface SiteSettingsRow {
+  whatsapp_number: string | null;
+  whatsapp_message: string | null;
+}
+
 export async function fetchWhatsAppSettings(): Promise<WhatsAppSettings | null> {
-  const { data, error } = await supabase
-    .from("app_settings")
-    .select("whatsapp_number, whatsapp_message")
-    .eq("id", 1)
-    .maybeSingle();
-  if (error) return null;
-  return data as WhatsAppSettings | null;
+  try {
+    const res = await api.get<{ settings: SiteSettingsRow | null }>("/site-settings");
+    const s = res.settings;
+    if (!s) return null;
+    return {
+      whatsapp_number: s.whatsapp_number ?? "",
+      whatsapp_message: s.whatsapp_message ?? "",
+    };
+  } catch {
+    return null;
+  }
 }
 
 /** Loads settings once at app boot and mirrors them onto SITE so existing
@@ -43,11 +52,11 @@ export function useWhatsAppSettings() {
 }
 
 export async function saveWhatsAppSettings(input: WhatsAppSettings) {
-  const { error } = await supabase
-    .from("app_settings")
-    .upsert({ id: 1, ...input }, { onConflict: "id" });
-  if (error) throw error;
-  // Mirror onto SITE for the rest of the session.
+  // site-settings PUT accepts a partial of the FIELDS list.
+  await api.put("/site-settings", {
+    whatsapp_number: input.whatsapp_number,
+    whatsapp_message: input.whatsapp_message,
+  });
   SITE.whatsappIntl = normalizeBdPhone(input.whatsapp_number);
   SITE.whatsappMessage = input.whatsapp_message;
 }

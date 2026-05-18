@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 
 export type PartnerKind = "airline" | "hotel" | "authority";
 
@@ -29,15 +29,16 @@ export function usePartners(includeUnpublished = false) {
 
   const reload = useCallback(async () => {
     setLoading(true);
-    let q = supabase.from("partners").select("*").order("display_order", { ascending: true });
-    if (!includeUnpublished) q = q.eq("published", true);
-    const { data: rows, error } = await q;
-    if (error || !rows || rows.length === 0) {
+    try {
+      const path = includeUnpublished ? "/partners?all=1" : "/partners";
+      const res = await api.get<{ partners: Partner[] }>(path);
+      const rows = res.partners || [];
+      setData(rows.length === 0 && !includeUnpublished ? FALLBACK : rows);
+    } catch {
       setData(includeUnpublished ? [] : FALLBACK);
-    } else {
-      setData(rows as Partner[]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, [includeUnpublished]);
 
   useEffect(() => { reload(); }, [reload]);

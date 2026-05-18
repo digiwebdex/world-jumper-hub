@@ -1,13 +1,12 @@
-// Database-backed visa services. Mirrors the static VisaService shape but
-// resolves the icon string to a Lucide component at read-time.
+// Database-backed visa services served by the VPS API.
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Compass, Globe2, FileCheck2, Mail, Stamp, Zap,
   Plane, Briefcase, GraduationCap, Heart, Shield, Building2, Users, Award,
   type LucideIcon,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 
 export const ICON_MAP: Record<string, LucideIcon> = {
   Compass, Globe2, FileCheck2, Mail, Stamp, Zap,
@@ -35,7 +34,7 @@ export type VisaService = {
   displayOrder?: number;
 };
 
-type Row = {
+export type Row = {
   id: string;
   slug: string;
   number: string;
@@ -83,17 +82,21 @@ export function useVisaServices(includeUnpublished = false) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const reload = async () => {
+  const reload = useCallback(async () => {
     setLoading(true);
-    let q = supabase.from("visa_services").select("*").order("display_order", { ascending: true });
-    if (!includeUnpublished) q = q.eq("published", true);
-    const { data: rows, error: err } = await q;
-    if (err) { setError(err.message); setLoading(false); return; }
-    setData((rows as Row[] | null ?? []).map(rowToService));
-    setLoading(false);
-  };
+    try {
+      const path = includeUnpublished ? "/visa-services?all=1" : "/visa-services";
+      const res = await api.get<{ services: Row[] }>(path);
+      setData((res.services || []).map(rowToService));
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to load");
+    } finally {
+      setLoading(false);
+    }
+  }, [includeUnpublished]);
 
-  useEffect(() => { reload(); /* eslint-disable-next-line */ }, [includeUnpublished]);
+  useEffect(() => { reload(); }, [reload]);
   return { data, loading, error, reload };
 }
 
@@ -103,11 +106,12 @@ export function useVisaService(slug: string) {
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
-    supabase.from("visa_services").select("*").eq("slug", slug).eq("published", true).maybeSingle()
-      .then(({ data: row }) => {
-        setData(row ? rowToService(row as Row) : null);
-        setLoading(false);
-      });
+    api.get<{ service: Row | null }>(`/visa-services/by-slug/${encodeURIComponent(slug)}`)
+      .then((res) => {
+        setData(res.service ? rowToService(res.service) : null);
+      })
+      .catch(() => setData(null))
+      .finally(() => setLoading(false));
   }, [slug]);
   return { data, loading };
 }

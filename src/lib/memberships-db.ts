@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api";
 import { SITE } from "@/lib/site-config";
 
 export interface Membership {
@@ -26,23 +26,24 @@ export function useMemberships(includeUnpublished = false) {
 
   const reload = useCallback(async () => {
     setLoading(true);
-    let q = supabase.from("memberships").select("*").order("display_order", { ascending: true });
-    if (!includeUnpublished) q = q.eq("published", true);
-    const { data: rows, error } = await q;
-    if (error || !rows || rows.length === 0) {
+    try {
+      const path = includeUnpublished ? "/memberships?all=1" : "/memberships";
+      const res = await api.get<{ memberships: Membership[] }>(path);
+      const rows = res.memberships || [];
+      setData(rows.length === 0 && !includeUnpublished ? FALLBACK : rows);
+    } catch {
       setData(includeUnpublished ? [] : FALLBACK);
-    } else {
-      setData(rows as Membership[]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, [includeUnpublished]);
 
   useEffect(() => { reload(); }, [reload]);
   return { data, loading, reload };
 }
 
-export const MEMBERSHIP_LOGO_BUCKET = "membership-logos";
-
-export function membershipLogoPublicUrl(path: string): string {
-  return supabase.storage.from(MEMBERSHIP_LOGO_BUCKET).getPublicUrl(path).data.publicUrl;
+// Kept for backwards compatibility — admin uploader now uses /api/admin/uploads.
+export const MEMBERSHIP_LOGO_BUCKET = "memberships";
+export function membershipLogoPublicUrl(url: string): string {
+  return url;
 }
