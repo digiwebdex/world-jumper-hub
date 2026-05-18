@@ -48,6 +48,10 @@ app.use("/api/admin/uploads", uploadsRouter);
 app.use("/api/memberships", membershipsRouter);
 app.use("/api/partners", partnersRouter);
 app.use("/api/visa-services", visaServicesRouter);
+app.use("/api/home", homeCmsRouter);
+app.use("/api/about", aboutCmsRouter);
+app.use("/api/services", servicesFaqsRouter);
+app.use("/api/nav-footer", navFooterRouter);
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);
